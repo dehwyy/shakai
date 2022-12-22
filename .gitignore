@@ -2,6 +2,8 @@ node_modules
 dist
 coverage
 .idea
+.test/coverage*
+.test/coverage/*
 /coverage
 .coverage*
 .coverage
