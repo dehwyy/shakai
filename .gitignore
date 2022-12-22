@@ -1,4 +1,12 @@
 node_modules
 dist
+coverage
 .idea
 /coverage
+/backend/test/coverage/
+/backend/test/coverage/**
+backend/test/coverage/**
+backend/test/coverage/
+/coverage/
+/coverage/**
+coverage/**
