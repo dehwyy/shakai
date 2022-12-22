@@ -1,4 +1,4 @@
 node_modules
 dist
 .idea
-/backend/test/coverage/
+/backend/test/coverage/**
