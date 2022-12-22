@@ -3,6 +3,8 @@ dist
 coverage
 .idea
 /coverage
+.coverage*
+.coverage
 /backend/test/coverage/
 /backend/test/coverage/**
 backend/test/coverage/**
