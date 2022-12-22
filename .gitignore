@@ -2,15 +2,3 @@ node_modules
 dist
 coverage
 .idea
-.test/coverage*
-.test/coverage/*
-/coverage
-.coverage*
-.coverage
-/backend/test/coverage/
-/backend/test/coverage/**
-backend/test/coverage/**
-backend/test/coverage/
-/coverage/
-/coverage/**
-coverage/**
