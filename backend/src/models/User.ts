@@ -1,10 +1,5 @@
 import {Schema, model} from "mongoose";
-
-export interface inUser {
-    email: string
-    username: string
-    password: string
-}
+import {inUser} from "../typing/Interfaces";
 
 const user = new Schema({
     email: {type: String, required: true, unique: true},

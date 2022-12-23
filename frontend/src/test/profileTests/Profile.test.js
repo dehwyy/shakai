@@ -10,10 +10,10 @@ describe("profile tests", () => {
     test("i tags checker", () =>
         expect(screen.getAllByTestId("i")).toHaveLength(2)
     )
-    test("place test", () => {
+    test("place __tests__", () => {
         expect(screen.getByTestId("placeInfo")).toBeInTheDocument()
     })
-    test("'More info' test", () => {
+    test("'More info' __tests__", () => {
         expect(screen.getByTestId("moreInfoBtn")).toBeInTheDocument()
     })
     test("open/close user's info", () => {

@@ -4,8 +4,10 @@ import AuthController from "../controllers/AuthController";
 
 
 const authRouter: Router = new (CreateRouter as any)()
-authRouter.get("/", AuthController.getUsers)
+authRouter.get("/", AuthController.TESTgetUsers)
+authRouter.post("/test", AuthController.TESTgetUser)
 authRouter.post("/reg", AuthController.registration)
 authRouter.post("/login", AuthController.login)
+authRouter.delete("/test", AuthController.TESTdeleteUser)
 
 export default authRouter

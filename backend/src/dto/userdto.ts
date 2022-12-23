@@ -1,5 +1,5 @@
-import {Request} from "express-serve-static-core";
-import {inUser} from "../models/User";
+import {Request} from "express";
+import {inUser} from "../typing/Interfaces";
 
 class UserDto {
     getUserData(req: Request) {

@@ -10,13 +10,13 @@ describe("navbar tests", () => {
                 <Navbar />
             </MemoryRouter>)
     })
-    test("main page test", () => {
+    test("main page __tests__", () => {
         expect(screen.queryByText("home")).not.toBeNull()
     })
-    test("users page test", () => {
+    test("users page __tests__", () => {
         expect(screen.queryByText("people")).not.toBeNull()
     })
-    test("single user page test", () => {
+    test("single user page __tests__", () => {
         expect(screen.queryByText("account_circle")).not.toBeNull()
     })
     test("count of pages", () => {

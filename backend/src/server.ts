@@ -1,9 +1,12 @@
 import app from "./app";
 import mongoose from "mongoose"; mongoose.set('strictQuery', true);
 import * as dotenv from "dotenv";
-import * as path from "path"
+import {fileURLToPath} from 'url';
+import path from "path";
 
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, '..', '.env')});
+
 const PORT = 727
 const DB = process.env.DATABASE || ''
 const startServer = async () => {
