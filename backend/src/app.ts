@@ -1,12 +1,15 @@
 import express from "express"
-import {Request, Express, Response} from "express-serve-static-core";
+import cors from "cors"
+import cookieParser from "cookie-parser"
+import {Express} from "express-serve-static-core";
+import authRouter from "./routers/AuthRouter";
 
 
 const app: Express = express()
 app.use(express.json())
-app.get("/", (req: Request, res: Response) => {
-    res.send("ABOBA")
-})
+app.use(cors())
+app.use(cookieParser())
+app.use("/users", authRouter)
 
 export default app
 
