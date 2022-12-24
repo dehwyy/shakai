@@ -11,8 +11,5 @@ app.use(cors())
 app.use(cookieParser())
 app.use("/users", authRouter)
 app.use(errorMiddleware)
-app.get("/", (req, res) => {
-    res.send({message: "yes"})
-})
 export default app
 

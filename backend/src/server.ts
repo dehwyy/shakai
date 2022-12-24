@@ -1,8 +1,8 @@
 import app from "./app";
 import mongoose from "mongoose"; mongoose.set('strictQuery', true);
 import * as dotenv from "dotenv";
-import {fileURLToPath} from 'url';
 import path from "path";
+import {fileURLToPath} from "url";
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, '..', '.env')});

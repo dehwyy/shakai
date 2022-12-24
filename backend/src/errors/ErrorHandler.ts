@@ -17,6 +17,9 @@ class ErrorHandler extends Error{
     static NotFound(message?: string) {
         return new ErrorHandler(message, 404)
     }
+    static Conflict(message?: string) {
+        return new ErrorHandler(message, 409)
+    }
 }
 
 export default ErrorHandler
