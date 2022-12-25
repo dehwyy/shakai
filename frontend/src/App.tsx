@@ -1,9 +1,11 @@
 import React from 'react';
-import Navbar from "./components/navbar/Navbar";
-import Profile from "./components/profile/Profile";
 import styled, {ThemeProvider} from "styled-components";
 import {Route, Routes} from "react-router-dom";
+import GlobalStyles from "./globalStyles/style";
+import Navbar from "./components/navbar/Navbar";
+import Profile from "./components/profile/Profile";
 import Users from "./components/users/Users";
+import LoginForm from "./components/authForm/LoginForm";
 
 const AppWrapper = styled.div`
   font-size: 25px;
@@ -12,21 +14,28 @@ const AppWrapper = styled.div`
   background: ${props => props.theme.mainBackground};
   min-height: 100vh;
   overflow: hidden;
+  
 `
 
 const darkTheme = {
     mainBackground: "#121212",
-    blockBackground: "#222222"
+    blockBackground: "#222222",
+    coloredBackground: "#673ab7",
+    secondColorBackground: "#BF2FA3",
+    blueColor: "#3A5FB4"
 }
 
 const App = () => {
     return (
         <ThemeProvider theme={darkTheme}>
+            <GlobalStyles/>
             <AppWrapper>
-                <Navbar />
-                <Routes>
-                    <Route path={"/profile"} element={<Profile />} />
-                    <Route path={"/users"} element={<Users />}/>
+                <Routes >
+                    <Route path={"/"} element={<LoginForm />} />
+                    <Route path={"content"}>
+                        <Route path={"profile"} element={<><Navbar /><Profile /></>} />
+                        <Route path={"users"} element={<><Navbar /><Users /></>}/>
+                    </Route>
                 </Routes>
             </AppWrapper>
         </ThemeProvider>

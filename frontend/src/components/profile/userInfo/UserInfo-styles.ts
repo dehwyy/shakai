@@ -49,7 +49,7 @@ export const InfoDescription = styled.div`
 
 export const InfoDescriptionFlex = styled.div`
   display: flex;
-  width: 500px;
+  width: 525px;
   margin: 0 auto;
   padding-bottom: 20px;
   & div {
@@ -62,7 +62,7 @@ export const InfoDescriptionFlex = styled.div`
     cursor: pointer
   }
   & span {
-    margin-left: 20px
+    margin-left: 15px
   }
 `
 
