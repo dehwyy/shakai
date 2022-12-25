@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc --watch",
-    "dev": "nodemon  src/server.ts",
+    "dev": "nodemon  src/server.ts --port 1727",
     "test": "jest"
   },
   "keywords": [],

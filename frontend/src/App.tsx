@@ -5,7 +5,7 @@ import GlobalStyles from "./globalStyles/style";
 import Navbar from "./components/navbar/Navbar";
 import Profile from "./components/profile/Profile";
 import Users from "./components/users/Users";
-import LoginForm from "./components/authForm/LoginForm";
+import LoginFormRouter from "./components/authForm/login/LoginFormRouter";
 
 const AppWrapper = styled.div`
   font-size: 25px;
@@ -20,9 +20,13 @@ const AppWrapper = styled.div`
 const darkTheme = {
     mainBackground: "#121212",
     blockBackground: "#222222",
+    lighterBlockBackground: "#323232",
     coloredBackground: "#673ab7",
     secondColorBackground: "#BF2FA3",
-    blueColor: "#3A5FB4"
+    blueColor: "#3A5FB4",
+    darkerBlueColor: "#32509b",
+    lighterBlueColor: "#4672d7",
+    fontColor: "white"
 }
 
 const App = () => {
@@ -31,7 +35,7 @@ const App = () => {
             <GlobalStyles/>
             <AppWrapper>
                 <Routes >
-                    <Route path={"/"} element={<LoginForm />} />
+                    <Route path={"*"} element={<LoginFormRouter />} />
                     <Route path={"content"}>
                         <Route path={"profile"} element={<><Navbar /><Profile /></>} />
                         <Route path={"users"} element={<><Navbar /><Users /></>}/>
