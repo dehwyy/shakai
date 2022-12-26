@@ -1,7 +1,7 @@
 import * as React from "react";
 import {render, screen} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import UserInfo from "../../components/profile/userInfo/UserInfo";
+import UserInfo from "../../src/components/profile/userInfo/UserInfo";
 
 describe("profile tests", () => {
     beforeEach(() => {

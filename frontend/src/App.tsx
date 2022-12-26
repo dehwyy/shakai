@@ -6,6 +6,7 @@ import Navbar from "./components/navbar/Navbar";
 import Profile from "./components/profile/Profile";
 import Users from "./components/users/Users";
 import LoginFormTest from "./components/authForm/login/LoginForm";
+import RegistrationForm from "./components/authForm/registration/RegistrationForm";
 
 const AppWrapper = styled.div`
   font-size: 25px;
@@ -13,8 +14,7 @@ const AppWrapper = styled.div`
   color: white;
   background: ${props => props.theme.mainBackground};
   min-height: 100vh;
-  overflow: hidden;
-  
+  overflow-x: hidden;
 `
 
 const darkTheme = {
@@ -36,6 +36,7 @@ const App = () => {
             <AppWrapper>
                 <Routes >
                     <Route path={"*"} element={<LoginFormTest />} />
+                    <Route path={"registration"} element={<RegistrationForm />} />
                     <Route path={"content"}>
                         <Route path={"profile"} element={<><Navbar /><Profile /></>} />
                         <Route path={"users"} element={<><Navbar /><Users /></>}/>

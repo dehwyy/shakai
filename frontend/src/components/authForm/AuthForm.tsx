@@ -3,8 +3,10 @@ import {useForm} from "react-hook-form";
 import AuthInput from "./AuthInput/AuthInput";
 import {Form} from "./LoginForm-style";
 import {inLoginForm, inLoginRef} from "./auth";
+import {useNavigate} from "react-router-dom";
 
-const AuthForm = forwardRef<inLoginRef, inLoginForm>(({values}, ref) => {
+const AuthForm = forwardRef<inLoginRef, inLoginForm>(({values, nextButtonNavigation}, ref) => {
+    const navigate = useNavigate()
     const {handleSubmit, register, formState: {isValid, errors}, reset, clearErrors} = useForm({
         mode: "onBlur",
     })
@@ -18,6 +20,7 @@ const AuthForm = forwardRef<inLoginRef, inLoginForm>(({values}, ref) => {
             handleSubmit((data) => {
                 console.log(data)
                 reset()
+                {nextButtonNavigation && navigate(nextButtonNavigation)}
             })(e)
         }
     }))
@@ -26,7 +29,7 @@ const AuthForm = forwardRef<inLoginRef, inLoginForm>(({values}, ref) => {
     return (
         <Form ref={formRef}>
             {values.map((value, index) => {
-                return <AuthInput<Record<TValues, string>>  name={value.name} validation={value.validation} register={register} errors={errors} key={index} customKey={index}/>
+                return <AuthInput<Record<TValues, string>>  name={value.name} validation={value.validation} inputType={value.inputType || "text"} register={register} errors={errors} key={index} customKey={index}/>
             })}
         </Form>
     );

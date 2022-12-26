@@ -17,12 +17,12 @@ export const FormCentered = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: end;
   `
 
 export const OptionsWrapper = styled.div`
   width: 100%;
-  height: 150px;
+  height: 100%;
   display: flex;
   align-items: center;
 `
@@ -35,19 +35,27 @@ export const Options = styled.div`
   border-radius: 5px;
   padding: 6px 8px;
   gap: 5px;
+  user-select: none;
+`
+
+export const OptionalText = styled.div`
+  user-select: none;
+  font-size: 30px;
+  font-weight: 600;
+  width: 100%;
+  text-align: center;
+  justify-self: start;
 `
 
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: end;
-  height: 50%;
+  min-height: 125px;
   position: relative;
   user-select: none;
+  margin-top: -35px;
 `
-
-
 
 export const FlexBlock = styled.div`
   width: 98%;
@@ -57,7 +65,7 @@ export const FlexBlock = styled.div`
 `
 
 
-export const LoginOption = styled.div<{readonly isChosen: boolean}>`
+export const LoginOption = styled.div<{readonly isChosen?: boolean}>`
   padding: 15px 35px;
   font-size: 20px;
   background: ${props => !props.isChosen ? props.theme.lighterBlockBackground : props.theme.blueColor};

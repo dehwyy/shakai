@@ -4,23 +4,28 @@ import Ico from "../../../UI/Ico";
 import {Link} from "react-router-dom";
 
 const MenuProfile = () => {
+    const accessToken = localStorage.getItem("accessToken")
+    const linkTo = accessToken ? "/content/profile" : "/"
+    const profileText = accessToken ? "Profile": "Authorization"
     return (
         <MenuWrapper>
             <MenuBody>
-                <Link to="/content/profile">
-                <MenuItem>
-                        <Ico> person </Ico>
-                        Profile
-                </MenuItem>
+                <Link to={linkTo} data-testid="accessTokenTestId">
+                    <MenuItem>
+                            <Ico> person </Ico>
+                        {profileText}
+                    </MenuItem>
                 </Link>
                 <MenuItem>
                     <Ico> settings </Ico>
                     Settings
                 </MenuItem>
-                <MenuItem>
-                    <Ico> exit_to_app </Ico>
-                    Log out
-                </MenuItem>
+                {accessToken &&
+                    <MenuItem>
+                        <Ico> exit_to_app </Ico>
+                        Log out
+                    </MenuItem>
+                }
             </MenuBody>
         </MenuWrapper>
     );

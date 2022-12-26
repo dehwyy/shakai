@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Navbar from "../../components/navbar/Navbar";
+import Navbar from "../../src/components/navbar/Navbar";
 import {render, screen} from "@testing-library/react";
 import {MemoryRouter} from "react-router-dom";
 

@@ -1,6 +1,6 @@
 import * as React from "react"
 import {render, screen} from "@testing-library/react";
-import DetailedUserInfo from "../../components/profile/userInfo/detailedUserInfo/DetailedUserInfo";
+import DetailedUserInfo from "../../src/components/profile/userInfo/detailedUserInfo/DetailedUserInfo";
 
 describe("Detailed info in profile", () => {
     beforeEach(() => {

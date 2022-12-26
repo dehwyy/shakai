@@ -15,6 +15,7 @@ interface InputProps<T extends TInputValues> {
     name: string,
     customKey: number,
     validation?: RegisterOptions
+    inputType: string
 }
 
 interface ReturnInputRegister {
@@ -33,7 +34,8 @@ interface inLoginForm {
     values: {
         name: string,
         validation?: RegisterOptions
+        inputType?: string
     }[],
-
+    nextButtonNavigation?: string
 }
 

@@ -7,7 +7,8 @@ export const MenuWrapper = styled.div`
 `
 
 export const MenuBody = styled.div`
-  width: 200px;
+  width: max-content;
+  min-width: 170px;
   background: ${props => props.theme.coloredBackground};
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -17,7 +18,7 @@ export const MenuBody = styled.div`
 `
 
 export const MenuItem = styled.div`
-  padding: 10px 15px;
+  padding: 10px 15px 10px 0;
   font-size: 1.5rem;
   &:hover {
     background: ${props => props.theme.secondColorBackground};

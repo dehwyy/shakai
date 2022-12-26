@@ -1,9 +1,18 @@
 import React, {RefObject, useMemo, useRef, useState} from 'react';
-import {FlexBlock, FormCentered, FormWrapper, LoginOption, OptionsWrapper, Options} from "../LoginForm-style";
+import {
+    FlexBlock,
+    FormCentered,
+    FormWrapper,
+    LoginOption,
+    OptionsWrapper,
+    Options,
+    OptionalText
+} from "../LoginForm-style";
 import AuthForm from "../AuthForm";
 import AuthSign from "../AuthSign/AuthSign";
 import AuthButton from "../AuthButton/AuthButton";
-import {RegisterOptions} from "react-hook-form";
+import {useNavigate} from "react-router-dom";
+
 
 function LoginFormRouter() {
     const [isEmail, setEmail] = useState<boolean>(true)
@@ -18,7 +27,8 @@ function LoginFormRouter() {
                         message: "invalid email"
                     },
                     required: "row is required"
-                }}
+                }
+            }
             ]
     }, []) // redux soon
     const data2 = useMemo(() => {
@@ -29,9 +39,12 @@ function LoginFormRouter() {
                 }}
             ]
     }, []) // redux soon
+    const nextButtonNavigation = "registration"
+
     return (
         <FormWrapper>
             <FormCentered>
+                <OptionalText>Choose method of authorization</OptionalText>
                 <OptionsWrapper>
                     <Options>
                         <LoginOption onClick={() => {
@@ -44,12 +57,13 @@ function LoginFormRouter() {
                         }} isChosen={!isEmail}>Username</LoginOption>
                     </Options>
                 </OptionsWrapper>
-                {isEmail ? <AuthForm values={data} ref={ref}/> : <AuthForm values={data2} ref={ref2}/> }
+                {isEmail ? <AuthForm values={data} ref={ref} nextButtonNavigation={nextButtonNavigation}/>
+                    : <AuthForm values={data2} ref={ref2} nextButtonNavigation={nextButtonNavigation}/> }
                 <FlexBlock>
                     <AuthSign />
-                    <AuthButton onClick={() => {
-                        isEmail ? ref.current?.submit() : ref2.current?.submit()
-                    }}/>
+                        <AuthButton onClick={() => {
+                            isEmail ? ref.current?.submit() : ref2.current?.submit()
+                        }}/>
                 </FlexBlock>
             </FormCentered>
         </FormWrapper>

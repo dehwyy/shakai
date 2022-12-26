@@ -1,10 +1,13 @@
 import * as React from "react"
 import {render, screen} from "@testing-library/react";
-import Posts from "../../components/profile/Posts/Posts";
+import Posts from "../../src/components/profile/Posts/Posts";
+import {MemoryRouter} from "react-router-dom";
 
 describe("posts tests", () => {
     beforeEach(() => {
-        render(<Posts />)
+        render(
+            <Posts />
+        )
     })
     test("does each post has avatar", () => {
         expect(screen.getAllByTestId("post").length).toBe(screen.getAllByAltText("Avatar").length)
