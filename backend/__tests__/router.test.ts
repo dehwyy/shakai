@@ -4,7 +4,6 @@ import mongoose from "mongoose";mongoose.set('strictQuery', false);
 import * as dotenv from "dotenv";
 import path from "path";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 
 dotenv.config({ path: path.resolve(__dirname, "..", '.env')});
 const db = process.env.DATABASE || ""
