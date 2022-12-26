@@ -5,7 +5,7 @@
 - Going to do 2 build modes: production && development
 - Live chat on `websockets` soon...
 
-> this is my first time using `babel`, `jest`, `react-testing-library`, `express` with `typescript``
+> this is my first time using `babel`, `jest`, `react-testing-library`, `express` with `typescript` + `react hook form`(since 25.12.2022)
 
 ## archive
 
