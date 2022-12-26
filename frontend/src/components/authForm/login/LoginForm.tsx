@@ -1,59 +1,59 @@
-import React, {FC, forwardRef, RefObject, useEffect, useImperativeHandle, useRef} from 'react';
-import {useForm} from "react-hook-form";
-import {ErrorSpan, FlexBlock} from "../LoginForm-style";
+import React, {RefObject, useMemo, useRef, useState} from 'react';
+import {FlexBlock, FormCentered, FormWrapper, LoginOption, OptionsWrapper, Options} from "../LoginForm-style";
+import AuthForm from "../AuthForm";
+import AuthSign from "../AuthSign/AuthSign";
+import AuthButton from "../AuthButton/AuthButton";
+import {RegisterOptions} from "react-hook-form";
 
-export enum etp {
-    "email",
-    "username"
-}
-
-interface inLoginForm {
-    tp: etp.email | etp.username,
-}
-
-interface inLoginRef {
-    reset: () => void
-}
-
-const LoginForm = forwardRef<inLoginRef, inLoginForm>(({tp}, ref) => {
-    const {handleSubmit, register, formState: {isValid, errors}, reset, clearErrors} = useForm<{
-        usernameOrEmail: string
-    }>({
-        mode: "onBlur",
-    })
-    const formRef = useRef<HTMLFormElement>() as RefObject<HTMLFormElement>
-    useImperativeHandle(ref, () => ({
-        reset: () => {
-            formRef.current?.reset()
-            clearErrors()
-        }
-    }))
-
-    const pattern = tp === etp.email ?
-              {
-                  value: /^[a-z0-9_-]+@[a-z_-]+.[a-z]+$/i,
-                  message: "invalid email"
-              } :
-              {
-                  value: /^[a-z0-9_-]+$/i,
-                  message: "should not contain spaces"
-              }
-    const submitForm = (data: any) => {
-        console.log(data)
-        reset()
-    }
+function LoginFormRouter() {
+    const [isEmail, setEmail] = useState<boolean>(true)
+    const ref = useRef<HTMLFormElement>() as RefObject<HTMLFormElement>
+    const ref2 = useRef<HTMLFormElement>() as RefObject<HTMLFormElement>
+    const data = useMemo(() => {
+        return [
+            {name: "email",
+                validation: {
+                    pattern: {
+                        value: /[a-z0-9_-]+@[a-z]+.[a-z]/i,
+                        message: "invalid email"
+                    },
+                    required: "row is required"
+                }}
+            ]
+    }, []) // redux soon
+    const data2 = useMemo(() => {
+        return [
+            {name: "username",
+                validation: {
+                    required: "row is required"
+                }}
+            ]
+    }, []) // redux soon
     return (
-        <form ref={formRef} onSubmit={handleSubmit(submitForm)}>
-            <input {...register("usernameOrEmail", {
-                pattern
-            })} />
-            <ErrorSpan>{errors?.usernameOrEmail && errors.usernameOrEmail?.message}</ErrorSpan>
-            <FlexBlock>
-                <span>Don't have account yet?<br/>Register now!</span>
-                <button type="submit">Next</button>
-            </FlexBlock>
-        </form>
+        <FormWrapper>
+            <FormCentered>
+                <OptionsWrapper>
+                    <Options>
+                        <LoginOption onClick={() => {
+                            setEmail(true)
+                            ref2.current?.reset()
+                        }} isChosen={isEmail}>Email</LoginOption>
+                        <LoginOption onClick={() => {
+                            setEmail(false)
+                            ref.current?.reset()
+                        }} isChosen={!isEmail}>Username</LoginOption>
+                    </Options>
+                </OptionsWrapper>
+                {isEmail ? <AuthForm values={data} ref={ref}/> : <AuthForm values={data2} ref={ref2}/> }
+                <FlexBlock>
+                    <AuthSign />
+                    <AuthButton onClick={() => {
+                        isEmail ? ref.current?.submit() : ref2.current?.submit()
+                    }}/>
+                </FlexBlock>
+            </FormCentered>
+        </FormWrapper>
     );
-});
+}
 
-export default LoginForm;
+export default LoginFormRouter
