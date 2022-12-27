@@ -1,4 +1,5 @@
-import React, { RefObject, useMemo, useRef, useState } from "react"
+import * as React from "react"
+import { RefObject, useMemo, useRef, useState } from "react"
 import {
   FlexBlock,
   FormCentered,

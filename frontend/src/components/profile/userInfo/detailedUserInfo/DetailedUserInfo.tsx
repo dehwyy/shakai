@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react"
 import { DetailedUserInfoWrapper } from "./DetailedUserInfo-styles"
 import Ico from "../../../../UI/Ico"
 

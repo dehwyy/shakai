@@ -1,47 +1,47 @@
 import styled from "styled-components"
 export const PostsDivWrapper = styled.div`
-  width: 90%;
   margin: 0 auto;
   padding-top: 50px;
+  width: 90%;
 `
 
 export const PostDivWrapper = styled.div`
-  margin-bottom: 10px;
-  padding: 10px 25px;
+  align-items: center;
+  background: #222222;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  background: #222222;
+  margin-bottom: 10px;
+  padding: 10px 25px;
 `
 
 export const PostHeader = styled.div`
-  display: flex;
   align-items: center;
-  justify-content: space-between;
   align-self: start;
-  width: 300px;
-  max-width: 90%;
+  display: flex;
   font-size: 15px;
+  justify-content: space-between;
   margin: 10px 0 20px 0;
+  max-width: 90%;
+  width: 300px;
   & img {
-    border-radius: 50%;
-    max-width: 40px;
-    max-height: 40px;
     background: green;
+    border-radius: 50%;
+    max-height: 40px;
+    max-width: 40px;
   }
 `
 
 export const PostBody = styled.div`
   font-size: 18px;
   & img {
-    margin: 0 auto;
     display: block;
+    margin: 0 auto;
     max-height: 800px;
     max-width: 100%;
   }
 `
 export const PostMessage = styled.div`
-  padding-bottom: 15px;
   max-width: 100%;
+  padding-bottom: 15px;
 `

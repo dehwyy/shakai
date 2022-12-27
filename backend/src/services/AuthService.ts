@@ -1,5 +1,5 @@
 import User from "../models/User"
-import bcrypt from "bcryptjs"
+import * as bcrypt from "bcryptjs"
 import { inDataToLogin } from "../typing/Interfaces"
 import ErrorHandler from "../errors/ErrorHandler"
 import TokenService from "./TokenService"

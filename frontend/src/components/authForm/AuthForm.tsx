@@ -1,8 +1,10 @@
-import React, {
+import * as React from "react"
+import {
   forwardRef,
   RefObject,
   useImperativeHandle,
   useRef,
+  SyntheticEvent,
 } from "react"
 import { useForm } from "react-hook-form"
 import AuthInput from "./AuthInput/AuthInput"
@@ -16,7 +18,7 @@ const AuthForm = forwardRef<inLoginRef, inLoginForm>(
     const {
       handleSubmit,
       register,
-      formState: { isValid, errors },
+      formState: { errors },
       reset,
       clearErrors,
     } = useForm({
@@ -28,7 +30,7 @@ const AuthForm = forwardRef<inLoginRef, inLoginForm>(
         reset()
         clearErrors()
       },
-      submit: (e: any) => {
+      submit: (e: SyntheticEvent) => {
         handleSubmit((data) => {
           console.log(data)
           reset()
@@ -59,5 +61,6 @@ const AuthForm = forwardRef<inLoginRef, inLoginForm>(
     )
   },
 )
+AuthForm.displayName = "AuthForm"
 
 export default AuthForm

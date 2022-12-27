@@ -1,25 +1,25 @@
 import styled from "styled-components"
 
 export const GridWrapper = styled.div`
+  background: ${(props) => props.theme.blockBackground};
   border-radius: 10px;
   padding: 15px 25px;
-  background: ${(props) => props.theme.blockBackground};
   text-align: end;
 `
 export const GridContent = styled.div`
-  text-align: start;
-  display: flex;
   align-items: center;
+  display: flex;
+  text-align: start;
 `
 
 export const ImgDiv = styled.div`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
   background: white;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
   & img {
-    max-width: 100%;
     max-height: 100%;
+    max-width: 100%;
   }
 `
 
@@ -28,8 +28,8 @@ export const ContentDiv = styled.div`
 `
 
 export const UsernameWrapper = styled.div`
-  font-size: 18px;
   border-bottom: 2px solid white;
+  font-size: 18px;
 `
 
 export const InfoWrapper = styled.div`
@@ -41,11 +41,11 @@ export const InfoWrapper = styled.div`
 
 export const GridButton = styled.button`
   background: dodgerblue;
-  font-size: 20px;
-  padding: 5px 15px;
   border-radius: 7px;
   color: white;
   font-family: "Montserrat", monospace;
+  font-size: 20px;
+  padding: 5px 15px;
   &:hover {
     cursor: pointer;
   }

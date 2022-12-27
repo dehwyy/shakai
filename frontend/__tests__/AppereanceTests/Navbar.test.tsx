@@ -11,15 +11,19 @@ describe("navbar tests", () => {
       </MemoryRouter>,
     )
   })
+
   test("main page __tests__", () => {
-    expect(screen.queryByText("home")).not.toBeNull()
+    expect(screen.getByText("home")).not.toBeNull()
   })
+
   test("users page __tests__", () => {
-    expect(screen.queryByText("people")).not.toBeNull()
+    expect(screen.getByText("people")).not.toBeNull()
   })
+
   test("single user page __tests__", () => {
-    expect(screen.queryByText("account_circle")).not.toBeNull()
+    expect(screen.getByText("account_circle")).not.toBeNull()
   })
+
   test("count of pages", () => {
     expect(screen.getAllByTestId("i")).toHaveLength(3)
   })

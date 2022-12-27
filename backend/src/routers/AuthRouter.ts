@@ -2,7 +2,7 @@ import { Router as CreateRouter } from "express"
 import { Router } from "express-serve-static-core"
 import AuthController from "../controllers/AuthController"
 
-const authRouter: Router = new (CreateRouter as any)()
+const authRouter: Router = CreateRouter()
 authRouter.get("/getAllUsers", AuthController.getUsers)
 authRouter.post("/getOneUser", AuthController.getUser)
 authRouter.delete("/deleteOneUser", AuthController.deleteUser)

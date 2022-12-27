@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react"
 import styled, { ThemeProvider } from "styled-components"
 import { Route, Routes } from "react-router-dom"
 import GlobalStyles from "./globalStyles/style"
@@ -9,10 +9,10 @@ import LoginFormTest from "./components/authForm/login/LoginForm"
 import RegistrationForm from "./components/authForm/registration/RegistrationForm"
 
 const AppWrapper = styled.div`
-  font-size: 25px;
-  font-family: "Montserrat", "monospace";
-  color: white;
   background: ${(props) => props.theme.mainBackground};
+  color: white;
+  font-family: "Montserrat", "monospace";
+  font-size: 25px;
   min-height: 100vh;
   overflow-x: hidden;
 `

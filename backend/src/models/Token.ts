@@ -1,4 +1,4 @@
-import { Schema, model, Types } from "mongoose"
+import { Schema, model } from "mongoose"
 import { inToken } from "../typing/Interfaces"
 const token = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: "User" },

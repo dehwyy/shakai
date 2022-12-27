@@ -1,75 +1,75 @@
-import styled, { ThemedStyledProps } from "styled-components"
+import styled from "styled-components"
 
 export const FormWrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
-  display: flex;
   align-items: center;
+  display: flex;
+  height: 100vh;
   justify-content: center;
+  width: 100vw;
 `
 
 export const FormCentered = styled.div`
-  width: 400px;
-  height: 375px;
-  padding: 10px 25px 50px;
-  border-radius: 10px;
   background: ${(props) => props.theme.blockBackground};
-  position: relative;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
+  height: 375px;
   justify-content: end;
+  padding: 10px 25px 50px;
+  position: relative;
+  width: 400px;
 `
 
 export const OptionsWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
   align-items: center;
+  display: flex;
+  height: 100%;
+  width: 100%;
 `
 
 export const Options = styled.div`
-  margin: 0 auto;
-  width: min-content;
-  display: flex;
   border: 2px solid white;
   border-radius: 5px;
-  padding: 6px 8px;
+  display: flex;
   gap: 5px;
+  margin: 0 auto;
+  padding: 6px 8px;
   user-select: none;
+  width: min-content;
 `
 
 export const OptionalText = styled.div`
-  user-select: none;
   font-size: 30px;
   font-weight: 600;
-  width: 100%;
-  text-align: center;
   justify-self: start;
+  text-align: center;
+  user-select: none;
+  width: 100%;
 `
 
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-top: -35px;
   min-height: 125px;
   position: relative;
   user-select: none;
-  margin-top: -35px;
 `
 
 export const FlexBlock = styled.div`
-  width: 98%;
   align-items: end;
   display: flex;
   justify-content: space-between;
+  width: 98%;
 `
 
 export const LoginOption = styled.div<{ readonly isChosen?: boolean }>`
-  padding: 15px 35px;
-  font-size: 20px;
   background: ${(props) =>
     !props.isChosen
       ? props.theme.lighterBlockBackground
       : props.theme.blueColor};
   border-radius: 5px;
+  font-size: 20px;
+  padding: 15px 35px;
 `

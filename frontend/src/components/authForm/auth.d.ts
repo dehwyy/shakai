@@ -1,15 +1,11 @@
 import { ChangeHandler, FieldErrors, RegisterOptions } from "react-hook-form"
-import { Ref } from "react"
+import { Ref, SyntheticEvent } from "react"
 
 interface AuthButtonProps {
   onClick: () => void
 }
 
-type TInputValues = {
-  [key: string]: any
-}
-
-interface InputProps<T extends TInputValues> {
+interface InputProps<T extends Record<string, string | number>> {
   register: (name: keyof T, options?: RegisterOptions<T>) => ReturnInputRegister
   errors: FieldErrors<TInputValues>
   name: string
@@ -21,13 +17,13 @@ interface InputProps<T extends TInputValues> {
 interface ReturnInputRegister {
   onChange: ChangeHandler
   onBlur: ChangeHandler
-  ref: Ref<any>
+  ref: Ref<HTMLFormElement>
   name: string
 }
 
 interface inLoginRef {
   reset: () => void
-  submit: (data: any) => void
+  submit: (data: SyntheticEvent) => void
 }
 
 interface inLoginForm {

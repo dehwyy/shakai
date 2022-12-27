@@ -23,6 +23,58 @@
       "jsx": true
     }
   },
-  "plugins": ["react", "@typescript-eslint", "prettier"],
-  "rules": {}
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "prettier",
+    "better-styled-components",
+    "@html-eslint",
+    "testing-library",
+    "import"
+  ],
+  "rules": {
+    "better-styled-components/sort-declarations-alphabetically": 2,
+    "import/no-unresolved": "error"
+  },
+  "overrides": [
+    {
+      "files": ["*.html"],
+      "parser": "@html-eslint/parser",
+      "extends": ["plugin:@html-eslint/recommended"]
+    },
+    {
+      "files": ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(test).[jt]s?(x)"],
+      "plugins": ["jest", "jest-async", "jest-formatting"],
+      "extends": [
+        "plugin:testing-library/react",
+        "plugin:jest/recommended",
+        "plugin:jest-formatting/recommended"
+      ],
+      "rules": {
+        "testing-library/no-render-in-setup": [
+          "error",
+          { "allowTestingFrameworkSetupHook": "beforeEach" }
+        ],
+        "jest/prefer-expect-assertions": "off",
+        "jest-async/expect-return": "error"
+      }
+    }
+  ],
+  "settings": {
+    "jest": {
+      "version": 29
+    },
+    "react": {
+      "version": "18"
+    },
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true
+      }
+    },
+    "project": "*/tsconfig.json"
+  }
 }

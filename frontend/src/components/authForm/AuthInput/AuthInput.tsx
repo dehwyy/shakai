@@ -1,6 +1,6 @@
-import React, { PropsWithChildren, useMemo } from "react"
-import { ErrorSpan } from "./AuthInput-style"
-import { AInput, AInputWrapper } from "./AuthInput-style"
+import * as React from "react"
+import { PropsWithChildren } from "react"
+import { ErrorSpan, AInput, AInputWrapper } from "./AuthInput-style"
 import { InputProps, TInputValues } from "../auth"
 
 function AuthInput<T extends TInputValues>({

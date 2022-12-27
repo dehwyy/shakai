@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react"
 import { PostsDivWrapper } from "./Posts-styled"
 import Post from "./Post"
 import { RANDOM_IMAGE } from "../../../img/profile"

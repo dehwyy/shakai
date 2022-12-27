@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import * as React from "react"
+import { useState } from "react"
 import { BACKGROUND_IMAGE, PROFILE_IMAGE } from "../../../img/profile"
 import Ico from "../../../UI/Ico"
 import {

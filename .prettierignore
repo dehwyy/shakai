@@ -3,3 +3,4 @@ frontend/__tests__
 *.config.*
 *.setup.*
 *.json
+*.html

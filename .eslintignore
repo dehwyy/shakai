@@ -1,0 +1,5 @@
+*.config.*
+*.setup.*
+*.json
+dist
+pnpm-lock.yaml

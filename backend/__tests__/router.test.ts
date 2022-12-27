@@ -35,7 +35,7 @@ class AuthTestingTools {
     expect(data).toEqual(["testEmail", "testUsername"])
   }
   static elemChecker(data: string[]) {
-    for (let elem of data) {
+    for (const elem of data) {
       expect(elem).toBeTruthy()
     }
   }
@@ -43,7 +43,8 @@ class AuthTestingTools {
 
 describe("CRD cycle", () => {
   beforeAll(() => mongoose.connect(db))
-  afterAll((done) => mongoose.disconnect(done))
+
+  afterAll(async () => await mongoose.disconnect())
 
   describe("create", () => {
     test("(simple) create", async () => {
@@ -58,6 +59,7 @@ describe("CRD cycle", () => {
       AuthTestingTools.userDataVerify([email, username]) // check if email & username are correct
       AuthTestingTools.elemChecker([accessToken, refreshToken]) // check whether access and refresh tokens exist
     })
+
     test("(error) create", async () => {
       const response = await request(app)
         .post("/users/reg")
@@ -67,6 +69,7 @@ describe("CRD cycle", () => {
       expect(statusCode).toBe(409) // expect status 409 - Conflict
     })
   })
+
   describe("read", () => {
     test("(simple) read", async () => {
       const response = await request(app)
@@ -82,6 +85,7 @@ describe("CRD cycle", () => {
       expect(refreshToken).toBe(AuthTestingTools.refreshToken) // check whether token, that we just received is same as token, that we received at creating of user
     })
   })
+
   describe("delete", () => {
     test("delete", async () => {
       const response = await request(app)

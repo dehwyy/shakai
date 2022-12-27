@@ -1,10 +1,5 @@
-import React, {
-  Component,
-  ComponentElement,
-  FC,
-  ReactElement,
-  ReactNode,
-} from "react"
+import * as React from "react"
+import { FC, ReactNode } from "react"
 
 interface inIco {
   children: ReactNode

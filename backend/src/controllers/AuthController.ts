@@ -1,8 +1,7 @@
 import AuthService from "../services/AuthService"
-import { inUser } from "../typing/Interfaces"
+import { inUser, inDataToLogin } from "../typing/Interfaces"
 import UserDto from "../dto/userdto"
 import { NextFunction, Response, Request } from "express"
-import { inDataToLogin } from "../typing/Interfaces"
 import { Types } from "mongoose"
 import TokenService from "../services/TokenService"
 
@@ -11,7 +10,7 @@ class AuthController {
     res.json(await AuthService.getAllUsers())
   }
   async deleteUser(
-    req: Request<{}, {}, { username: string }>,
+    req: Request<object, object, { username: string }>,
     res: Response,
     next: NextFunction,
   ) {
@@ -22,15 +21,21 @@ class AuthController {
       next(e)
     }
   }
-  async getUser(req: Request<{}, {}, { username: string }>, res: Response) {
+  async getUser(
+    req: Request<object, object, { username: string }>,
+    res: Response,
+  ) {
     res.json({ message: await AuthService.getOneUSer(req.body.username) })
   }
-  async getToken(req: Request<{}, {}, { id: Types.ObjectId }>, res: Response) {
+  async getToken(
+    req: Request<object, object, { id: Types.ObjectId }>,
+    res: Response,
+  ) {
     res.json({ token: await TokenService.getTokenById(req.body.id) })
   }
 
   async registration(
-    req: Request<{}, {}, inUser>,
+    req: Request<object, object, inUser>,
     res: Response,
     next: NextFunction,
   ) {
@@ -48,7 +53,7 @@ class AuthController {
   }
 
   async login(
-    req: Request<{}, {}, inDataToLogin>,
+    req: Request<object, object, inDataToLogin>,
     res: Response,
     next: NextFunction,
   ) {

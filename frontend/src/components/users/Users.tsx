@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react"
 import { UsersGrid, UsersWrapper } from "./Users-styles"
 import User from "./User/User"
 

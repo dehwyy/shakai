@@ -1,11 +1,10 @@
-import React, { RefObject, useMemo, useRef, useState } from "react"
+import * as React from "react"
+import { RefObject, useMemo, useRef } from "react"
 import {
   FlexBlock,
   FormCentered,
   FormWrapper,
-  LoginOption,
   OptionsWrapper,
-  Options,
   OptionalText,
 } from "../LoginForm-style"
 import AuthForm from "../AuthForm"

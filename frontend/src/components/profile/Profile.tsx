@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react"
 import { ProfileWrapper, PostsWrapper } from "./Profile-styles"
 import Posts from "./Posts/Posts"
 import UserInfo from "./userInfo/UserInfo"

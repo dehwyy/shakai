@@ -1,20 +1,20 @@
 import styled from "styled-components"
 export const NavbarWrapper = styled.div`
+  align-items: center;
+  background: ${(props) => props.theme.coloredBackground};
+  border-bottom: 1px solid white;
+  display: flex;
+  height: 60px;
   position: fixed;
   top: 0;
-  z-index: 3;
-  border-bottom: 1px solid white;
-  background: ${(props) => props.theme.coloredBackground};
-  height: 60px;
   width: 100vw;
-  display: flex;
-  align-items: center;
+  z-index: 3;
 `
 export const NavbarItem = styled.div`
   margin-right: 2vw;
-  user-select: none;
   position: relative;
   top: 5px;
+  user-select: none;
   &:hover {
     cursor: pointer;
   }

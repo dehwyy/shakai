@@ -1,12 +1,11 @@
-import express from "express"
+import express, { Express, json } from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser"
-import { Express } from "express"
 import authRouter from "./routers/AuthRouter"
 import errorMiddleware from "./middlewares/errorMiddleware"
 
 const app: Express = express()
-app.use(express.json())
+app.use(json())
 app.use(cors())
 app.use(cookieParser())
 app.use("/users", authRouter)

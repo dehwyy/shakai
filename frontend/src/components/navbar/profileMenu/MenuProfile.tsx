@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react"
 import { MenuBody, MenuItem, MenuWrapper } from "./MenuProfile-style"
 import Ico from "../../../UI/Ico"
 import { Link } from "react-router-dom"

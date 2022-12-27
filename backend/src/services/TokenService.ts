@@ -1,5 +1,5 @@
 import { inToken, inUserPublicData } from "../typing/Interfaces"
-import jwt from "jsonwebtoken"
+import * as jwt from "jsonwebtoken"
 import dotenv from "dotenv"
 import Token from "../models/Token"
 import { Types } from "mongoose"
@@ -19,7 +19,7 @@ class TokenService {
     })
     return {
       accessToken,
-      refreshToken,
+      newToken,
     }
   }
   async setRefreshToken(dto: inToken) {
