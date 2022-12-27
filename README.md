@@ -19,3 +19,5 @@
 - 25.12.2022(2) - made basic form using react-hook-form
 - 26.12.2022(UTC: 2:00) - made adaptive auth component system with react-hook-form + full-typescript
 - 26.12.2022(UTC: 10:00) - made login and registration forms, update tests from _.test.jsx to _.test.tsx, profile menu depends on accessToken(soon) in localStorage
+- 27.12.2022(UTC: 0:00) - set up prettier and very basics of eslint
+- 28.12.2022(UTC: 9:00) - configured eslint and prettier
