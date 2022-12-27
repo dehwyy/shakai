@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components"
 export const DetailedUserInfoWrapper = styled.div`
   margin: 25px auto 0;
   border-top: 1px solid white;
@@ -10,7 +10,7 @@ export const DetailedUserInfoWrapper = styled.div`
   & div {
     display: flex;
     padding: 0 0 20px 0;
-    & i{
+    & i {
       top: 0;
     }
   }

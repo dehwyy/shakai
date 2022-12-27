@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 export const UserWrapper = styled.div`
   border-radius: 10px;
-  background: ${props => props.theme.blockBackground};
+  background: ${(props) => props.theme.blockBackground};
 `
 
 export const BackgroundImg = styled.img`
@@ -41,7 +41,7 @@ export const InfoDescription = styled.div`
   padding: 10px 0 0 0;
   text-align: center;
   max-width: 100%;
-  &  i {
+  & i {
     top: 4px;
     left: 5px;
   }
@@ -59,13 +59,11 @@ export const InfoDescriptionFlex = styled.div`
     user-select: none;
   }
   &:hover {
-    cursor: pointer
+    cursor: pointer;
   }
   & span {
-    margin-left: 15px
+    margin-left: 15px;
   }
 `
 
-export const ShortDescription = styled(InfoDescription)`
-  
-`
+export const ShortDescription = styled(InfoDescription)``

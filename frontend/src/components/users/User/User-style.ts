@@ -1,9 +1,9 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 export const GridWrapper = styled.div`
   border-radius: 10px;
   padding: 15px 25px;
-  background: ${props => props.theme.blockBackground};
+  background: ${(props) => props.theme.blockBackground};
   text-align: end;
 `
 export const GridContent = styled.div`
@@ -50,4 +50,3 @@ export const GridButton = styled.button`
     cursor: pointer;
   }
 `
-

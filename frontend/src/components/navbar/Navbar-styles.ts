@@ -1,10 +1,10 @@
-import styled from "styled-components";
+import styled from "styled-components"
 export const NavbarWrapper = styled.div`
   position: fixed;
   top: 0;
   z-index: 3;
   border-bottom: 1px solid white;
-  background: ${props => props.theme.coloredBackground};
+  background: ${(props) => props.theme.coloredBackground};
   height: 60px;
   width: 100vw;
   display: flex;

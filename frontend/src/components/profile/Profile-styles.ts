@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 export const ProfileWrapper = styled.div`
   margin: 100px auto 0;
@@ -10,11 +10,7 @@ export const ProfileWrapper = styled.div`
   box-sizing: border-box;
   padding: 0 0 50px;
 `
-export const DivWrapper = styled.div`
-`
+export const DivWrapper = styled.div``
 export const PostsWrapper = styled(DivWrapper)`
-  background: ${props => props.theme.mainBackground};
+  background: ${(props) => props.theme.mainBackground};
 `
-
-
-

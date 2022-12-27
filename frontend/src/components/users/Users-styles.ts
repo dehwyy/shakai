@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 export const UsersWrapper = styled.div`
-  background: ${props => props.theme.mainBackground};
+  background: ${(props) => props.theme.mainBackground};
   min-height: 50vh;
 `
 
@@ -13,4 +13,3 @@ export const UsersGrid = styled.div`
   margin: 100px auto 0;
   grid-template-columns: 1fr 1fr;
 `
-

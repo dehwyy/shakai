@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled from "styled-components"
 export const PostsDivWrapper = styled.div`
   width: 90%;
-  margin: 0 auto; 
+  margin: 0 auto;
   padding-top: 50px;
 `
 

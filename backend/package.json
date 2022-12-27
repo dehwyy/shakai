@@ -4,6 +4,9 @@
   "description": "",
   "main": "dist/server.js",
   "type": "module",
+  "engines": {
+    "node": ">=15"
+  },
   "scripts": {
     "build": "tsc --watch",
     "dev": "nodemon  src/server.ts --port 1727",

@@ -1,4 +1,4 @@
-import styled, {ThemedStyledProps} from "styled-components";
+import styled, { ThemedStyledProps } from "styled-components"
 
 export const FormWrapper = styled.div`
   width: 100vw;
@@ -13,12 +13,12 @@ export const FormCentered = styled.div`
   height: 375px;
   padding: 10px 25px 50px;
   border-radius: 10px;
-  background: ${props => props.theme.blockBackground};
+  background: ${(props) => props.theme.blockBackground};
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: end;
-  `
+`
 
 export const OptionsWrapper = styled.div`
   width: 100%;
@@ -64,13 +64,12 @@ export const FlexBlock = styled.div`
   justify-content: space-between;
 `
 
-
-export const LoginOption = styled.div<{readonly isChosen?: boolean}>`
+export const LoginOption = styled.div<{ readonly isChosen?: boolean }>`
   padding: 15px 35px;
   font-size: 20px;
-  background: ${props => !props.isChosen ? props.theme.lighterBlockBackground : props.theme.blueColor};
+  background: ${(props) =>
+    !props.isChosen
+      ? props.theme.lighterBlockBackground
+      : props.theme.blueColor};
   border-radius: 5px;
 `
-
-
-

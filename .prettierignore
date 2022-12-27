@@ -1,0 +1,5 @@
+backend/__tests__
+frontend/__tests__
+*.config.*
+*.setup.*
+*.json
