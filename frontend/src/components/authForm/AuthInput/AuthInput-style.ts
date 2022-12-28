@@ -19,6 +19,7 @@ export const AInput = styled.input`
 export const AInputWrapper = styled.div`
   position: relative;
   width: 100%;
+  margin: 15px 0;
 `
 
 export const ErrorSpan = styled.span`

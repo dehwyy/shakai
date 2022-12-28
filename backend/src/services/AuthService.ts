@@ -1,9 +1,7 @@
 import User from "../models/User"
-import * as bcrypt from "bcryptjs"
-import { inDataToLogin } from "../typing/Interfaces"
+import bcrypt from "bcryptjs"
 import ErrorHandler from "../errors/ErrorHandler"
 import TokenService from "./TokenService"
-import Token from "../models/Token"
 
 class AuthService {
   async reg(email: string, username: string, password: string) {
@@ -20,32 +18,36 @@ class AuthService {
       email,
       username,
     })
-    return { user, tokens }
+    return { tokens, userId: user._id }
   }
-
-  async login(dto: inDataToLogin) {
-    const user = await this.isUserInDb(dto.email, dto.username)
+  async login(
+    email: string | undefined,
+    username: string | undefined,
+    password: string,
+  ) {
+    const user = await this.isUserInDb(email, username)
     if (!user) throw ErrorHandler.NotFound("User wasn't found")
-    const isPasswordEquals = bcrypt.compareSync(dto.password, user.password)
+    const isPasswordEquals = bcrypt.compareSync(password, user.password)
     if (!isPasswordEquals) throw ErrorHandler.Forbidden("Wrong password")
     const tokens = await TokenService.generateTokens({
       userId: user._id,
-      email: dto.email,
-      username: dto.username,
+      email: email,
+      username: username,
     })
-    return tokens
+    return {
+      user,
+      tokens,
+    }
   }
 
   async findUserByEmail(email: string | undefined) {
     if (!email) return
-    const user = await User.findOne({ email })
-    return user
+    return User.findOne({ email })
   }
 
   async findUserByUsername(username: string | undefined) {
     if (!username) return
-    const user = await User.findOne({ username })
-    return user
+    return User.findOne({ username })
   }
 
   async isUserInDb(email: string | undefined, username: string | undefined) {
@@ -56,21 +58,7 @@ class AuthService {
   }
 
   async getAllUsers() {
-    const users = await User.find()
-    return users
-  }
-  async getOneUSer(username: string) {
-    const user = await User.findOne({ username })
-    return user
-  }
-  async deleteUser(username: string) {
-    const user = await User.findOneAndDelete({ username })
-    if (!user) throw ErrorHandler.Unauthorized("no user with such username")
-    const refreshToken = await Token.findOneAndDelete({ userId: user._id })
-    return {
-      user,
-      refreshToken,
-    }
+    return User.find()
   }
 }
 

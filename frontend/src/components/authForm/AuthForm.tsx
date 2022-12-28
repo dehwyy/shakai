@@ -11,9 +11,18 @@ import AuthInput from "./AuthInput/AuthInput"
 import { Form } from "./LoginForm-style"
 import { inLoginForm, inLoginRef } from "./auth"
 import { useNavigate } from "react-router-dom"
+import regUser from "../../requests/regUser"
+
+interface regUserData {
+  username: string
+  email: string
+  password: string
+}
 
 const AuthForm = forwardRef<inLoginRef, inLoginForm>(
   ({ values, nextButtonNavigation }, ref) => {
+    const names = [...values.map((value) => value.name)] as const
+    type TValues = typeof names[number]
     const navigate = useNavigate()
     const {
       handleSubmit,
@@ -31,17 +40,16 @@ const AuthForm = forwardRef<inLoginRef, inLoginForm>(
         clearErrors()
       },
       submit: (e: SyntheticEvent) => {
-        handleSubmit((data) => {
-          console.log(data)
+        handleSubmit(async (data) => {
           reset()
+          const isSuccess = await regUser(data as regUserData)
           {
-            nextButtonNavigation && navigate(nextButtonNavigation)
+            isSuccess && nextButtonNavigation && navigate(nextButtonNavigation)
           }
         })(e)
       },
     }))
-    const names = [...values.map((value) => value.name)] as const
-    type TValues = typeof names[number]
+
     return (
       <Form ref={formRef}>
         {values.map((value, index) => {

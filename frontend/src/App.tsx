@@ -6,7 +6,7 @@ import Navbar from "./components/navbar/Navbar"
 import Profile from "./components/profile/Profile"
 import Users from "./components/users/Users"
 import LoginFormTest from "./components/authForm/login/LoginForm"
-import RegistrationForm from "./components/authForm/registration/RegistrationForm"
+import RegistrationForm from "./components/authForm/registration/RegistrationFormTemplate"
 
 const AppWrapper = styled.div`
   background: ${(props) => props.theme.mainBackground};

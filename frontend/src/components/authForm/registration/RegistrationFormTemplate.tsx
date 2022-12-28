@@ -12,20 +12,37 @@ import AuthSign from "../AuthSign/AuthSign"
 import AuthButton from "../AuthButton/AuthButton"
 import { RegisterOptions } from "react-hook-form"
 
-function LoginFormRouter() {
-  const ref = useRef<HTMLFormElement>() as RefObject<HTMLFormElement>
-  const data = useMemo(() => {
+const RegistrationTemplate = () => {
+  const ref3 = useRef<HTMLFormElement>() as RefObject<HTMLFormElement>
+  const data2 = useMemo(() => {
     return [
       {
-        name: "password",
+        name: "email",
         validation: {
-          required: "password is required",
           minLength: {
             value: 4,
             message: "Minimal length of password is 4",
           },
         } as RegisterOptions,
-        inputType: "password",
+      },
+      {
+        name: "username",
+        validation: {
+          maxLength: {
+            value: 14,
+            message: "Max length is 14 chars",
+          },
+        },
+      },
+      {
+        name: "password",
+        validation: {
+          maxLength: {
+            value: 14,
+            message: "Max length is 14 chars",
+          },
+        },
+        inputType: "current-password",
       },
     ]
   }, []) // redux soon
@@ -33,17 +50,17 @@ function LoginFormRouter() {
     <FormWrapper>
       <FormCentered>
         <OptionsWrapper>
-          <OptionalText>Login</OptionalText>
+          <OptionalText>Registration</OptionalText>
         </OptionsWrapper>
         <AuthForm
-          values={data}
-          ref={ref}
+          values={data2}
+          ref={ref3}
         />
         <FlexBlock>
           <AuthSign />
           <AuthButton
             onClick={() => {
-              ref.current?.submit()
+              ref3.current?.submit()
             }}
           />
         </FlexBlock>
@@ -52,4 +69,4 @@ function LoginFormRouter() {
   )
 }
 
-export default LoginFormRouter
+export default RegistrationTemplate

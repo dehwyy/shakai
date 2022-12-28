@@ -8,7 +8,7 @@ export const UsersWrapper = styled.div`
 export const UsersGrid = styled.div`
   display: grid;
   gap: 15px;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   margin: 100px auto 0;
   max-width: 95vw;
   width: 1200px;

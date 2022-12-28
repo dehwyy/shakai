@@ -17,7 +17,7 @@ interface InputProps<T extends Record<string, string | number>> {
 interface ReturnInputRegister {
   onChange: ChangeHandler
   onBlur: ChangeHandler
-  ref: Ref<HTMLFormElement>
+  ref: Ref<HTMLInputElement>
   name: string
 }
 

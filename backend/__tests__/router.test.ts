@@ -1,4 +1,4 @@
-import * as request from "supertest"
+import request from "supertest"
 import app from "../src/app"
 import mongoose from "mongoose"
 mongoose.set("strictQuery", false)

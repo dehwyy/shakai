@@ -1,52 +1,35 @@
 import AuthService from "../services/AuthService"
 import { inUser, inDataToLogin } from "../typing/Interfaces"
-import UserDto from "../dto/userdto"
 import { NextFunction, Response, Request } from "express"
-import { Types } from "mongoose"
-import TokenService from "../services/TokenService"
+import UserInfoService from "../services/UserInfoService"
+import { validationResult } from "express-validator"
+import ErrorHandler from "../errors/ErrorHandler"
 
 class AuthController {
   async getUsers(req: Request, res: Response) {
     res.json(await AuthService.getAllUsers())
   }
-  async deleteUser(
-    req: Request<object, object, { username: string }>,
-    res: Response,
-    next: NextFunction,
-  ) {
-    try {
-      const userWithTokens = await AuthService.deleteUser(req.body.username)
-      res.json({ message: "success in delete", userWithTokens })
-    } catch (e) {
-      next(e)
-    }
-  }
-  async getUser(
-    req: Request<object, object, { username: string }>,
-    res: Response,
-  ) {
-    res.json({ message: await AuthService.getOneUSer(req.body.username) })
-  }
-  async getToken(
-    req: Request<object, object, { id: Types.ObjectId }>,
-    res: Response,
-  ) {
-    res.json({ token: await TokenService.getTokenById(req.body.id) })
-  }
-
   async registration(
     req: Request<object, object, inUser>,
     res: Response,
     next: NextFunction,
   ) {
     try {
+      const errors = validationResult(req)
+      if (!errors.isEmpty()) {
+        next(ErrorHandler.BadRequest("max length of username is 14"))
+      }
       const { email, username, password } = req.body
       const data = await AuthService.reg(email, username, password)
+      await UserInfoService.createUserInfo(data.userId)
       res.cookie("refreshToken", data.tokens.refreshToken, {
         maxAge: 24 * 60 * 60 * 1000,
         httpOnly: true,
       })
-      res.json({ message: "success in reg", data })
+      res.json({
+        message: "success in reg",
+        accessToken: data.tokens.accessToken,
+      })
     } catch (e) {
       next(e)
     }
@@ -58,13 +41,13 @@ class AuthController {
     next: NextFunction,
   ) {
     try {
-      const userDto = UserDto.getUserData(req)
-      const tokens = await AuthService.login(userDto)
-      res.cookie("refreshToken", tokens.refreshToken, {
+      const { email, username, password } = req.body
+      const data = await AuthService.login(email, username, password)
+      res.cookie("refreshToken", data.tokens.refreshToken, {
         maxAge: 24 * 60 * 60 * 1000,
         httpOnly: true,
       })
-      res.json({ message: "success in login", tokens })
+      res.json({ message: "success in login", data })
     } catch (e) {
       next(e)
     }

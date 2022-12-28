@@ -23,7 +23,10 @@ export const FormCentered = styled.div`
 export const OptionsWrapper = styled.div`
   align-items: center;
   display: flex;
-  height: 100%;
+  left: 50%;
+  position: absolute;
+  top: 15px;
+  transform: translateX(-50%);
   width: 100%;
 `
 
@@ -50,9 +53,9 @@ export const OptionalText = styled.div`
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
+  height: 65%;
   justify-content: center;
-  margin-top: -35px;
-  min-height: 125px;
+  margin-bottom: 15px;
   position: relative;
   user-select: none;
 `

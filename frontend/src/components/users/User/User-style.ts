@@ -15,38 +15,51 @@ export const GridContent = styled.div`
 export const ImgDiv = styled.div`
   background: white;
   border-radius: 50%;
-  height: 50px;
-  width: 50px;
+  max-height: 100px;
+  max-width: 100px;
+  min-height: 100px;
+  min-width: 100px;
+  overflow: hidden;
   & img {
+    border-radius: 50%;
     max-height: 100%;
-    max-width: 100%;
+    object-fit: cover;
+    object-position: 0 0;
+    width: 100%;
   }
 `
 
 export const ContentDiv = styled.div`
-  padding-left: 10px;
+  padding-bottom: 15px;
+  padding-left: 15px;
+  text-align: center;
 `
 
 export const UsernameWrapper = styled.div`
   border-bottom: 2px solid white;
-  font-size: 18px;
+  font-size: 30px;
+  min-width: 120px;
 `
 
 export const InfoWrapper = styled.div`
-  font-size: 15px;
   & i {
     top: 6px;
   }
 `
 
+export const LocationSpan = styled.span`
+  font-size: 18px;
+`
+
 export const GridButton = styled.button`
-  background: dodgerblue;
+  background: ${(props) => props.theme.blueColor};
   border-radius: 7px;
   color: white;
   font-family: "Montserrat", monospace;
   font-size: 20px;
   padding: 5px 15px;
   &:hover {
+    background: ${(props) => props.theme.darkerBlueColor};
     cursor: pointer;
   }
 `

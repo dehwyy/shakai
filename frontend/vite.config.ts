@@ -1,12 +1,8 @@
 import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
-import {ViteMinifyPlugin} from "vite-plugin-minify"
-import babelPlugin from "vite-plugin-babel"
-
+import { chunkSplitPlugin } from "vite-plugin-chunk-split"
 export default defineConfig({
-  plugins: [react(), ViteMinifyPlugin({}), babelPlugin({
-    filter: /\.[tj]sx?$/
-  })],
+  plugins: [react(), chunkSplitPlugin({ strategy: "default" })],
   server: {
     port: 1727,
   },
