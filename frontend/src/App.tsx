@@ -6,6 +6,10 @@ import Navbar from "./components/navbar/Navbar"
 import Profile from "./components/profile/Profile"
 import Users from "./components/users/Users"
 import Login from "./components/newAuthForm/Login"
+import Registration from "./components/newAuthForm/Registration"
+import { useEffect } from "react"
+import { useTypedDispatch, useTypedSelector } from "./store/typed-hooks"
+import { setAuth } from "./store/slices/currentUser-store"
 
 const AppWrapper = styled.div`
   background: ${props => props.theme.mainBackground};
@@ -29,13 +33,20 @@ const darkTheme = {
 }
 
 const App = () => {
+  const dispatch = useTypedDispatch()
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken")
+    if (accessToken) {
+      dispatch({ type: setAuth, payload: true })
+    }
+  }, [])
   return (
     <ThemeProvider theme={darkTheme}>
       <GlobalStyles />
       <AppWrapper>
         <Routes>
           <Route path={"*"} element={<Login />} />
-          <Route path={"registration"} element={<Login />} />
+          <Route path={"registration"} element={<Registration />} />
           <Route path={"content"}>
             <Route
               path={"profile"}

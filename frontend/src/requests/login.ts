@@ -1,4 +1,5 @@
 import $api from "./httpAxios"
+import Login from "../components/newAuthForm/Login"
 
 interface inSubmitLoginData {
   username?: string

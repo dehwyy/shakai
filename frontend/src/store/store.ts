@@ -8,6 +8,11 @@ const store = configureStore({
     FormStore,
     CurrentUserStore,
   },
+  middleware: getDefaultMiddleware => {
+    return getDefaultMiddleware({
+      serializableCheck: { isSerializable: () => true },
+    })
+  },
 })
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch

@@ -18,6 +18,10 @@ import usernameValidation from "./validation/usernameValidation"
 import { useNavigate } from "react-router-dom"
 import Ico from "../../UI/Ico"
 import login from "../../requests/login"
+import { setAuth } from "../../store/slices/currentUser-store"
+import { useTypedDispatch } from "../../store/typed-hooks"
+import passwordValidation from "./validation/passwordValidation"
+import emailValidation from "./validation/emailValidation"
 
 interface inSubmitLoginData {
   username?: string
@@ -37,13 +41,16 @@ const LoginFormRouter = () => {
   const [username, setUsername] = useState("")
   const [passwordError, setPasswordError] = useState<string>("")
   const navigate = useNavigate()
+  const dispatch = useTypedDispatch()
   const formRef = useRef<HTMLFormElement>(null)
 
   const submitHandler = async (data: inSubmitLoginData) => {
     const response = await login({ ...data, email, username }).catch(() => {
       setPasswordError(`Wrong password or ${methodOfAuth}!`)
     })
-    response && navigate("content")
+    response &&
+      dispatch({ type: setAuth, payload: true }) &&
+      navigate("content/profile")
     reset()
   }
   const buttonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -92,7 +99,8 @@ const LoginFormRouter = () => {
             <AInputWrapper>
               <AInput
                 placeholder="password"
-                {...register("password", usernameValidation)}
+                type="password"
+                {...register("password", { ...passwordValidation })}
                 onFocus={() => setPasswordError("")}
               />
               <ErrorSpan>{passwordError}</ErrorSpan>
@@ -111,7 +119,7 @@ const LoginFormRouter = () => {
             <AInputWrapper>
               <AInput
                 placeholder="email"
-                {...register("email", usernameValidation)}
+                {...register("email", emailValidation)}
               />
               {errors.email && (
                 <ErrorSpan>{errors.email.message as string}</ErrorSpan>
@@ -123,14 +131,15 @@ const LoginFormRouter = () => {
               <Sign
                 onClick={() => {
                   setReadyForSubmit(false)
+                  setPasswordError("")
                   reset()
                 }}>
                 <Ico>arrow_back</Ico> Get back
               </Sign>
             ) : (
               <Sign onClick={() => navigate("registration")}>
-                Already have an account? <br />
-                Login now !
+                Don&apos;t have account? <br />
+                Register now!
               </Sign>
             )}
             {isReadyForSubmit ? (

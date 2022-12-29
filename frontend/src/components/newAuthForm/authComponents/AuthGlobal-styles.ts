@@ -53,7 +53,7 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: start;
-  margin-top: 75px;
+  margin-top: 25px;
   user-select: none;
 `
 
