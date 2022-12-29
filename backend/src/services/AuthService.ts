@@ -18,7 +18,7 @@ class AuthService {
       email,
       username,
     })
-    return { tokens, userId: user._id }
+    return { tokens, userId: user._id, username }
   }
   async login(
     email: string | undefined,

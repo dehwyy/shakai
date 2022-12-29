@@ -9,12 +9,12 @@ export const FormWrapper = styled.div`
 `
 
 export const FormCentered = styled.div`
-  background: ${(props) => props.theme.blockBackground};
+  background: ${props => props.theme.blockBackground};
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   height: 375px;
-  justify-content: end;
+  justify-content: center;
   padding: 10px 25px 50px;
   position: relative;
   width: 400px;
@@ -25,7 +25,7 @@ export const OptionsWrapper = styled.div`
   display: flex;
   left: 50%;
   position: absolute;
-  top: 15px;
+  top: 25px;
   transform: translateX(-50%);
   width: 100%;
 `
@@ -44,7 +44,6 @@ export const Options = styled.div`
 export const OptionalText = styled.div`
   font-size: 30px;
   font-weight: 600;
-  justify-self: start;
   text-align: center;
   user-select: none;
   width: 100%;
@@ -53,26 +52,29 @@ export const OptionalText = styled.div`
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
-  height: 65%;
-  justify-content: center;
-  margin-bottom: 15px;
-  position: relative;
+  justify-content: start;
+  margin-top: 75px;
   user-select: none;
 `
 
 export const FlexBlock = styled.div`
-  align-items: end;
+  bottom: 25px;
   display: flex;
   justify-content: space-between;
-  width: 98%;
+  margin-top: 25px;
+  position: absolute;
+  width: 392px;
 `
 
 export const LoginOption = styled.div<{ readonly isChosen?: boolean }>`
-  background: ${(props) =>
+  background: ${props =>
     !props.isChosen
       ? props.theme.lighterBlockBackground
       : props.theme.blueColor};
   border-radius: 5px;
   font-size: 20px;
   padding: 15px 35px;
+  &:hover {
+    cursor: pointer;
+  }
 `

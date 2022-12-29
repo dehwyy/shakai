@@ -4,6 +4,7 @@ import { NextFunction, Response, Request } from "express"
 import UserInfoService from "../services/UserInfoService"
 import { validationResult } from "express-validator"
 import ErrorHandler from "../errors/ErrorHandler"
+import tokenService from "../services/TokenService"
 
 class AuthController {
   async getUsers(req: Request, res: Response) {
@@ -48,6 +49,16 @@ class AuthController {
         httpOnly: true,
       })
       res.json({ message: "success in login", data })
+    } catch (e) {
+      next(e)
+    }
+  }
+  async logout(req: Request, res: Response, next: NextFunction) {
+    try {
+      await tokenService.removeToken(req.cookies.refreshToken)
+      res.clearCookie("refreshToken")
+      console.log("refreshToken")
+      res.sendStatus(200)
     } catch (e) {
       next(e)
     }

@@ -2,6 +2,7 @@ import { inToken, inUserPublicData } from "../typing/Interfaces"
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
 import Token from "../models/Token"
+import { Types } from "mongoose"
 
 dotenv.config()
 
@@ -43,6 +44,10 @@ class TokenService {
   }
   async findToken(token: string) {
     return Token.findOne({ token })
+  }
+
+  async removeToken(refreshToken: string) {
+    return Token.deleteOne({ refreshToken })
   }
 }
 

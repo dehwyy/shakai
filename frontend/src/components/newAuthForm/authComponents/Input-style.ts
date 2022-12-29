@@ -1,17 +1,17 @@
 import styled from "styled-components"
 
 export const AInput = styled.input`
-  background: ${(props) => props.theme.mainBackground};
-  border: 1px solid ${(props) => props.theme.mainBackground};
+  background: ${props => props.theme.mainBackground};
+  border: 1px solid ${props => props.theme.mainBackground};
   border-radius: 5px;
   box-sizing: border-box;
-  color: ${(props) => props.theme.fontColor};
+  color: ${props => props.theme.fontColor};
   font-size: 25px;
   padding: 10px 25px;
   position: relative;
   width: 100%;
   &:focus {
-    border: 1px solid ${(props) => props.theme.blueColor};
+    border: 1px solid ${props => props.theme.blueColor};
     outline: none;
   }
 `
@@ -28,6 +28,5 @@ export const ErrorSpan = styled.span`
   font-size: 14px;
   left: 5px;
   position: absolute;
-  text-transform: capitalize;
   width: 100%;
 `

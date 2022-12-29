@@ -5,11 +5,10 @@ import GlobalStyles from "./globalStyles/style"
 import Navbar from "./components/navbar/Navbar"
 import Profile from "./components/profile/Profile"
 import Users from "./components/users/Users"
-import LoginFormTest from "./components/authForm/login/LoginForm"
-import RegistrationForm from "./components/authForm/registration/RegistrationFormTemplate"
+import Login from "./components/newAuthForm/Login"
 
 const AppWrapper = styled.div`
-  background: ${(props) => props.theme.mainBackground};
+  background: ${props => props.theme.mainBackground};
   color: white;
   font-family: "Montserrat", "monospace";
   font-size: 25px;
@@ -35,14 +34,8 @@ const App = () => {
       <GlobalStyles />
       <AppWrapper>
         <Routes>
-          <Route
-            path={"*"}
-            element={<LoginFormTest />}
-          />
-          <Route
-            path={"registration"}
-            element={<RegistrationForm />}
-          />
+          <Route path={"*"} element={<Login />} />
+          <Route path={"registration"} element={<Login />} />
           <Route path={"content"}>
             <Route
               path={"profile"}

@@ -7,7 +7,7 @@ const formState = {
 }
 
 const formStore = createSlice({
-  name: "formStore",
+  name: "loginFormStore",
   initialState: { formState },
   reducers: {
     updateUsername: (state, action: PayloadAction<string>) => {
@@ -17,11 +17,14 @@ const formStore = createSlice({
       state.formState.username = action.payload
     },
     resetFormState: (state) => {
-      console.log(state, "form was reset")
-      state.formState = { ...formState }
+      state.formState = {
+        username: "",
+        email: "",
+        password: "",
+      }
     },
   },
 })
 
-export const { resetFormState } = formStore.actions
+export const { updateUsername, updateEmail, resetFormState } = formStore.actions
 export default formStore.reducer

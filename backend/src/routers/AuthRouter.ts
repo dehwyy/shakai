@@ -12,5 +12,6 @@ authRouter.post(
   AuthController.registration,
 )
 authRouter.post("/login", AuthController.login)
+authRouter.delete("/logout", AuthController.logout)
 
 export default authRouter

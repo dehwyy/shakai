@@ -2,11 +2,13 @@ import * as React from "react"
 import { MenuBody, MenuItem, MenuWrapper } from "./MenuProfile-style"
 import Ico from "../../../UI/Ico"
 import { Link } from "react-router-dom"
+import logout from "../../../requests/logout"
+import { useTypedSelector } from "../../../store/typed-hooks"
 
 const MenuProfile = () => {
-  const accessToken = localStorage.getItem("accessToken")
-  const linkTo = accessToken ? "/content/profile" : "/"
-  const profileText = accessToken ? "Profile" : "Authorization"
+  const isAuth = useTypedSelector((state) => state.CurrentUserStore.user.isAuth)
+  const linkTo = isAuth ? "/content/profile" : "/"
+  const profileText = isAuth ? "Profile" : "Authorization"
   return (
     <MenuWrapper>
       <MenuBody>
@@ -23,8 +25,8 @@ const MenuProfile = () => {
           <Ico> settings </Ico>
           Settings
         </MenuItem>
-        {accessToken && (
-          <MenuItem>
+        {isAuth && (
+          <MenuItem onClick={() => logout()}>
             <Ico> exit_to_app </Ico>
             Log out
           </MenuItem>

@@ -12,7 +12,8 @@ export default (
   next: NextFunction,
 ) => {
   if (error instanceof ErrorHandler) {
-    res.json({ statusCode: error.statusCode, message: error.message })
+    //prettier-ignore
+    res.status(error.statusCode).json({ statusCode: error.statusCode, message: error.message })
   } else {
     res.json({ statusCode: 500, message: "server(I guess) error" })
   }
