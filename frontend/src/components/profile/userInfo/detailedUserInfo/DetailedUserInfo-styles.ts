@@ -6,10 +6,13 @@ export const DetailedUserInfoWrapper = styled.div`
   justify-content: flex-start;
   margin: 25px auto 0;
   padding-top: 10px;
-  width: 450px;
+  width: 70%;
   & div {
     display: flex;
-    padding: 0 0 20px 0;
+    margin: 5px 0;
+    border: 1px solid gray;
+    padding: 20px 0 20px 5px;
+    border-radius: 5px;
     & i {
       top: 0;
     }

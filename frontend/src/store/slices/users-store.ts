@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-interface user {
+export interface user {
   id: string
   email: string
   username: string
@@ -17,45 +17,28 @@ interface user {
   favouriteGames?: string
   friends?: string[]
 }
-const usersState = {
-  users: [
-    {
-      id: "63aba779a16790341e47d35b",
-      username: "stepan",
-      location: "usa",
-      profileImg: "https://i.redd.it/lznaqsx973b41.jpg",
-    },
-    {
-      id: "63aba779a16790341e47d35b",
-      username: "12345678901234",
-      location: "russia",
-      profileImg: "https://i.redd.it/lznaqsx973b41.jpg",
-    },
-    {
-      id: "63aba779a16790341e47d35b",
-      username: "dehwyy",
-      location: "jp",
-      profileImg: "https://i.redd.it/lznaqsx973b41.jpg",
-    },
-    {
-      id: "63aba779a16790341e47d35b",
-      username: "dehwyy",
-      location: "かわち野高等学校 (Kawachino High School",
-      profileImg: "https://i.redd.it/lznaqsx973b41.jpg",
-    },
-  ],
-} as {
-  users: user[]
-}
+type userAdd = Omit<user, "email" | "username">
+const users = [] as user[]
+
 const usersStore = createSlice({
   name: "usersStore",
-  initialState: usersState,
+  initialState: { users },
   reducers: {
-    uploadUsers: (state, action) => {
-      state.users = action.payload
+    uploadUser: (state, action: PayloadAction<user>) => {
+      if (!state.users.find(user => user.id === action.payload.id)) {
+        state.users.push(action.payload)
+      }
+    },
+    updateUserInfo: (state, action: PayloadAction<userAdd>) => {
+      console.log(action.payload.id, state.users[0])
+      const idx = state.users.findIndex(user => user.id === action.payload.id)
+      console.log(idx)
+      if (~idx) {
+        state.users[idx] = { ...state.users[idx], ...action.payload }
+      }
     },
   },
 })
 
-export const { uploadUsers } = usersStore.actions
+export const { uploadUser, updateUserInfo } = usersStore.actions
 export default usersStore.reducer

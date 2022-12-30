@@ -49,7 +49,7 @@ const App = () => {
           <Route path={"registration"} element={<Registration />} />
           <Route path={"content"}>
             <Route
-              path={"profile"}
+              path={"profile/:id"}
               element={
                 <>
                   <Navbar />
@@ -58,7 +58,7 @@ const App = () => {
               }
             />
             <Route
-              path={"users"}
+              path={"users:id"}
               element={
                 <>
                   <Navbar />

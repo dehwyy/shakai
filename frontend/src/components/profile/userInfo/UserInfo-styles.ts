@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 export const UserWrapper = styled.div`
-  background: ${(props) => props.theme.blockBackground};
+  background: ${props => props.theme.blockBackground};
   border-radius: 10px;
 `
 
@@ -19,21 +19,20 @@ export const BackgroundImg = styled.img`
 `
 
 export const ImgDiv = styled.div`
-  border-radius: 50%;
   height: 200px;
   margin: 0 auto;
   padding: 100px 0 25px 0;
   position: relative;
-  width: max-content;
+  width: 200px;
   z-index: 2;
 `
 
 export const Img = styled.img`
   background: #222222;
   border-radius: 50%;
-  max-height: 100%;
-  max-width: 100%;
-  object-fit: contain;
+  height: 200px;
+  object-fit: cover;
+  width: 200px;
 `
 
 export const InfoDescription = styled.div`

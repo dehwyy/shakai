@@ -16,7 +16,11 @@ import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import regUser from "../../requests/regUser"
 import { useTypedDispatch } from "../../store/typed-hooks"
-import { setAuth } from "../../store/slices/currentUser-store"
+import {
+  setAuth,
+  setUserId,
+  setUsername,
+} from "../../store/slices/currentUser-store"
 import emailValidation from "./validation/emailValidation"
 import usernameValidation from "./validation/usernameValidation"
 import passwordValidation from "./validation/passwordValidation"
@@ -29,16 +33,19 @@ interface inDataForm {
 
 const Registration = () => {
   //prettier-ignore
-  const {register, formState: {errors, isValid}, reset, handleSubmit, getValues} = useForm({
+  const {register, formState: {errors, isValid}, reset, handleSubmit, getValues} = useForm<inDataForm>({
     mode: "onBlur",
   })
   const navigate = useNavigate()
   const dispatch = useTypedDispatch()
   const submitHandler = async (data: inDataForm) => {
     const response = await regUser(data)
-    response &&
-      dispatch({ type: setAuth, payload: true }) &&
-      navigate("/content/profile")
+    if (response) {
+      dispatch({ type: setAuth, payload: true })
+      dispatch({ type: setUsername, payload: response.username })
+      dispatch({ type: setUserId, payload: response.userId })
+      navigate(`/content/profile/${response.userId}`)
+    }
     reset()
   }
   const required = { required: { value: true, message: "field is required" } }

@@ -1,4 +1,5 @@
 import sendRegistration from "./sendRegistration"
+import { AxiosResponse } from "axios"
 
 interface inDataForm {
   username: string
@@ -6,10 +7,10 @@ interface inDataForm {
   password: string
 }
 
-const regUser = async (data: inDataForm): Promise<boolean> => {
+const regUser = async (data: inDataForm): Promise<any> => {
   const response = await sendRegistration(data)
   localStorage.setItem("accessToken", response.data.accessToken)
-  return Boolean(response.data.accessToken)
+  return response.data
 }
 
 export default regUser

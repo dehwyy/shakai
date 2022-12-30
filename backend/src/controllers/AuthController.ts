@@ -29,6 +29,8 @@ class AuthController {
       })
       res.json({
         message: "success in reg",
+        userId: data.userId,
+        username,
         accessToken: data.tokens.accessToken,
       })
     } catch (e) {
