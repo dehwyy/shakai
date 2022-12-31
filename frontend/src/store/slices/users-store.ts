@@ -30,9 +30,7 @@ const usersStore = createSlice({
       }
     },
     updateUserInfo: (state, action: PayloadAction<userAdd>) => {
-      console.log(action.payload.id, state.users[0])
       const idx = state.users.findIndex(user => user.id === action.payload.id)
-      console.log(idx)
       if (~idx) {
         state.users[idx] = { ...state.users[idx], ...action.payload }
       }

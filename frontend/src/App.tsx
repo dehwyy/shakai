@@ -1,6 +1,6 @@
 import * as React from "react"
 import styled, { ThemeProvider } from "styled-components"
-import { Route, Routes } from "react-router-dom"
+import { Navigate, Route, Routes } from "react-router-dom"
 import GlobalStyles from "./globalStyles/style"
 import Navbar from "./components/navbar/Navbar"
 import Profile from "./components/profile/Profile"
@@ -10,6 +10,7 @@ import Registration from "./components/newAuthForm/Registration"
 import { useEffect } from "react"
 import { useTypedDispatch, useTypedSelector } from "./store/typed-hooks"
 import { setAuth } from "./store/slices/currentUser-store"
+import Redirect from "./components/Redirect"
 
 const AppWrapper = styled.div`
   background: ${props => props.theme.mainBackground};
@@ -30,6 +31,7 @@ const darkTheme = {
   darkerBlueColor: "#32509b",
   lighterBlueColor: "#4672d7",
   fontColor: "white",
+  greenColor: "#4CAF50",
 }
 
 const App = () => {
@@ -58,7 +60,7 @@ const App = () => {
               }
             />
             <Route
-              path={"users:id"}
+              path={"users/:id"}
               element={
                 <>
                   <Navbar />
@@ -66,6 +68,7 @@ const App = () => {
                 </>
               }
             />
+            <Route path={"redirect/:id"} element={<Redirect url={"/content/profile/"} />} />
           </Route>
         </Routes>
       </AppWrapper>

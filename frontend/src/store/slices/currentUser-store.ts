@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 const user = {
-  username: "username123",
+  username: "",
   isAuth: false,
   userId: "",
 }

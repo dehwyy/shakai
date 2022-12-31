@@ -1,95 +1,61 @@
 import * as React from "react"
-import { FC } from "react"
+import { FC, useState } from "react"
 import Ico from "../../../../UI/Ico"
+import { Simulate } from "react-dom/test-utils"
+import submit = Simulate.submit
+import { useParams } from "react-router-dom"
+import updateUserInfo from "../../../../requests/updateUserInfo"
 
-const Education: FC<{ education: string }> = ({ education }) => {
-  return (
-    <div>
-      <Ico ExtraComponent={() => <span>Education:</span>}>school</Ico>
-      <span>{education}</span>
-    </div>
-  )
+const clickHandler = async (
+  id: string,
+  newFieldData: { field: string; fieldNewValue: string },
+  resetInitValue: (arg: string) => void,
+  setEditMode: (arg: boolean) => void,
+) => {
+  const response = await updateUserInfo(id, [newFieldData])
+  if (response) {
+    resetInitValue(newFieldData.fieldNewValue)
+    setEditMode(false)
+  } else {
+    console.log("ERROR")
+  }
 }
 
-const Friends: FC<{ friends: string[] }> = ({ friends }) => {
-  return (
-    <div>
-      <Ico ExtraComponent={() => <span>Friends:</span>}>group</Ico>
-      <span>{"There should be several friends' icons"}</span>
-    </div>
-  )
-}
-const DateOfBirth: FC<{ dateOfBirth: string }> = ({ dateOfBirth }) => {
-  return (
-    <div>
-      <Ico ExtraComponent={() => <span>Birthday:</span>}>cake</Ico>
-      <span>{dateOfBirth}</span>
-    </div>
-  )
+interface inInfoTemplate {
+  param: string
+  paramString: string
+  isEdit: boolean
+  ico: string
+  customText?: string | null
 }
 
-const Interests: FC<{ interests: string }> = ({ interests }) => {
+export const InfoTemplate: FC<inInfoTemplate> = ({ param, paramString, isEdit, ico, customText = null }) => {
+  const [initValue, resetInitValue] = useState<string>(param)
+  const [inputValue, setInputValue] = useState<string>(initValue)
+  const [isEditMode, setEditMode] = useState(false)
+  const { id } = useParams()
+  const capitalizedText = customText || paramString.charAt(0).toUpperCase() + paramString.slice(1)
   return (
     <div>
-      <Ico ExtraComponent={() => <span>Friends:</span>}>group</Ico>
-      <span>{"There should be several friends' icons"}</span>
+      <Ico ExtraComponent={() => <span>{capitalizedText}:</span>}>{ico}</Ico>
+      {!isEditMode ? (
+        <>
+          <span>{initValue}</span>
+          {isEdit && <Ico eventListener={() => setEditMode(true)}>create</Ico>}
+        </>
+      ) : (
+        <>
+          <input value={inputValue} onChange={e => setInputValue(e.target.value)} />
+        </>
+      )}
+      {initValue !== inputValue && id && (
+        <button
+          onClick={() =>
+            clickHandler(id, { field: paramString, fieldNewValue: inputValue }, resetInitValue, setEditMode)
+          }>
+          submit
+        </button>
+      )}
     </div>
   )
-}
-
-const Activity: FC<{ activity: string }> = ({ activity }) => {
-  return (
-    <div>
-      <Ico ExtraComponent={() => <span>Friends:</span>}>group</Ico>
-      <span>{"There should be several friends' icons"}</span>
-    </div>
-  )
-}
-
-const FavouriteBooks: FC<{ favouriteBooks: string }> = ({ favouriteBooks }) => {
-  return (
-    <div>
-      <Ico ExtraComponent={() => <span>Favourite books:</span>}>bookmark</Ico>
-      <span>{favouriteBooks}</span>
-    </div>
-  )
-}
-
-const FavouriteMusic: FC<{ favouriteMusic: string }> = ({ favouriteMusic }) => {
-  return (
-    <div>
-      <Ico ExtraComponent={() => <span>Favourite music:</span>}>library_music</Ico>
-      <span>{favouriteMusic}</span>
-    </div>
-  )
-}
-
-const FavouriteGames: FC<{ favouriteGames: string }> = ({ favouriteGames }) => {
-  return (
-    <div>
-      <Ico ExtraComponent={() => <span>Favourite games:</span>}>videogame_asset</Ico>
-      <span>{favouriteGames}</span>
-    </div>
-  )
-}
-
-const Info: FC<{ info: string }> = ({ info }) => {
-  return (
-    <div>
-      <Ico ExtraComponent={() => <span>Info:</span>}>assignment_ind</Ico>
-      <span>{info}</span>
-    </div>
-  )
-}
-
-export {
-  Education, //
-  Friends, //
-  Info,
-  FavouriteBooks, //
-  FavouriteGames, //
-  FavouriteMusic,
-  Activity,
-  DateOfBirth, //
-  Interests,
 }

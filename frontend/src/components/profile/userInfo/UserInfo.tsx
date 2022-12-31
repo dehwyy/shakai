@@ -17,20 +17,15 @@ import { useTypedDispatch, useTypedSelector } from "../../../store/typed-hooks"
 import getUser from "../../../requests/getUser"
 import getUserFullInfo from "../../../requests/getUserFullInfo"
 import { useParams } from "react-router-dom"
-import {
-  updateUserInfo,
-  uploadUser,
-  user,
-} from "../../../store/slices/users-store"
-import { getFileInfo } from "prettier"
+import { updateUserInfo, uploadUser, user } from "../../../store/slices/users-store"
+
 const ResponseUserInfo = () => {
   const [isOpen, setOpen] = useState(false)
   const [user, setUser] = useState<user>()
   const dispatch = useTypedDispatch()
   const { id } = useParams()
-  const userFromState = useTypedSelector(state =>
-    state.UsersStore.users.find(user => id === user.id),
-  )
+  const [newId, setNewId] = useState(id)
+  const userFromState = useTypedSelector(state => state.UsersStore.users.find(user => newId === user.id))
   if (userFromState && userFromState !== user) {
     setUser(userFromState)
   }
@@ -38,7 +33,6 @@ const ResponseUserInfo = () => {
     if (id && !user) {
       getUser(id)
         .then(res => {
-          console.log(res.data._id)
           dispatch({
             type: uploadUser,
             payload: {
@@ -62,6 +56,8 @@ const ResponseUserInfo = () => {
             dispatch({ type: updateUserInfo, payload: { ...res.data, id } })
           })
         })
+    } else if (id !== newId) {
+      setNewId(id)
     }
   }, [])
   return (
@@ -69,7 +65,7 @@ const ResponseUserInfo = () => {
       <DivWrapper>
         <BackgroundImg src={BACKGROUND_IMAGE} alt="Background" />
         <ImgDiv>
-          <Img src={user?.profileImg} alt="Profile"></Img>
+          <Img src={user?.profileImg || PROFILE_IMAGE} alt="Profile"></Img>
         </ImgDiv>
       </DivWrapper>
       <DivWrapper>
@@ -80,9 +76,7 @@ const ResponseUserInfo = () => {
               <Ico>place</Ico>
               <span>{user?.location}</span>
             </div>
-            <div
-              onClick={() => setOpen(prev => !prev)}
-              data-testid="moreInfoBtn">
+            <div onClick={() => setOpen(prev => !prev)} data-testid="moreInfoBtn">
               Detailed Info
               <Ico>arrow_downward</Ico>
             </div>
@@ -90,7 +84,12 @@ const ResponseUserInfo = () => {
         </InfoDescription>
         {isOpen && (
           <InfoDescription data-testid="detailedInfo">
-            {user && <DetailedUserInfo user={user} />}
+            {user && (
+              <DetailedUserInfo
+                user={user}
+                isEdit={localStorage.getItem("currentUsername") === userFromState?.username}
+              />
+            )}
           </InfoDescription>
         )}
       </DivWrapper>

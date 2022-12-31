@@ -47,15 +47,30 @@ export const InfoDescription = styled.div`
 `
 
 export const InfoDescriptionFlex = styled.div`
+  align-items: end;
   display: flex;
   margin: 0 auto;
   padding-bottom: 20px;
   width: 525px;
-  & div {
+  & > div {
     flex-basis: auto;
     flex-grow: 1;
     font-size: 18px;
+    height: 100%;
     user-select: none;
+    & > button {
+      background: ${props => props.theme.lighterBlockBackground};
+      border: none;
+      border-radius: 5px;
+      bottom: -10px;
+      color: ${props => props.theme.fontColor};
+      font-size: 18px;
+      padding: 10px 15px;
+      position: relative;
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
   &:hover {
     cursor: pointer;

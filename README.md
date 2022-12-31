@@ -23,3 +23,6 @@
 - 27.12.2022(UTC: 9:00) - configured eslint and prettier
 - 28.12.2022(UTC: 6:25) - setup redux, axios instance, made connection with backend and frontend, refactor backend logic, made new schemes in db
   - yesterday I was struggling with vite and babel; Idk why, but they just don't want to work together: Vite can do everything by himself and babel can do everything by himself, but not both💀💀; After 5 hours I gave up, but I'll be back 😎(maybe just going to setup esbuild or webpack, time will tell); Also, I sometimes hate prettier cuz of its strange line breaking, like I've 2 arg in func and their summary length is 10, and prettier just leave each arg on new line, thus code becomes unreadable😐
+- 29.12.2022(UTC: ~20:00) - started refactoring login and registration form cuz it was hell
+- 30.12.2022(UTC: ~0:00) - refactored registration & login
+- 31.12.2022(UTC: 23:00) - made unique user pages & linked them to backend(user's full info)

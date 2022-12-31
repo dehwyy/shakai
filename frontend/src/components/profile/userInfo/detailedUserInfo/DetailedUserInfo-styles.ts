@@ -16,6 +16,31 @@ export const DetailedUserInfoWrapper = styled.div`
     & i {
       top: 0;
     }
+    & input {
+      background: ${props => props.theme.mainBackground};
+      border: 1px solid ${props => props.theme.mainBackground};
+      border-radius: 5px;
+      color: ${props => props.theme.fontColor};
+      margin-left: 0.5em;
+      font-size: 18px;
+      width: 65%;
+      &:focus {
+        border: 1px solid ${props => props.theme.blueColor};
+        outline: none;
+      }
+    }
+    & button {
+      margin-left: auto;
+      margin-right: 10px;
+      background: ${props => props.theme.greenColor};
+      padding: 5px 15px;
+      border: none;
+      border-radius: 5px;
+      color: ${props => props.theme.fontColor};
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
   & > div > span {
     font-size: 18px;

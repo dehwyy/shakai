@@ -18,7 +18,7 @@ import usernameValidation from "./validation/usernameValidation"
 import { useNavigate } from "react-router-dom"
 import Ico from "../../UI/Ico"
 import login from "../../requests/login"
-import { setAuth } from "../../store/slices/currentUser-store"
+import { setAuth, setUserId, setUsername } from "../../store/slices/currentUser-store"
 import { useTypedDispatch } from "../../store/typed-hooks"
 import passwordValidation from "./validation/passwordValidation"
 import emailValidation from "./validation/emailValidation"
@@ -38,7 +38,7 @@ const LoginFormRouter = () => {
   //prettier-ignore
   const [methodOfAuth, setMethodOfAuth] = useState<"email" | "username">("email")
   const [email, setEmail] = useState("")
-  const [username, setUsername] = useState("")
+  const [username, setUsernameHook] = useState("")
   const [passwordError, setPasswordError] = useState<string>("")
   const navigate = useNavigate()
   const dispatch = useTypedDispatch()
@@ -48,9 +48,13 @@ const LoginFormRouter = () => {
     const response = await login({ ...data, email, username }).catch(() => {
       setPasswordError(`Wrong password or ${methodOfAuth}!`)
     })
-    response &&
-      dispatch({ type: setAuth, payload: true }) &&
-      navigate("content/profile")
+    if (response) {
+      dispatch({ type: setAuth, payload: true })
+      console.log(response.data.data.user.username, response.data.data.user)
+      localStorage.setItem("currentUsername", response.data.data.user.username)
+      dispatch({ type: setUserId, payload: response.data.data.user._id })
+      navigate(`content/profile/${response.data.data.user._id}`)
+    }
     reset()
   }
   const buttonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -58,9 +62,9 @@ const LoginFormRouter = () => {
     if (isValid) {
       if (methodOfAuth === "email") {
         setEmail(getValues().email)
-        setUsername("")
+        setUsernameHook("")
       } else {
-        setUsername(getValues().username)
+        setUsernameHook(getValues().username)
         setEmail("")
       }
       setReadyForSubmit(true)
@@ -107,23 +111,13 @@ const LoginFormRouter = () => {
             </AInputWrapper>
           ) : methodOfAuth === "username" ? (
             <AInputWrapper>
-              <AInput
-                placeholder="username"
-                {...register("username", usernameValidation)}
-              />
-              {errors.username && (
-                <ErrorSpan>{errors.username.message as string}</ErrorSpan>
-              )}
+              <AInput placeholder="username" {...register("username", usernameValidation)} />
+              {errors.username && <ErrorSpan>{errors.username.message as string}</ErrorSpan>}
             </AInputWrapper>
           ) : (
             <AInputWrapper>
-              <AInput
-                placeholder="email"
-                {...register("email", emailValidation)}
-              />
-              {errors.email && (
-                <ErrorSpan>{errors.email.message as string}</ErrorSpan>
-              )}
+              <AInput placeholder="email" {...register("email", emailValidation)} />
+              {errors.email && <ErrorSpan>{errors.email.message as string}</ErrorSpan>}
             </AInputWrapper>
           )}
           <FlexBlock>
@@ -142,11 +136,7 @@ const LoginFormRouter = () => {
                 Register now!
               </Sign>
             )}
-            {isReadyForSubmit ? (
-              <Button type="submit">Next</Button>
-            ) : (
-              <Button onClick={buttonHandler}>Next</Button>
-            )}
+            {isReadyForSubmit ? <Button type="submit">Next</Button> : <Button onClick={buttonHandler}>Next</Button>}
           </FlexBlock>
         </Form>
       </FormCentered>

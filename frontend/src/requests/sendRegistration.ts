@@ -8,6 +8,7 @@ interface inRegData {
 }
 
 interface inRegResponse {
+  userId: string
   message: string
   accessToken: string
 }
