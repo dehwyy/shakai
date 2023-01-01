@@ -1,58 +1,69 @@
 import * as React from "react"
 import { DetailedUserInfoWrapper } from "./DetailedUserInfo-styles"
 import { user } from "../../../../store/slices/users-store"
-import { FC } from "react"
+import { FC, useState } from "react"
 import { InfoTemplate } from "./AdditionalInfoComponents"
-
+import AddUserField from "./AddUserInfo/AddUserField"
+type argT = Omit<user, "username" | "id" | "email">
 const DetailedUserInfo: FC<{ user: user; isEdit: boolean }> = ({ user, isEdit = false }) => {
+  const [userData, setUserData] = useState<user>(user)
+  const setData = (arg: Record<keyof argT, string>) => {
+    setUserData(prev => {
+      console.log({ ...prev, ...arg })
+      return { ...prev, ...arg }
+    })
+  }
   return (
     <DetailedUserInfoWrapper>
-      {user.education && (
-        <InfoTemplate isEdit={isEdit} ico={"school"} param={user.education} paramString={"education"} />
+      {userData.education && (
+        <InfoTemplate isEdit={isEdit} ico={"school"} param={userData.education} paramString={"education"} />
       )}
-      {user.info && <InfoTemplate isEdit={isEdit} ico={"assignment_ind"} param={user.info} paramString={"info"} />}
-      {user.activity && (
-        <InfoTemplate isEdit={isEdit} ico={"chrome_reader_mode"} param={user.activity} paramString={"activity"} />
+      {userData.info && (
+        <InfoTemplate isEdit={isEdit} ico={"assignment_ind"} param={userData.info} paramString={"info"} />
       )}
-      {user.interests && (
-        <InfoTemplate isEdit={isEdit} ico={"group"} param={user.interests} paramString={"interests"} />
+      {userData.activity && (
+        <InfoTemplate isEdit={isEdit} ico={"chrome_reader_mode"} param={userData.activity} paramString={"activity"} />
       )}
-      {user.dateOfBirth && (
+      {userData.interests && (
+        <InfoTemplate isEdit={isEdit} ico={"group"} param={userData.interests} paramString={"interests"} />
+      )}
+      {userData.dateOfBirth && (
         <InfoTemplate
           isEdit={isEdit}
           ico={"cake"}
-          param={user.dateOfBirth}
+          param={userData.dateOfBirth}
           paramString={"dateOfBirth"}
           customText={"Birthday"}
         />
       )}
-      {user.favouriteMusic && (
+      {userData.favouriteMusic && (
         <InfoTemplate
           isEdit={isEdit}
           ico={"bookmark"}
-          param={user.favouriteMusic}
-          paramString={"favoriteMusic"}
+          param={userData.favouriteMusic}
+          paramString={"favouriteMusic"}
           customText={"Favourite music"}
         />
       )}
-      {user.favouriteGames && (
+      {userData.favouriteGames && (
         <InfoTemplate
           isEdit={isEdit}
           ico={"videogame_asset"}
-          param={user.favouriteGames}
-          paramString={"favoriteGames"}
+          param={userData.favouriteGames}
+          paramString={"favouriteGames"}
           customText={"Favourite games"}
         />
       )}
-      {user.favouriteBooks && (
+      {userData.favouriteBooks && (
         <InfoTemplate
           isEdit={isEdit}
           ico={"bookmark"}
-          param={user.favouriteBooks}
-          paramString={"favoriteBooks"}
+          param={userData.favouriteBooks}
+          paramString={"favouriteBooks"}
           customText={"Favourite books"}
         />
       )}
+      <AddUserField setData={setData} user={userData} />
     </DetailedUserInfoWrapper>
   )
 }
