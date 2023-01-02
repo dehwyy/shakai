@@ -4,15 +4,15 @@ import { user } from "../../../../store/slices/users-store"
 import { FC, useState } from "react"
 import { InfoTemplate } from "./AdditionalInfoComponents"
 import AddUserField from "./AddUserInfo/AddUserField"
-type argT = Omit<user, "username" | "id" | "email">
+type argT = Omit<user, "username" | "id" | "email" | "friends">
 const DetailedUserInfo: FC<{ user: user; isEdit: boolean }> = ({ user, isEdit = false }) => {
   const [userData, setUserData] = useState<user>(user)
-  const setData = (arg: Record<keyof argT, string>) => {
+  const setData = (arg: Partial<Record<keyof argT, string>>) => {
     setUserData(prev => {
-      console.log({ ...prev, ...arg })
       return { ...prev, ...arg }
     })
   }
+  const aloha = Object.keys(userData).find(userKey => !userData[userKey as keyof user] && userKey !== "friends")
   return (
     <DetailedUserInfoWrapper>
       {userData.education && (
@@ -63,7 +63,7 @@ const DetailedUserInfo: FC<{ user: user; isEdit: boolean }> = ({ user, isEdit = 
           customText={"Favourite books"}
         />
       )}
-      <AddUserField setData={setData} user={userData} />
+      {aloha && <AddUserField setData={setData} user={userData} />}
     </DetailedUserInfoWrapper>
   )
 }

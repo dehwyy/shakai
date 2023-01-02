@@ -1,11 +1,11 @@
 import * as React from "react"
-import { AddUserFieldWrapper, UserInfoChoiceWrapper, UserInfoChoise } from "./AddUserField-style"
+import { AddUserFieldWrapper, UserInfoChoiceWrapper, UserInfoChoice } from "./AddUserField-style"
 import { FC, useState } from "react"
 import { user } from "../../../../../store/slices/users-store"
 
-type argT = keyof Omit<user, "username" | "id" | "email">
+type argT = Omit<user, "username" | "id" | "email" | "friends">
 interface inAddUserField {
-  setData: (arg: { [argT: string]: string }) => void
+  setData: (arg: Partial<Record<keyof argT, string>>) => void
   user: user
 }
 const AddUserField: FC<inAddUserField> = ({ setData, user }) => {
@@ -13,25 +13,25 @@ const AddUserField: FC<inAddUserField> = ({ setData, user }) => {
   return (
     <>
       <AddUserFieldWrapper onClick={() => setOpen(prev => !prev)}>
-        <span>Add info field</span>
+        <span>Edit info</span>
       </AddUserFieldWrapper>
       {isOpen && (
         <UserInfoChoiceWrapper>
           {!user.dateOfBirth && (
-            <UserInfoChoise onClick={() => setData({ dateOfBirth: " " })}>dateOfBirth</UserInfoChoise>
+            <UserInfoChoice onClick={() => setData({ dateOfBirth: " " })}>dateOfBirth</UserInfoChoice>
           )}
-          {!user.interests && <UserInfoChoise onClick={() => setData({ interests: " " })}>interests</UserInfoChoise>}
-          {!user.education && <UserInfoChoise onClick={() => setData({ education: " " })}>education</UserInfoChoise>}
-          {!user.activity && <UserInfoChoise onClick={() => setData({ activity: " " })}>activity</UserInfoChoise>}
-          {!user.info && <UserInfoChoise onClick={() => setData({ info: " " })}>info</UserInfoChoise>}
+          {!user.interests && <UserInfoChoice onClick={() => setData({ interests: " " })}>interests</UserInfoChoice>}
+          {!user.education && <UserInfoChoice onClick={() => setData({ education: " " })}>education</UserInfoChoice>}
+          {!user.activity && <UserInfoChoice onClick={() => setData({ activity: " " })}>activity</UserInfoChoice>}
+          {!user.info && <UserInfoChoice onClick={() => setData({ info: " " })}>info</UserInfoChoice>}
           {!user.favouriteGames && (
-            <UserInfoChoise onClick={() => setData({ favouriteGames: " " })}>FavouriteGames</UserInfoChoise>
+            <UserInfoChoice onClick={() => setData({ favouriteGames: " " })}>FavouriteGames</UserInfoChoice>
           )}
-          {!user.favouriteGames && (
-            <UserInfoChoise onClick={() => setData({ FavouriteBooks: " " })}>FavouriteBooks</UserInfoChoise>
+          {!user.favouriteBooks && (
+            <UserInfoChoice onClick={() => setData({ favouriteBooks: " " })}>FavouriteBooks</UserInfoChoice>
           )}
           {!user.favouriteMusic && (
-            <UserInfoChoise onClick={() => setData({ FavouriteMusic: " " })}>FavouriteMusic</UserInfoChoise>
+            <UserInfoChoice onClick={() => setData({ favouriteMusic: " " })}>FavouriteMusic</UserInfoChoice>
           )}
         </UserInfoChoiceWrapper>
       )}

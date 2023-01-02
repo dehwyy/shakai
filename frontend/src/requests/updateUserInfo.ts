@@ -1,7 +1,8 @@
 import $api from "./httpAxios"
+import { user } from "../store/slices/users-store"
 
 interface userField {
-  field: string
+  field: keyof user
   fieldNewValue: string
 }
 

@@ -1,4 +1,31 @@
 import styled from "styled-components"
+
+export const EditFieldInput = styled.input`
+  background: ${props => props.theme.mainBackground};
+  border: 1px solid ${props => props.theme.mainBackground};
+  border-radius: 5px;
+  color: ${props => props.theme.fontColor};
+  font-size: 18px;
+  margin-left: 1.5em;
+  width: 55%;
+  &:focus {
+    border: 1px solid ${props => props.theme.blueColor};
+    outline: none;
+  }
+`
+
+export const EditInfoButton = styled.button`
+  margin-left: auto;
+  margin-right: 10px;
+  background: ${props => props.theme.greenColor};
+  padding: 5px 15px;
+  border: none;
+  border-radius: 5px;
+  color: ${props => props.theme.fontColor};
+  &:hover {
+    cursor: pointer;
+  }
+`
 export const DetailedUserInfoWrapper = styled.div`
   border-top: 1px solid white;
   display: flex;
@@ -16,30 +43,6 @@ export const DetailedUserInfoWrapper = styled.div`
     & i {
       top: 0;
     }
-    & input {
-      background: ${props => props.theme.mainBackground};
-      border: 1px solid ${props => props.theme.mainBackground};
-      border-radius: 5px;
-      color: ${props => props.theme.fontColor};
-      margin-left: 0.5em;
-      font-size: 18px;
-      width: 65%;
-      &:focus {
-        border: 1px solid ${props => props.theme.blueColor};
-        outline: none;
-      }
-    }
-    & button {
-      margin-left: auto;
-      margin-right: 10px;
-      background: ${props => props.theme.greenColor};
-      padding: 5px 15px;
-      border: none;
-      border-radius: 5px;
-      color: ${props => props.theme.fontColor};
-      &:hover {
-        cursor: pointer;
-      }
     }
   }
   & > div > span {

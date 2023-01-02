@@ -1,10 +1,9 @@
 import * as React from "react"
-import { FC, useState } from "react"
+import { FC, useMemo, useState } from "react"
 import Ico from "../../../../UI/Ico"
-import { Simulate } from "react-dom/test-utils"
-import submit = Simulate.submit
 import { useParams } from "react-router-dom"
 import updateUserInfo from "../../../../requests/updateUserInfo"
+import { EditFieldInput, EditInfoButton } from "./DetailedUserInfo-styles"
 
 const clickHandler = async (
   id: string,
@@ -12,10 +11,10 @@ const clickHandler = async (
   resetInitValue: (arg: string) => void,
   setEditMode: (arg: boolean) => void,
 ) => {
+  resetInitValue(newFieldData.fieldNewValue)
+  setEditMode(false)
   const response = await updateUserInfo(id, [newFieldData])
   if (response) {
-    resetInitValue(newFieldData.fieldNewValue)
-    setEditMode(false)
   } else {
     console.log("ERROR")
   }
@@ -31,30 +30,46 @@ interface inInfoTemplate {
 
 export const InfoTemplate: FC<inInfoTemplate> = ({ param, paramString, isEdit, ico, customText = null }) => {
   const [initValue, resetInitValue] = useState<string>(param)
-  const [inputValue, setInputValue] = useState<string>(initValue)
+  const [inputValue, setInputValue] = useState<string>(param)
   const [isEditMode, setEditMode] = useState(false)
   const { id } = useParams()
-  const capitalizedText = customText || paramString.charAt(0).toUpperCase() + paramString.slice(1)
+  const capitalizedText = useMemo(() => customText || paramString.charAt(0).toUpperCase() + paramString.slice(1), [])
   return (
-    <div>
+    <div
+      onClick={() => {
+        setEditMode(false)
+      }}>
       <Ico ExtraComponent={() => <span>{capitalizedText}:</span>}>{ico}</Ico>
       {!isEditMode ? (
         <>
           <span>{initValue}</span>
-          {isEdit && <Ico eventListener={() => setEditMode(true)}>create</Ico>}
+          {isEdit && (
+            <Ico
+              eventListener={e => {
+                setInputValue(initValue)
+                e.stopPropagation()
+                setEditMode(true)
+              }}>
+              create
+            </Ico>
+          )}
         </>
       ) : (
         <>
-          <input value={inputValue} onChange={e => setInputValue(e.target.value)} />
+          <EditFieldInput
+            value={inputValue}
+            onChange={e => setInputValue(e.target.value)}
+            onClick={e => e.stopPropagation()}
+          />
         </>
       )}
       {initValue !== inputValue && id && (
-        <button
-          onClick={() =>
+        <EditInfoButton
+          onClick={() => {
             clickHandler(id, { field: paramString, fieldNewValue: inputValue }, resetInitValue, setEditMode)
-          }>
+          }}>
           submit
-        </button>
+        </EditInfoButton>
       )}
     </div>
   )

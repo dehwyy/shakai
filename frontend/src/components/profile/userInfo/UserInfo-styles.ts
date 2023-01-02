@@ -25,14 +25,41 @@ export const ImgDiv = styled.div`
   position: relative;
   width: 200px;
   z-index: 2;
+  overflow: hidden;
+  & div {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+  }
+  &:hover span {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0px);
+    cursor: pointer;
+  }
+`
+
+export const ImgSpan = styled.span`
+  bottom: 0;
+  left: 50%;
+  width: 100%;
+  height: 20%;
+  text-align: center;
+  position: absolute;
+  transform: translateX(-50%) translateY(10px);
+  background: rgba(17, 17, 17, 0.8);
+  color: white;
+  opacity: 0;
+  transition: 0.2s linear;
 `
 
 export const Img = styled.img`
   background: #222222;
   border-radius: 50%;
-  height: 200px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  width: 200px;
 `
 
 export const InfoDescription = styled.div`

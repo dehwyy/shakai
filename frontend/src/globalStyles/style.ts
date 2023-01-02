@@ -21,6 +21,7 @@ const GlobalStyles = createGlobalStyle`
     }
     i {
       position: relative;
+      user-select: none;
     }
     a {
         text-decoration: none;

@@ -1,11 +1,12 @@
 import * as React from "react"
-import { useEffect, useState } from "react"
+import { useEffect, useId, useState } from "react"
 import { BACKGROUND_IMAGE, PROFILE_IMAGE } from "../../../img/profile"
 import Ico from "../../../UI/Ico"
 import {
   BackgroundImg,
   Img,
   ImgDiv,
+  ImgSpan,
   InfoDescription,
   InfoDescriptionFlex,
   ShortDescription,
@@ -17,13 +18,24 @@ import { useTypedDispatch, useTypedSelector } from "../../../store/typed-hooks"
 import getUser from "../../../requests/getUser"
 import getUserFullInfo from "../../../requests/getUserFullInfo"
 import { useParams } from "react-router-dom"
-import { updateUserInfo, uploadUser, user } from "../../../store/slices/users-store"
+import { uploadUser, user, updateUserInfo } from "../../../store/slices/users-store"
+import updateUserInformation from "../../../requests/updateUserInfo"
+import { EditFieldInput, EditInfoButton } from "./detailedUserInfo/DetailedUserInfo-styles"
+import InputModal from "../../../UI/InputModal"
 
 const ResponseUserInfo = () => {
   const [isOpen, setOpen] = useState(false)
+  const [isModalVisible, setModalVisible] = useState(false)
+  const [isModalError, setModalError] = useState(false)
+  const [isEditLocation, setEditLocation] = useState(false)
   const [user, setUser] = useState<user>()
+  const [inputValue, setInputValue] = useState(user?.location || "")
+  const [userLocation, setUserLocation] = useState(user?.location)
+  const [image, setImage] = useState(user?.profileImg)
+  const [imageInput, setImageInput] = useState("")
   const dispatch = useTypedDispatch()
   const { id } = useParams()
+  const inputId = useId()
   const [newId, setNewId] = useState(id)
   const userFromState = useTypedSelector(state => state.UsersStore.users.find(user => newId === user.id))
   if (userFromState && userFromState !== user) {
@@ -60,12 +72,49 @@ const ResponseUserInfo = () => {
       setNewId(id)
     }
   }, [])
+  const editable = localStorage.getItem("currentUsername") === userFromState?.username
   return (
     <UserWrapper>
+      {isModalVisible && (
+        <InputModal>
+          <>
+            <div>Past url to your desirable image</div>
+            <div>
+              <EditFieldInput
+                id={inputId}
+                value={imageInput}
+                onChange={e => {
+                  setImageInput(e.target.value)
+                  setModalError(false)
+                }}
+              />
+              {isModalError && <label htmlFor={inputId}>Link couldn&apos;t be treated as image</label>}
+            </div>
+            <div>
+              <EditInfoButton
+                onClick={async () => {
+                  if (imageInput.match(/.[(jpg)(png)(jpeg)]$/)) {
+                    await updateUserInformation(id || "error", [{ field: "profileImg", fieldNewValue: imageInput }])
+                    setImage(imageInput)
+                    setImageInput("")
+                    setModalVisible(false)
+                  } else {
+                    setModalError(true)
+                  }
+                }}>
+                Update
+              </EditInfoButton>
+            </div>
+          </>
+        </InputModal>
+      )}
       <DivWrapper>
         <BackgroundImg src={BACKGROUND_IMAGE} alt="Background" />
         <ImgDiv>
-          <Img src={user?.profileImg || PROFILE_IMAGE} alt="Profile"></Img>
+          <div>
+            <Img src={image || user?.profileImg || PROFILE_IMAGE}></Img>
+            <ImgSpan onClick={() => setModalVisible(true)}>Change</ImgSpan>
+          </div>
         </ImgDiv>
       </DivWrapper>
       <DivWrapper>
@@ -74,7 +123,24 @@ const ResponseUserInfo = () => {
           <InfoDescriptionFlex>
             <div data-testid="placeInfo">
               <Ico>place</Ico>
-              <span>{user?.location}</span>
+              {isEditLocation ? (
+                <EditFieldInput value={inputValue} onChange={e => setInputValue(e.target.value)} />
+              ) : (
+                <span>{userLocation || user?.location}</span>
+              )}
+              {editable &&
+                (isEditLocation ? (
+                  <Ico
+                    eventListener={async () => {
+                      setUserLocation(inputValue)
+                      await updateUserInformation(id || "error", [{ field: "location", fieldNewValue: inputValue }])
+                      setEditLocation(false)
+                    }}>
+                    check
+                  </Ico>
+                ) : (
+                  <Ico eventListener={() => setEditLocation(true)}>edit</Ico>
+                ))}
             </div>
             <div onClick={() => setOpen(prev => !prev)} data-testid="moreInfoBtn">
               Detailed Info
@@ -84,12 +150,7 @@ const ResponseUserInfo = () => {
         </InfoDescription>
         {isOpen && (
           <InfoDescription data-testid="detailedInfo">
-            {user && (
-              <DetailedUserInfo
-                user={user}
-                isEdit={localStorage.getItem("currentUsername") === userFromState?.username}
-              />
-            )}
+            {user && <DetailedUserInfo user={user} isEdit={editable} />}
           </InfoDescription>
         )}
       </DivWrapper>
