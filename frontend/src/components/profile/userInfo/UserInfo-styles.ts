@@ -5,61 +5,49 @@ export const UserWrapper = styled.div`
   border-radius: 10px;
 `
 
-export const BackgroundImg = styled.img`
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  height: 200px;
-  left: 50%;
-  object-fit: cover;
-  object-position: center;
-  position: absolute;
-  top: 15px;
-  transform: translate(-50%, 0);
-  width: 98%;
-`
+export const BackgroundImg = styled.img``
 
 export const ImgDiv = styled.div`
   height: 200px;
-  margin: 0 auto;
-  padding: 100px 0 25px 0;
+  margin: 150px auto 25px;
+  overflow: hidden;
   position: relative;
   width: 200px;
   z-index: 2;
-  overflow: hidden;
   & div {
     border-radius: 50%;
-    width: 200px;
     height: 200px;
-    position: relative;
     overflow: hidden;
+    position: relative;
+    width: 200px;
   }
   &:hover span {
+    cursor: pointer;
     opacity: 1;
     transform: translateX(-50%) translateY(0px);
-    cursor: pointer;
   }
 `
 
 export const ImgSpan = styled.span`
-  bottom: 0;
-  left: 50%;
-  width: 100%;
-  height: 20%;
-  text-align: center;
-  position: absolute;
-  transform: translateX(-50%) translateY(10px);
   background: rgba(17, 17, 17, 0.8);
+  bottom: 0;
   color: white;
+  height: 20%;
+  left: 50%;
   opacity: 0;
+  position: absolute;
+  text-align: center;
+  transform: translateX(-50%) translateY(10px);
   transition: 0.2s linear;
+  width: 100%;
 `
 
 export const Img = styled.img`
   background: #222222;
   border-radius: 50%;
-  width: 100%;
   height: 100%;
   object-fit: cover;
+  width: 100%;
 `
 
 export const InfoDescription = styled.div`
@@ -104,6 +92,9 @@ export const InfoDescriptionFlex = styled.div`
   }
   & span {
     margin-left: 15px;
+    &:hover {
+      cursor: default;
+    }
   }
 `
 

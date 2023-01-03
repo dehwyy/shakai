@@ -1,7 +1,7 @@
 import * as React from "react"
 import { MenuBody, MenuItem, MenuWrapper } from "./MenuProfile-style"
 import Ico from "../../../UI/Ico"
-import { Link, redirect } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import logout from "../../../requests/logout"
 import { useTypedDispatch, useTypedSelector } from "../../../store/typed-hooks"
 import { setAuth } from "../../../store/slices/currentUser-store"
@@ -10,11 +10,13 @@ const MenuProfile = () => {
   const isAuth = useTypedSelector(state => state.CurrentUserStore.user.isAuth)
   const dispatch = useTypedDispatch()
   const profileText = isAuth ? "Profile" : "Authorization"
-  const page = isAuth ? `/content/redirect/${localStorage.getItem("userId")}` : "/"
+  const currentUserId = localStorage.getItem("userId")
+  const { id } = useParams()
+  const page = currentUserId !== id && (isAuth ? `/content/redirect/${currentUserId}` : "/")
   return (
     <MenuWrapper>
       <MenuBody>
-        <Link to={page} data-testid="accessTokenTestId">
+        <Link to={page as string} data-testid="accessTokenTestId">
           <MenuItem>
             <Ico> person </Ico>
             {profileText}

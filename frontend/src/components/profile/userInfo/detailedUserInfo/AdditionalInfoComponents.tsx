@@ -4,10 +4,12 @@ import Ico from "../../../../UI/Ico"
 import { useParams } from "react-router-dom"
 import updateUserInfo from "../../../../requests/updateUserInfo"
 import { EditFieldInput, EditInfoButton } from "./DetailedUserInfo-styles"
+import { user } from "../../../../store/slices/users-store"
+import { inInfoTemplateProps } from "../user"
 
 const clickHandler = async (
   id: string,
-  newFieldData: { field: string; fieldNewValue: string },
+  newFieldData: { field: keyof user; fieldNewValue: string },
   resetInitValue: (arg: string) => void,
   setEditMode: (arg: boolean) => void,
 ) => {
@@ -20,15 +22,7 @@ const clickHandler = async (
   }
 }
 
-interface inInfoTemplate {
-  param: string
-  paramString: string
-  isEdit: boolean
-  ico: string
-  customText?: string | null
-}
-
-export const InfoTemplate: FC<inInfoTemplate> = ({ param, paramString, isEdit, ico, customText = null }) => {
+export const InfoTemplate: FC<inInfoTemplateProps> = ({ param, paramString, isEdit, ico, customText = null }) => {
   const [initValue, resetInitValue] = useState<string>(param)
   const [inputValue, setInputValue] = useState<string>(param)
   const [isEditMode, setEditMode] = useState(false)
@@ -66,7 +60,12 @@ export const InfoTemplate: FC<inInfoTemplate> = ({ param, paramString, isEdit, i
       {initValue !== inputValue && id && (
         <EditInfoButton
           onClick={() => {
-            clickHandler(id, { field: paramString, fieldNewValue: inputValue }, resetInitValue, setEditMode)
+            clickHandler(
+              id,
+              { field: paramString as keyof user, fieldNewValue: inputValue },
+              resetInitValue,
+              setEditMode,
+            )
           }}>
           submit
         </EditInfoButton>

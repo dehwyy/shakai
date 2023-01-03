@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useEffect, useId, useState } from "react"
+import { lazy, useEffect, Suspense, useState } from "react"
 import { BACKGROUND_IMAGE, PROFILE_IMAGE } from "../../../img/profile"
 import Ico from "../../../UI/Ico"
 import {
@@ -19,23 +19,21 @@ import getUser from "../../../requests/getUser"
 import getUserFullInfo from "../../../requests/getUserFullInfo"
 import { useParams } from "react-router-dom"
 import { uploadUser, user, updateUserInfo } from "../../../store/slices/users-store"
-import updateUserInformation from "../../../requests/updateUserInfo"
-import { EditFieldInput, EditInfoButton } from "./detailedUserInfo/DetailedUserInfo-styles"
-import InputModal from "../../../UI/InputModal"
+import UserModal from "./userModal/UserModal"
+
+const Location = lazy(() => import("./userLocation/Location"))
 
 const ResponseUserInfo = () => {
   const [isOpen, setOpen] = useState(false)
-  const [isModalVisible, setModalVisible] = useState(false)
-  const [isModalError, setModalError] = useState(false)
-  const [isEditLocation, setEditLocation] = useState(false)
+  const [isProfileModalVisible, setProfileModalVisible] = useState(false)
+  const [isBackgroundModalVisible, setBackgroundModalVisible] = useState(false)
   const [user, setUser] = useState<user>()
-  const [inputValue, setInputValue] = useState(user?.location || "")
-  const [userLocation, setUserLocation] = useState(user?.location)
   const [image, setImage] = useState(user?.profileImg)
+  const [background, setBackground] = useState(user?.backgroundImg)
   const [imageInput, setImageInput] = useState("")
+  const [backgroundInput, setBackgroundInput] = useState("")
   const dispatch = useTypedDispatch()
   const { id } = useParams()
-  const inputId = useId()
   const [newId, setNewId] = useState(id)
   const userFromState = useTypedSelector(state => state.UsersStore.users.find(user => newId === user.id))
   if (userFromState && userFromState !== user) {
@@ -74,46 +72,50 @@ const ResponseUserInfo = () => {
   }, [])
   const editable = localStorage.getItem("currentUsername") === userFromState?.username
   return (
-    <UserWrapper>
-      {isModalVisible && (
-        <InputModal>
-          <>
-            <div>Past url to your desirable image</div>
-            <div>
-              <EditFieldInput
-                id={inputId}
-                value={imageInput}
-                onChange={e => {
-                  setImageInput(e.target.value)
-                  setModalError(false)
-                }}
-              />
-              {isModalError && <label htmlFor={inputId}>Link couldn&apos;t be treated as image</label>}
-            </div>
-            <div>
-              <EditInfoButton
-                onClick={async () => {
-                  if (imageInput.match(/.[(jpg)(png)(jpeg)]$/)) {
-                    await updateUserInformation(id || "error", [{ field: "profileImg", fieldNewValue: imageInput }])
-                    setImage(imageInput)
-                    setImageInput("")
-                    setModalVisible(false)
-                  } else {
-                    setModalError(true)
-                  }
-                }}>
-                Update
-              </EditInfoButton>
-            </div>
-          </>
-        </InputModal>
+    <UserWrapper
+      onClick={() => {
+        setImageInput("")
+        setProfileModalVisible(false)
+      }}>
+      {isProfileModalVisible && (
+        <UserModal
+          inputValue={imageInput}
+          setInputValue={setImageInput}
+          setModalVisible={setProfileModalVisible}
+          setImage={setImage}
+          field={"profileImg"}
+        />
+      )}
+      {isBackgroundModalVisible && (
+        <UserModal
+          inputValue={backgroundInput}
+          setInputValue={setBackgroundInput}
+          setModalVisible={setBackgroundModalVisible}
+          setImage={setBackground}
+          field={"backgroundImg"}
+        />
       )}
       <DivWrapper>
-        <BackgroundImg src={BACKGROUND_IMAGE} alt="Background" />
+        <span>
+          <BackgroundImg src={background || user?.backgroundImg || BACKGROUND_IMAGE} alt="Background" />
+          <Ico
+            eventListener={e => {
+              e.stopPropagation()
+              setBackgroundModalVisible(true)
+            }}>
+            edit
+          </Ico>
+        </span>
         <ImgDiv>
           <div>
             <Img src={image || user?.profileImg || PROFILE_IMAGE}></Img>
-            <ImgSpan onClick={() => setModalVisible(true)}>Change</ImgSpan>
+            <ImgSpan
+              onClick={e => {
+                e.stopPropagation()
+                setProfileModalVisible(true)
+              }}>
+              Change
+            </ImgSpan>
           </div>
         </ImgDiv>
       </DivWrapper>
@@ -121,27 +123,9 @@ const ResponseUserInfo = () => {
         <ShortDescription>{user?.username}</ShortDescription>
         <InfoDescription>
           <InfoDescriptionFlex>
-            <div data-testid="placeInfo">
-              <Ico>place</Ico>
-              {isEditLocation ? (
-                <EditFieldInput value={inputValue} onChange={e => setInputValue(e.target.value)} />
-              ) : (
-                <span>{userLocation || user?.location}</span>
-              )}
-              {editable &&
-                (isEditLocation ? (
-                  <Ico
-                    eventListener={async () => {
-                      setUserLocation(inputValue)
-                      await updateUserInformation(id || "error", [{ field: "location", fieldNewValue: inputValue }])
-                      setEditLocation(false)
-                    }}>
-                    check
-                  </Ico>
-                ) : (
-                  <Ico eventListener={() => setEditLocation(true)}>edit</Ico>
-                ))}
-            </div>
+            <Suspense>
+              {(user?.location || editable) && <Location location={user?.location as string} editable={editable} />}
+            </Suspense>
             <div onClick={() => setOpen(prev => !prev)} data-testid="moreInfoBtn">
               Detailed Info
               <Ico>arrow_downward</Ico>

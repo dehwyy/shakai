@@ -13,21 +13,15 @@ import { Sign } from "./authComponents/Sign.style"
 import { Button } from "./authComponents/Button-style"
 import { AInputWrapper, AInput, ErrorSpan } from "./authComponents/Input-style"
 import { useForm } from "react-hook-form"
-import { FormEventHandler, MouseEventHandler, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import usernameValidation from "./validation/usernameValidation"
 import { useNavigate } from "react-router-dom"
 import Ico from "../../UI/Ico"
 import login from "../../requests/login"
-import { setAuth, setUserId, setUsername } from "../../store/slices/currentUser-store"
+import { setAuth, setUserId } from "../../store/slices/currentUser-store"
 import { useTypedDispatch } from "../../store/typed-hooks"
 import passwordValidation from "./validation/passwordValidation"
 import emailValidation from "./validation/emailValidation"
-
-interface inSubmitLoginData {
-  username?: string
-  email?: string
-  password?: string
-}
 
 const LoginFormRouter = () => {
   //prettier-ignore
@@ -44,7 +38,7 @@ const LoginFormRouter = () => {
   const dispatch = useTypedDispatch()
   const formRef = useRef<HTMLFormElement>(null)
 
-  const submitHandler = async (data: inSubmitLoginData) => {
+  const submitHandler = async (data: Partial<AllFieldsDataForm>) => {
     const response = await login({ ...data, email, username }).catch(() => {
       setPasswordError(`Wrong password or ${methodOfAuth}!`)
     })

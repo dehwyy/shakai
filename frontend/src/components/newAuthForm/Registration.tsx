@@ -3,10 +3,8 @@ import {
   FlexBlock,
   FormCentered,
   FormWrapper,
-  LoginOption,
   OptionsWrapper,
   OptionalText,
-  Options,
   Form,
 } from "./authComponents/AuthGlobal-styles"
 import { Sign } from "./authComponents/Sign.style"
@@ -16,25 +14,19 @@ import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import regUser from "../../requests/regUser"
 import { useTypedDispatch } from "../../store/typed-hooks"
-import { setAuth, setUserId, setUsername } from "../../store/slices/currentUser-store"
+import { setAuth, setUserId } from "../../store/slices/currentUser-store"
 import emailValidation from "./validation/emailValidation"
 import usernameValidation from "./validation/usernameValidation"
 import passwordValidation from "./validation/passwordValidation"
 
-interface inDataForm {
-  username: string
-  email: string
-  password: string
-}
-
 const Registration = () => {
   //prettier-ignore
-  const {register, formState: {errors, isValid}, reset, handleSubmit, getValues} = useForm<inDataForm>({
+  const {register, formState: {errors}, reset, handleSubmit} = useForm<AllFieldsDataForm>({
     mode: "onBlur",
   })
   const navigate = useNavigate()
   const dispatch = useTypedDispatch()
-  const submitHandler = async (data: inDataForm) => {
+  const submitHandler = async (data: AllFieldsDataForm) => {
     const response = await regUser(data)
     if (response) {
       dispatch({ type: setAuth, payload: true })
@@ -49,7 +41,7 @@ const Registration = () => {
     <FormWrapper>
       <FormCentered>
         <OptionsWrapper>
-          <OptionalText>TEXT</OptionalText>
+          <OptionalText>Registration</OptionalText>
         </OptionsWrapper>
         <Form onSubmit={handleSubmit(submitHandler)}>
           <AInputWrapper>

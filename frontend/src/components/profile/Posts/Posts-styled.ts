@@ -27,8 +27,12 @@ export const PostHeader = styled.div`
   & img {
     background: green;
     border-radius: 50%;
-    max-height: 40px;
-    max-width: 40px;
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+  }
+  & span:nth-child(2) {
+    font-size: 1.3rem;
   }
 `
 

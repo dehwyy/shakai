@@ -4,15 +4,18 @@ import { user } from "../../../../store/slices/users-store"
 import { FC, useState } from "react"
 import { InfoTemplate } from "./AdditionalInfoComponents"
 import AddUserField from "./AddUserInfo/AddUserField"
-type argT = Omit<user, "username" | "id" | "email" | "friends">
-const DetailedUserInfo: FC<{ user: user; isEdit: boolean }> = ({ user, isEdit = false }) => {
+import { argT, inDetailedUserInfoProps } from "../user"
+
+const DetailedUserInfo: FC<inDetailedUserInfoProps> = ({ user, isEdit = false }) => {
   const [userData, setUserData] = useState<user>(user)
   const setData = (arg: Partial<Record<keyof argT, string>>) => {
     setUserData(prev => {
       return { ...prev, ...arg }
     })
   }
-  const aloha = Object.keys(userData).find(userKey => !userData[userKey as keyof user] && userKey !== "friends")
+  const hasAnyEmptyFields = Object.keys(userData).find(
+    userKey => !userData[userKey as keyof user] && userKey !== "friends",
+  )
   return (
     <DetailedUserInfoWrapper>
       {userData.education && (
@@ -63,7 +66,7 @@ const DetailedUserInfo: FC<{ user: user; isEdit: boolean }> = ({ user, isEdit = 
           customText={"Favourite books"}
         />
       )}
-      {aloha && <AddUserField setData={setData} user={userData} />}
+      {hasAnyEmptyFields && <AddUserField setData={setData} user={userData} />}
     </DetailedUserInfoWrapper>
   )
 }

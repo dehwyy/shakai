@@ -28,6 +28,7 @@ const userDetailedInfo = new Schema({
   favouriteGames: { type: String, default: null },
   info: { type: String, default: null },
   profileImg: { type: String, default: null },
+  backgroundImg: { type: String, default: null },
   friends: [{ type: Schema.Types.ObjectId, ref: "User", default: null }],
 })
 

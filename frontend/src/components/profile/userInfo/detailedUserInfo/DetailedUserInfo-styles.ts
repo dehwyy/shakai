@@ -15,13 +15,13 @@ export const EditFieldInput = styled.input`
 `
 
 export const EditInfoButton = styled.button`
-  margin-left: auto;
-  margin-right: 10px;
   background: ${props => props.theme.greenColor};
-  padding: 5px 15px;
   border: none;
   border-radius: 5px;
   color: ${props => props.theme.fontColor};
+  margin-left: auto;
+  margin-right: 10px;
+  padding: 5px 15px;
   &:hover {
     cursor: pointer;
   }

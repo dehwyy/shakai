@@ -5,6 +5,7 @@ export interface user {
   email: string
   username: string
   profileImg?: string
+  backgroundImg?: string
   info?: string
   briefInfo?: string
   location?: string

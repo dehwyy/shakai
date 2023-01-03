@@ -67,10 +67,7 @@ export const FlexBlock = styled.div`
 `
 
 export const LoginOption = styled.div<{ readonly isChosen?: boolean }>`
-  background: ${props =>
-    !props.isChosen
-      ? props.theme.lighterBlockBackground
-      : props.theme.blueColor};
+  background: ${props => (!props.isChosen ? props.theme.lighterBlockBackground : props.theme.blueColor)};
   border-radius: 5px;
   font-size: 20px;
   padding: 15px 35px;
