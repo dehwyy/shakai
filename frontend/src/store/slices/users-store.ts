@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import post from "../../components/profile/Posts/Post"
 
 export interface user {
   id: string
@@ -17,6 +18,13 @@ export interface user {
   favouriteBooks?: string
   favouriteGames?: string
   friends?: string[]
+  posts?: postAttrs[]
+}
+export interface postAttrs {
+  id: string
+  dateOfCreate: string
+  postText?: string
+  postImage?: string
 }
 type userAdd = Omit<user, "email" | "username">
 const users = [] as user[]
@@ -31,12 +39,10 @@ const usersStore = createSlice({
       }
     },
     updateUserInfo: (state, action: PayloadAction<userAdd>) => {
-      console.log(action.payload)
       const idx = state.users.findIndex(user => user.id === action.payload.id)
       if (~idx) {
         state.users[idx] = { ...state.users[idx], ...action.payload }
       }
-      console.log(state.users[0])
     },
   },
 })

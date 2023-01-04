@@ -36,7 +36,7 @@ export const InfoTemplate: FC<inInfoTemplateProps> = ({ param, paramString, isEd
       <Ico ExtraComponent={() => <span>{capitalizedText}:</span>}>{ico}</Ico>
       {!isEditMode ? (
         <>
-          <span>{initValue}</span>
+          <span style={{ paddingLeft: "1rem" }}>{initValue}</span>
           {isEdit && (
             <Ico
               eventListener={e => {

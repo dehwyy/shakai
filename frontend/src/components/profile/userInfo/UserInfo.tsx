@@ -59,6 +59,7 @@ const ResponseUserInfo = () => {
         })
         .then(() => {
           getUserFullInfo(id).then(res => {
+            console.log(res.data)
             delete res.data._id
             delete res.data.__v
             const id = res.data.userId

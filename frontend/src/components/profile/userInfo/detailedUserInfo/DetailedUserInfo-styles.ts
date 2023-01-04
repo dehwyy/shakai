@@ -6,7 +6,8 @@ export const EditFieldInput = styled.input`
   border-radius: 5px;
   color: ${props => props.theme.fontColor};
   font-size: 18px;
-  margin-left: 1.5em;
+  margin-left: 1em;
+  padding-left: 1em;
   width: 55%;
   &:focus {
     border: 1px solid ${props => props.theme.blueColor};

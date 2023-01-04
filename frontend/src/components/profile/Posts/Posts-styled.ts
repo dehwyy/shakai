@@ -5,8 +5,37 @@ export const PostsDivWrapper = styled.div`
   width: 90%;
 `
 
+export const PostCreate = styled.div`
+  background: ${props => props.theme.blockBackground};
+  margin: 0 auto 30px;
+  width: 100%;
+  text-align: end;
+  border-radius: 5px;
+  & form {
+    & textarea {
+      box-sizing: border-box;
+      border-radius: 5px 5px 0 0;
+      padding: 15px;
+      background: ${props => props.theme.lighterBlockBackground};
+      color: ${props => props.theme.fontColor};
+      font-size: 1.2rem;
+      min-height: 150px;
+      resize: none;
+      width: 100%;
+    }
+    & button {
+      padding: 15px 50px;
+      border-radius: 5px;
+      font-size: 1.2rem;
+      margin: 10px;
+      color: ${props => props.theme.fontColor};
+      background: ${props => props.theme.coloredBackground};
+    }
+  }
+`
+
 export const PostDivWrapper = styled.div`
-  align-items: center;
+  align-items: start;
   background: #222222;
   border-radius: 15px;
   display: flex;
