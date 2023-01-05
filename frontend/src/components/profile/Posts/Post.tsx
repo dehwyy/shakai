@@ -2,6 +2,9 @@ import * as React from "react"
 import { FC } from "react"
 import { PostDivWrapper, PostHeader, PostBody, PostMessage } from "./Posts-styled"
 import { PROFILE_IMAGE } from "../../../img/profile"
+import Ico from "../../../UI/Ico"
+import deletePost from "../../../requests/deletePost"
+import { postAttrs } from "../../../store/slices/users-store"
 
 interface inPostProps {
   img?: string
@@ -9,15 +12,31 @@ interface inPostProps {
   text?: string
   username?: string | undefined
   date: string
+  currentId?: string
+  setPosts: React.Dispatch<React.SetStateAction<postAttrs[] | undefined>>
 }
 
-const Post: FC<inPostProps> = ({ img, profileImg, username, date, text }) => {
+const Post: FC<inPostProps> = ({ setPosts, currentId, img, profileImg, username, date, text }) => {
+  const deleteHandler = async () => {
+    const response = await deletePost(currentId as string)
+    setPosts(prev => {
+      if (prev) {
+        return prev.filter(post => post.id !== currentId)
+      }
+    })
+  }
+
   return (
     <PostDivWrapper data-testid="post">
       <PostHeader>
         <img src={profileImg || PROFILE_IMAGE} alt={"Avatar"} />
-        <span data-testid="username">{username || ""}</span>
-        <span data-testid="date">{date}</span>
+        <span data-testid="username" style={{ marginLeft: "20px" }}>
+          {username || ""}
+        </span>
+        <span data-testid="date" style={{ margin: "3px 0 0 20px" }}>
+          {date}
+        </span>
+        <Ico eventListener={deleteHandler}>delete</Ico>
       </PostHeader>
       <PostBody>
         <PostMessage>

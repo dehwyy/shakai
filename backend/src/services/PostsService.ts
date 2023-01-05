@@ -15,6 +15,10 @@ class PostsService {
     const userPosts = await Posts.find({ userId: id })
     return userPosts
   }
+  async deleteUserById(id: string) {
+    const deletedPosts = await Posts.findOneAndDelete({ _id: id })
+    return deletedPosts
+  }
 }
 
 export default new PostsService()

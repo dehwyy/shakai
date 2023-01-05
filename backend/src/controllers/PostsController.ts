@@ -20,6 +20,15 @@ class PostsController {
       next(e)
     }
   }
+  async deletePostByPostId(req: Request<object, object, object, { id: string }>, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.query
+      const deletedPost = await PostsService.deleteUserById(id)
+      res.json({ message: "Success" })
+    } catch (e) {
+      next(e)
+    }
+  }
 }
 
 export default new PostsController()

@@ -9,14 +9,13 @@ import getPosts from "../../../requests/getPosts"
 import { useForm } from "react-hook-form"
 import UserModal from "../userInfo/userModal/UserModal"
 import sendPost from "../../../requests/sendPost"
-import post from "./Post"
 
 const Posts = () => {
   const { id } = useParams()
   const userFromState = useTypedSelector(state => state.UsersStore.users.find(user => id === user.id))
   const dispatch = useTypedDispatch()
   const [posts, setPosts] = useState<postAttrs[] | undefined>(userFromState?.posts)
-  const [isAdditionalImageVisible, setAdditionalImageVisible] = useState(true)
+  const [isAdditionalImageVisible, setAdditionalImageVisible] = useState(false)
   const [image, setImage] = useState<string>()
   const [imageInput, setImageInput] = useState("")
   const { reset, handleSubmit, register } = useForm<postAttrs>()
@@ -61,7 +60,9 @@ const Posts = () => {
       {posts &&
         posts.map(post => (
           <Post
+            setPosts={setPosts}
             key={post.id}
+            currentId={post.id}
             profileImg={userFromState?.profileImg}
             img={post?.postImage}
             username={userFromState?.username}

@@ -6,4 +6,5 @@ const router: Router = CreateRouter()
 
 router.post("/create", PostsController.createPost)
 router.get("/get?:id", PostsController.getPostsByUserId)
+router.delete("/delete?:id", PostsController.deletePostByPostId)
 export default router

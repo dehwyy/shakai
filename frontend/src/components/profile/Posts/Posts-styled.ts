@@ -2,7 +2,7 @@ import styled from "styled-components"
 export const PostsDivWrapper = styled.div`
   margin: 0 auto;
   padding-top: 50px;
-  width: 90%;
+  width: 60%;
 `
 
 export const PostCreate = styled.div`
@@ -13,7 +13,7 @@ export const PostCreate = styled.div`
   & form {
     padding: 15px;
     display: grid;
-    grid-template: 1fr 12vh / 1fr 1fr;
+    grid-template: 1fr minmax(80px, 1vh) / 1fr 1fr;
     grid-template-areas:
       "textarea textarea"
       "btn btn-submit";
@@ -24,8 +24,9 @@ export const PostCreate = styled.div`
       padding: 10px;
       background: ${props => props.theme.lighterBlockBackground};
       color: ${props => props.theme.fontColor};
-      font-size: 1.5rem;
+      font-size: 1rem;
       min-height: 150px;
+      min-width: 1px;
       resize: none;
       width: 100%;
       &:focus {
@@ -34,9 +35,9 @@ export const PostCreate = styled.div`
     }
     & button {
       grid-area: btn;
-      padding: 15px 50px;
       border-radius: 5px;
       font-size: 1.2rem;
+      min-width: 70px;
       margin: 10px;
       color: ${props => props.theme.fontColor};
       background: ${props => props.theme.coloredBackground};
@@ -66,10 +67,14 @@ export const PostHeader = styled.div`
   align-self: start;
   display: flex;
   font-size: 15px;
-  justify-content: space-between;
   margin: 10px 0 20px 0;
-  max-width: 90%;
-  width: 300px;
+  width: 100%;
+  & i {
+    margin-left: auto !important;
+    &:hover {
+      cursor: pointer;
+    }
+  }
   & img {
     background: green;
     border-radius: 50%;
