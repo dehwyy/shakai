@@ -9,27 +9,44 @@ export const PostCreate = styled.div`
   background: ${props => props.theme.blockBackground};
   margin: 0 auto 30px;
   width: 100%;
-  text-align: end;
   border-radius: 5px;
   & form {
+    padding: 15px;
+    display: grid;
+    grid-template: 1fr 12vh / 1fr 1fr;
+    grid-template-areas:
+      "textarea textarea"
+      "btn btn-submit";
     & textarea {
+      grid-area: textarea;
       box-sizing: border-box;
       border-radius: 5px 5px 0 0;
-      padding: 15px;
+      padding: 10px;
       background: ${props => props.theme.lighterBlockBackground};
       color: ${props => props.theme.fontColor};
-      font-size: 1.2rem;
+      font-size: 1.5rem;
       min-height: 150px;
       resize: none;
       width: 100%;
+      &:focus {
+        outline: none;
+      }
     }
     & button {
+      grid-area: btn;
       padding: 15px 50px;
       border-radius: 5px;
       font-size: 1.2rem;
       margin: 10px;
       color: ${props => props.theme.fontColor};
       background: ${props => props.theme.coloredBackground};
+      &:hover {
+        cursor: pointer;
+      }
+      &[type="submit"] {
+        background: ${props => props.theme.secondColorBackground};
+        grid-area: btn-submit;
+      }
     }
   }
 `

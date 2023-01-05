@@ -5,6 +5,7 @@ import InputModal from "../../../../UI/InputModal"
 import { useParams } from "react-router-dom"
 import Ico from "../../../../UI/Ico"
 import { inUserModalProps } from "../user"
+import { user } from "../../../../store/slices/users-store"
 
 const UserModal: FC<inUserModalProps> = ({ inputValue, setInputValue, setModalVisible, setImage, field }) => {
   const inputId = useId()
@@ -36,7 +37,12 @@ const UserModal: FC<inUserModalProps> = ({ inputValue, setInputValue, setModalVi
           <EditInfoButton
             onClick={async () => {
               if (inputValue.match(/.[(jpg)(png)(jpeg)]$/)) {
-                await updateUserInformation(id || "error", [{ field, fieldNewValue: inputValue }])
+                if (field === "postImage") {
+                  console.log(field)
+                } else {
+                  const key = field as keyof user
+                  await updateUserInformation(id || "error", [{ field: key, fieldNewValue: inputValue }])
+                }
                 setImage(inputValue)
                 setInputValue("")
                 setModalVisible(false)

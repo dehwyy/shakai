@@ -21,7 +21,7 @@ export interface user {
   posts?: postAttrs[]
 }
 export interface postAttrs {
-  id: string
+  id?: string
   dateOfCreate: string
   postText?: string
   postImage?: string

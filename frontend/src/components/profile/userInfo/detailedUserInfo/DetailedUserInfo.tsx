@@ -6,15 +6,17 @@ import { InfoTemplate } from "./AdditionalInfoComponents"
 import AddUserField from "./AddUserInfo/AddUserField"
 import { argT, inDetailedUserInfoProps } from "../user"
 
+type infoOnlyUserT = Omit<user, "posts">
+
 const DetailedUserInfo: FC<inDetailedUserInfoProps> = ({ user, isEdit = false }) => {
-  const [userData, setUserData] = useState<user>(user)
+  const [userData, setUserData] = useState<infoOnlyUserT>(user)
   const setData = (arg: Partial<Record<keyof argT, string>>) => {
     setUserData(prev => {
       return { ...prev, ...arg }
     })
   }
   const hasAnyEmptyFields = Object.keys(userData).find(
-    userKey => !userData[userKey as keyof user] && userKey !== "friends",
+    userKey => !userData[userKey as keyof infoOnlyUserT] && userKey !== "friends",
   )
   return (
     <DetailedUserInfoWrapper>

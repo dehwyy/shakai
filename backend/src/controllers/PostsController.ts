@@ -2,9 +2,9 @@ import { Request, Response, NextFunction } from "express-serve-static-core"
 import PostsService, { postAttrs } from "../services/PostsService"
 
 class PostsController {
-  async createPost(req: Request<object, object, { postData: postAttrs }>, res: Response, next: NextFunction) {
+  async createPost(req: Request<object, object, postAttrs>, res: Response, next: NextFunction) {
     try {
-      const { postData } = req.body
+      const postData = req.body
       const response = await PostsService.createPost(postData)
       res.json({ message: "success in post creation" })
     } catch (e) {

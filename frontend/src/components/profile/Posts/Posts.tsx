@@ -7,13 +7,19 @@ import { useEffect, useState } from "react"
 import { postAttrs, updateUserInfo } from "../../../store/slices/users-store"
 import getPosts from "../../../requests/getPosts"
 import { useForm } from "react-hook-form"
+import UserModal from "../userInfo/userModal/UserModal"
+import sendPost from "../../../requests/sendPost"
+import post from "./Post"
 
 const Posts = () => {
   const { id } = useParams()
   const userFromState = useTypedSelector(state => state.UsersStore.users.find(user => id === user.id))
   const dispatch = useTypedDispatch()
   const [posts, setPosts] = useState<postAttrs[] | undefined>(userFromState?.posts)
-  const { reset, handleSubmit, register } = useForm()
+  const [isAdditionalImageVisible, setAdditionalImageVisible] = useState(true)
+  const [image, setImage] = useState<string>()
+  const [imageInput, setImageInput] = useState("")
+  const { reset, handleSubmit, register } = useForm<postAttrs>()
   useEffect(() => {
     //prettier-ignore
     (async () => {
@@ -24,15 +30,31 @@ const Posts = () => {
       }
     })()
   }, [])
-  const submitHandler = (data: any) => {
-    console.log(data)
+  const submitHandler = async (data: postAttrs) => {
+    const payload = { ...data, userId: id, dateOfCreate: new Date().toTimeString().slice(0, 8), postImage: image }
+    await sendPost(payload)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore "prev" must have a [SymbolIteratorMethod]()
+    setPosts(prev => [{ ...payload, id: Date.now() }, ...prev])
     reset()
   }
   return (
     <PostsDivWrapper>
+      {isAdditionalImageVisible && (
+        <UserModal
+          inputValue={imageInput}
+          setInputValue={setImageInput}
+          setModalVisible={setAdditionalImageVisible}
+          setImage={setImage}
+          field={"postImage"}
+        />
+      )}
       <PostCreate>
         <form onSubmit={handleSubmit(submitHandler)}>
-          <textarea {...register("textInput")} />
+          <textarea {...register("postText")} />
+          <button type="button" onClick={() => setAdditionalImageVisible(true)}>
+            Add Image
+          </button>
           <button type="submit">Post</button>
         </form>
       </PostCreate>
