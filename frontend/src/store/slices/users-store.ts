@@ -22,7 +22,7 @@ export interface user {
 }
 export interface postAttrs {
   id?: string
-  dateOfCreate: string
+  dateOfCreate?: string
   postText?: string
   postImage?: string
 }

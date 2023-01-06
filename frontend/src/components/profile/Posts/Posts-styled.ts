@@ -71,8 +71,10 @@ export const PostHeader = styled.div`
   width: 100%;
   & i {
     margin-left: auto !important;
+    transition: 0.15s ease;
     &:hover {
       cursor: pointer;
+      color: darkred;
     }
   }
   & img {

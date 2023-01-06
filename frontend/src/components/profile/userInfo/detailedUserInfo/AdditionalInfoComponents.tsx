@@ -3,9 +3,11 @@ import { FC, useMemo, useState } from "react"
 import Ico from "../../../../UI/Ico"
 import { useParams } from "react-router-dom"
 import updateUserInfo from "../../../../requests/updateUserInfo"
+import { updateUserInfo as updateStore } from "../../../../store/slices/users-store"
 import { EditFieldInput, EditInfoButton } from "./DetailedUserInfo-styles"
 import { user } from "../../../../store/slices/users-store"
 import { inInfoTemplateProps } from "../user"
+import { useTypedDispatch } from "../../../../store/typed-hooks"
 
 const clickHandler = async (
   id: string,
@@ -27,6 +29,7 @@ export const InfoTemplate: FC<inInfoTemplateProps> = ({ param, paramString, isEd
   const [inputValue, setInputValue] = useState<string>(param)
   const [isEditMode, setEditMode] = useState(false)
   const { id } = useParams()
+  const dispatch = useTypedDispatch()
   const capitalizedText = useMemo(() => customText || paramString.charAt(0).toUpperCase() + paramString.slice(1), [])
   return (
     <div
@@ -66,6 +69,7 @@ export const InfoTemplate: FC<inInfoTemplateProps> = ({ param, paramString, isEd
               resetInitValue,
               setEditMode,
             )
+            dispatch({ type: updateStore, payload: { [paramString]: inputValue, id } })
           }}>
           submit
         </EditInfoButton>

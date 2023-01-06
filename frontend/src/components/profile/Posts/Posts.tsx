@@ -3,13 +3,14 @@ import { PostsDivWrapper, PostCreate } from "./Posts-styled"
 import Post from "./Post"
 import { useTypedDispatch, useTypedSelector } from "../../../store/typed-hooks"
 import { useParams } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { createRef, useEffect, useRef, useState } from "react"
 import { postAttrs, updateUserInfo } from "../../../store/slices/users-store"
 import getPosts from "../../../requests/getPosts"
 import { useForm } from "react-hook-form"
 import UserModal from "../userInfo/userModal/UserModal"
 import sendPost from "../../../requests/sendPost"
-
+import { TransitionGroup, CSSTransition } from "react-transition-group"
+import "./PostsAnimation.css"
 const Posts = () => {
   const { id } = useParams()
   const userFromState = useTypedSelector(state => state.UsersStore.users.find(user => id === user.id))
@@ -18,6 +19,7 @@ const Posts = () => {
   const [isAdditionalImageVisible, setAdditionalImageVisible] = useState(false)
   const [image, setImage] = useState<string>()
   const [imageInput, setImageInput] = useState("")
+
   const { reset, handleSubmit, register } = useForm<postAttrs>()
   useEffect(() => {
     //prettier-ignore
@@ -37,6 +39,7 @@ const Posts = () => {
     setPosts(prev => [{ ...payload, id: Date.now() }, ...prev])
     reset()
   }
+  console.log(posts)
   return (
     <PostsDivWrapper>
       {isAdditionalImageVisible && (
@@ -57,19 +60,23 @@ const Posts = () => {
           <button type="submit">Post</button>
         </form>
       </PostCreate>
-      {posts &&
-        posts.map(post => (
-          <Post
-            setPosts={setPosts}
-            key={post.id}
-            currentId={post.id}
-            profileImg={userFromState?.profileImg}
-            img={post?.postImage}
-            username={userFromState?.username}
-            text={post?.postText}
-            date={post?.dateOfCreate}
-          />
-        ))}
+      <TransitionGroup>
+        {posts &&
+          posts.map(post => (
+            <CSSTransition key={post.id} timeout={100} classNames="item">
+              <Post
+                setPosts={setPosts}
+                key={post.id}
+                currentId={post.id}
+                profileImg={userFromState?.profileImg}
+                img={post?.postImage}
+                username={userFromState?.username}
+                text={post?.postText}
+                date={post?.dateOfCreate}
+              />
+            </CSSTransition>
+          ))}
+      </TransitionGroup>
     </PostsDivWrapper>
   )
 }

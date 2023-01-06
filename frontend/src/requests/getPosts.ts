@@ -7,7 +7,7 @@ interface postAttrsExtended extends postAttrs {
   __v?: string
 }
 
-const getPosts = async (id: string) => {
+const getPosts = async (id: string): Promise<postAttrs[]> => {
   const response = await $api.get(`posts/get?id=${id}`)
   const modifiedPosts = response.data.posts?.map((post: postAttrsExtended) => {
     return {

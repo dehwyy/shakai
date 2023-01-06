@@ -133,12 +133,9 @@ const ResponseUserInfo = () => {
             </div>
           </InfoDescriptionFlex>
         </InfoDescription>
-
-        {user && (
-          <InfoDescription data-testid="detailedInfo" style={isOpen ? { display: "none" } : {}}>
-            {user && <DetailedUserInfo user={user} isEdit={editable} />}
-          </InfoDescription>
-        )}
+        <InfoDescription data-testid="detailedInfo">
+          {isOpen && user && <DetailedUserInfo user={user} isEdit={editable} />}
+        </InfoDescription>
       </DivWrapper>
     </UserWrapper>
   )

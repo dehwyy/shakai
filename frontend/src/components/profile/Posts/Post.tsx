@@ -11,7 +11,7 @@ interface inPostProps {
   profileImg?: string | undefined
   text?: string
   username?: string | undefined
-  date: string
+  date?: string | undefined
   currentId?: string
   setPosts: React.Dispatch<React.SetStateAction<postAttrs[] | undefined>>
 }
