@@ -70,7 +70,7 @@ const DetailedUserInfo: FC<inDetailedUserInfoProps> = ({ user, isEdit = false })
           customText={"Favourite books"}
         />
       )}
-      {hasAnyEmptyFields && <AddUserField setData={setData} user={userData} />}
+      {isEdit && hasAnyEmptyFields && <AddUserField setData={setData} user={userData} />}
     </DetailedUserInfoWrapper>
   )
 }

@@ -26,23 +26,20 @@ class UserController {
       next(e)
     }
   }
-  async getUserById(
-    req: Request<object, object, object, { id: string }>,
-    res: Response,
-    next: NextFunction,
-  ) {
+  async getUserById(req: Request<object, object, object, { id: string }>, res: Response, next: NextFunction) {
     const { id } = req.query
     const user = await UserService.getUserById(id)
     res.json(user)
   }
-  async getUserInfo(
-    req: Request<object, object, object, { id: string }>,
-    res: Response,
-    next: NextFunction,
-  ) {
+  async getUserInfo(req: Request<object, object, object, { id: string }>, res: Response, next: NextFunction) {
     const { id } = req.query
     const userInfo = await UserService.getUserInfoById(id)
     res.json(userInfo)
+  }
+  async getImageByUserId(req: Request<object, object, object, { id: string }>, res: Response, next: NextFunction) {
+    const { id } = req.query
+    const image = await UserService.getProfileImageById(id)
+    res.json(image)
   }
 }
 

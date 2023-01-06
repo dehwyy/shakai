@@ -1,25 +1,27 @@
 import * as React from "react"
 import { useEffect, useState } from "react"
-import {
-  NavbarWrapper,
-  NavbarItem,
-  NavbarItemFirst,
-  NavbarItemLast,
-} from "./Navbar-styles"
+import { NavbarWrapper, NavbarItem, NavbarItemFirst, NavbarItemLast } from "./Navbar-styles"
 import Ico from "../../UI/Ico"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import MenuProfile from "./profileMenu/MenuProfile"
 import { useTypedSelector } from "../../store/typed-hooks"
+import getUserImageById from "../../requests/getUserImageById"
 
 const Navbar = () => {
   const [isVisibleMenu, setVisibleMenu] = useState<boolean>(false)
   const { id } = useParams()
   const navigate = useNavigate()
-  const userId = useTypedSelector(state => state.CurrentUserStore.user.userId)
+  const userId = localStorage.getItem("userId") as string
+  const imgProfile = useTypedSelector(state => state.UsersStore.users.find(user => user.id === userId))?.profileImg
+  const [img, setImg] = useState(imgProfile)
   useEffect(() => {
-    if (!id) {
-      navigate(userId)
-    }
+    ;(async () => {
+      if (!id) {
+        navigate(userId)
+      }
+      const image = await getUserImageById(userId)
+      setImg(image)
+    })()
   }, [])
   return (
     <NavbarWrapper>
@@ -34,7 +36,7 @@ const Navbar = () => {
         </Link>
       </NavbarItem>
       <NavbarItemLast onClick={() => setVisibleMenu(prev => !prev)}>
-        <Ico>account_circle</Ico>
+        {img ? <img src={img} /> : <Ico>account_circle</Ico>}
         {isVisibleMenu && <MenuProfile />}
       </NavbarItemLast>
     </NavbarWrapper>

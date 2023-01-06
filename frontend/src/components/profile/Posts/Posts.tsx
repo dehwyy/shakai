@@ -19,7 +19,7 @@ const Posts = () => {
   const [isAdditionalImageVisible, setAdditionalImageVisible] = useState(false)
   const [image, setImage] = useState<string>()
   const [imageInput, setImageInput] = useState("")
-
+  const editable = localStorage.getItem("currentUsername") === userFromState?.username
   const { reset, handleSubmit, register } = useForm<postAttrs>()
   useEffect(() => {
     //prettier-ignore
@@ -39,7 +39,6 @@ const Posts = () => {
     setPosts(prev => [{ ...payload, id: Date.now() }, ...prev])
     reset()
   }
-  console.log(posts)
   return (
     <PostsDivWrapper>
       {isAdditionalImageVisible && (
@@ -51,15 +50,17 @@ const Posts = () => {
           field={"postImage"}
         />
       )}
-      <PostCreate>
-        <form onSubmit={handleSubmit(submitHandler)}>
-          <textarea {...register("postText")} />
-          <button type="button" onClick={() => setAdditionalImageVisible(true)}>
-            Add Image
-          </button>
-          <button type="submit">Post</button>
-        </form>
-      </PostCreate>
+      {editable && (
+        <PostCreate>
+          <form onSubmit={handleSubmit(submitHandler)}>
+            <textarea {...register("postText")} />
+            <button type="button" onClick={() => setAdditionalImageVisible(true)}>
+              Add Image
+            </button>
+            <button type="submit">Post</button>
+          </form>
+        </PostCreate>
+      )}
       <TransitionGroup>
         {posts &&
           posts.map(post => (

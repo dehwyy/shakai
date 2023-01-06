@@ -1,7 +1,7 @@
 import styled from "styled-components"
 export const NavbarWrapper = styled.div`
   align-items: center;
-  background: ${(props) => props.theme.coloredBackground};
+  background: ${props => props.theme.coloredBackground};
   border-bottom: 1px solid white;
   display: flex;
   height: 60px;
@@ -29,4 +29,9 @@ export const NavbarItemFirst = styled(NavbarItem)`
 
 export const NavbarItemLast = styled(NavbarItem)`
   margin-left: auto;
+  & img {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+  }
 `

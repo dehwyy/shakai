@@ -99,24 +99,28 @@ const ResponseUserInfo = () => {
       <DivWrapper>
         <span>
           <BackgroundImg src={background || user?.backgroundImg || BACKGROUND_IMAGE} alt="Background" />
-          <Ico
-            eventListener={e => {
-              e.stopPropagation()
-              setBackgroundModalVisible(true)
-            }}>
-            edit
-          </Ico>
+          {editable && (
+            <Ico
+              eventListener={e => {
+                e.stopPropagation()
+                setBackgroundModalVisible(true)
+              }}>
+              edit
+            </Ico>
+          )}
         </span>
         <ImgDiv>
           <div>
             <Img src={image || user?.profileImg || PROFILE_IMAGE}></Img>
-            <ImgSpan
-              onClick={e => {
-                e.stopPropagation()
-                setProfileModalVisible(true)
-              }}>
-              Change
-            </ImgSpan>
+            {editable && (
+              <ImgSpan
+                onClick={e => {
+                  e.stopPropagation()
+                  setProfileModalVisible(true)
+                }}>
+                Change
+              </ImgSpan>
+            )}
           </div>
         </ImgDiv>
       </DivWrapper>

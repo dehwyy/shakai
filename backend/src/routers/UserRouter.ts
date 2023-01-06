@@ -6,4 +6,5 @@ const router: Router = createRouter()
 router.put("/editUser", userController.editUserInfo)
 router.get("/get?:id", userController.getUserById)
 router.get("/userInfo?:id", userController.getUserInfo)
+router.get("/userImage?:id", userController.getImageByUserId)
 export default router
