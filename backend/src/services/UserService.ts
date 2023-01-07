@@ -11,7 +11,11 @@ class UserService {
   }
   async getUserInfoById(id: string) {
     const userId = new mongoose.Types.ObjectId(id)
-    const userInfo = await UserDetailedInfo.findOne({ userId })
+    const cols =
+      "userId briefInfo education dateOfBirth " +
+      "interests activity favouriteMusic favouriteBooks " +
+      "favouriteGames info profileImg backgroundImg location"
+    const userInfo = await UserDetailedInfo.findOne({ userId }, cols)
     return userInfo
   }
   async getProfileImageById(id: string) {

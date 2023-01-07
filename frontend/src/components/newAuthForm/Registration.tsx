@@ -12,12 +12,10 @@ import { Button } from "./authComponents/Button-style"
 import { AInputWrapper, AInput, ErrorSpan } from "./authComponents/Input-style"
 import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
-import regUser from "../../requests/regUser"
-import { useTypedDispatch } from "../../store/typed-hooks"
-import { setAuth, setUserId } from "../../store/slices/currentUser-store"
 import emailValidation from "./validation/emailValidation"
 import usernameValidation from "./validation/usernameValidation"
 import passwordValidation from "./validation/passwordValidation"
+import AuthReq from "../../requests/AuthReq"
 
 const Registration = () => {
   //prettier-ignore
@@ -25,13 +23,9 @@ const Registration = () => {
     mode: "onBlur",
   })
   const navigate = useNavigate()
-  const dispatch = useTypedDispatch()
   const submitHandler = async (data: AllFieldsDataForm) => {
-    const response = await regUser(data)
+    const response = await AuthReq.regUser(data)
     if (response) {
-      dispatch({ type: setAuth, payload: true })
-      localStorage.setItem("currentUsername", response.username)
-      dispatch({ type: setUserId, payload: response.userId })
       navigate(`/content/profile/${response.userId}`)
     }
     reset()

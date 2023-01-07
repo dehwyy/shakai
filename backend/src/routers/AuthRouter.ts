@@ -6,11 +6,7 @@ import { body } from "express-validator"
 
 const authRouter: Router = CreateRouter()
 authRouter.get("/getAllUsers", AuthMiddlware, AuthController.getUsers)
-authRouter.post(
-  "/registration",
-  body("username").isLength({ max: 14 }),
-  AuthController.registration,
-)
+authRouter.post("/registration", body("username").isLength({ max: 14 }), AuthController.registration)
 authRouter.post("/login", AuthController.login)
 authRouter.delete("/logout", AuthController.logout)
 

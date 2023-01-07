@@ -10,11 +10,7 @@ class AuthController {
   async getUsers(req: Request, res: Response) {
     res.json(await AuthService.getAllUsers())
   }
-  async registration(
-    req: Request<object, object, inUser>,
-    res: Response,
-    next: NextFunction,
-  ) {
+  async registration(req: Request<object, object, inUser>, res: Response, next: NextFunction) {
     try {
       const errors = validationResult(req)
       if (!errors.isEmpty()) {
@@ -38,11 +34,7 @@ class AuthController {
     }
   }
 
-  async login(
-    req: Request<object, object, inDataToLogin>,
-    res: Response,
-    next: NextFunction,
-  ) {
+  async login(req: Request<object, object, inDataToLogin>, res: Response, next: NextFunction) {
     try {
       const { email, username, password } = req.body
       const data = await AuthService.login(email, username, password)

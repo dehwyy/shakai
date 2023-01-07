@@ -18,21 +18,14 @@ const User: FC<inUserProps> = ({ location, profileImg, username }) => {
     <GridWrapper>
       <GridContent>
         <ImgDiv>
-          <img
-            src={profileImg || PROFILE_IMAGE}
-            alt="Avatar"
-          />
+          <img src={profileImg || PROFILE_IMAGE} alt="Avatar" />
         </ImgDiv>
         <ContentDiv>
-          <UsernameWrapper>
-            {username || "THERE SHOULD BE USERNAME"}
-          </UsernameWrapper>
+          <UsernameWrapper>{username || "THERE SHOULD BE USERNAME"}</UsernameWrapper>
           <InfoWrapper>
             <div data-testid="placeInfo">
               <Ico>place</Ico>
-              <LocationSpan>
-                {location || "There should be location"}
-              </LocationSpan>
+              <LocationSpan>{location || "There should be location"}</LocationSpan>
             </div>
           </InfoWrapper>
         </ContentDiv>

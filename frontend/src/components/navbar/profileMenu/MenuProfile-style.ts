@@ -6,7 +6,7 @@ export const MenuWrapper = styled.div`
 `
 
 export const MenuBody = styled.div`
-  background: ${(props) => props.theme.coloredBackground};
+  background: ${props => props.theme.coloredBackground};
   border: 1px solid white;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -20,7 +20,7 @@ export const MenuItem = styled.div`
   font-size: 1.5rem;
   padding: 10px 15px 10px 0;
   &:hover {
-    background: ${(props) => props.theme.secondColorBackground};
+    background: ${props => props.theme.secondColorBackground};
   }
   & i {
     font-size: 1.5rem;

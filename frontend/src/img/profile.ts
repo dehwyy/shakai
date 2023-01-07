@@ -1,6 +1,5 @@
 export const BACKGROUND_IMAGE = "https://wallpaperaccess.com/full/1192022.jpg"
-export const PROFILE_IMAGE =
-  "https://cdn.icon-icons.com/icons2/2406/PNG/512/user_account_icon_145918.png"
+export const PROFILE_IMAGE = "https://cdn.icon-icons.com/icons2/2406/PNG/512/user_account_icon_145918.png"
 export const RANDOM_IMAGE =
   "https://sun1-94.userapi.com/impg/ZtmFw7Z_Nt4ckQzPhytuXtBV0J7OY60kK-620w/eCCm_YpEAqM.jpg?size=850x1200&quality=96&sign=5ec9e393cb7bf9ddd56124f89120d1da&type=album"
 export const RANDOM_TEXT =

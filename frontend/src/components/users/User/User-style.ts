@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 export const GridWrapper = styled.div`
-  background: ${(props) => props.theme.blockBackground};
+  background: ${props => props.theme.blockBackground};
   border-radius: 10px;
   padding: 15px 25px;
   text-align: end;
@@ -52,14 +52,14 @@ export const LocationSpan = styled.span`
 `
 
 export const GridButton = styled.button`
-  background: ${(props) => props.theme.blueColor};
+  background: ${props => props.theme.blueColor};
   border-radius: 7px;
   color: white;
   font-family: "Montserrat", monospace;
   font-size: 20px;
   padding: 5px 15px;
   &:hover {
-    background: ${(props) => props.theme.darkerBlueColor};
+    background: ${props => props.theme.darkerBlueColor};
     cursor: pointer;
   }
 `

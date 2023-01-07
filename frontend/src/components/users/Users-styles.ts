@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 export const UsersWrapper = styled.div`
-  background: ${(props) => props.theme.mainBackground};
+  background: ${props => props.theme.mainBackground};
   min-height: 50vh;
 `
 

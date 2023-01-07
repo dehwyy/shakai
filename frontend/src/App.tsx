@@ -8,8 +8,6 @@ import Users from "./components/users/Users"
 import Login from "./components/newAuthForm/Login"
 import Registration from "./components/newAuthForm/Registration"
 import { useEffect } from "react"
-import { useTypedDispatch, useTypedSelector } from "./store/typed-hooks"
-import { setAuth } from "./store/slices/currentUser-store"
 import Redirect from "./components/Redirect"
 
 const AppWrapper = styled.div`
@@ -35,12 +33,8 @@ const darkTheme = {
 }
 
 const App = () => {
-  const dispatch = useTypedDispatch()
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken")
-    if (accessToken) {
-      dispatch({ type: setAuth, payload: true })
-    }
   }, [])
   return (
     <ThemeProvider theme={darkTheme}>

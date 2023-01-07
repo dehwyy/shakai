@@ -3,8 +3,8 @@ import { FC } from "react"
 import { PostDivWrapper, PostHeader, PostBody, PostMessage } from "./Posts-styled"
 import { PROFILE_IMAGE } from "../../../img/profile"
 import Ico from "../../../UI/Ico"
-import deletePost from "../../../requests/deletePost"
 import { postAttrs } from "../../../store/slices/users-store"
+import UserData from "../../../requests/UserData"
 
 interface inPostProps {
   img?: string
@@ -18,7 +18,7 @@ interface inPostProps {
 
 const Post: FC<inPostProps> = ({ setPosts, currentId, img, profileImg, username, date, text }) => {
   const deleteHandler = async () => {
-    const response = await deletePost(currentId as string)
+    const response = await UserData.deletePost(currentId as string)
     setPosts(prev => {
       if (prev) {
         return prev.filter(post => post.id !== currentId)

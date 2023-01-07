@@ -2,17 +2,13 @@ import * as React from "react"
 import { MenuBody, MenuItem, MenuWrapper } from "./MenuProfile-style"
 import Ico from "../../../UI/Ico"
 import { Link, useParams } from "react-router-dom"
-import logout from "../../../requests/logout"
-import { useTypedDispatch, useTypedSelector } from "../../../store/typed-hooks"
-import { setAuth } from "../../../store/slices/currentUser-store"
+import AuthReq from "../../../requests/AuthReq"
 
 const MenuProfile = () => {
-  const isAuth = useTypedSelector(state => state.CurrentUserStore.user.isAuth)
-  const dispatch = useTypedDispatch()
-  const profileText = isAuth ? "Profile" : "Authorization"
   const currentUserId = localStorage.getItem("userId")
+  const profileText = currentUserId ? "Profile" : "Authorization"
   const { id } = useParams()
-  const page = currentUserId !== id && (isAuth ? `/content/redirect/${currentUserId}` : "/")
+  const page = currentUserId !== id && (currentUserId ? `/content/redirect/${currentUserId}` : "/")
   return (
     <MenuWrapper>
       <MenuBody>
@@ -26,11 +22,10 @@ const MenuProfile = () => {
           <Ico> settings </Ico>
           Settings
         </MenuItem>
-        {isAuth && (
+        {currentUserId && (
           <MenuItem
-            onClick={() => {
-              logout()
-              dispatch({ type: setAuth, payload: false })
+            onClick={async () => {
+              await AuthReq.logout()
             }}>
             <Ico> exit_to_app </Ico>
             Log out

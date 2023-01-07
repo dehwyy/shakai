@@ -20,11 +20,7 @@ class AuthService {
     })
     return { tokens, userId: user._id, username }
   }
-  async login(
-    email: string | undefined,
-    username: string | undefined,
-    password: string,
-  ) {
+  async login(email: string | undefined, username: string | undefined, password: string) {
     const user = await this.isUserInDb(email, username)
     if (!user) throw ErrorHandler.NotFound("User wasn't found")
     const isPasswordEquals = bcrypt.compareSync(password, user.password)
@@ -51,10 +47,7 @@ class AuthService {
   }
 
   async isUserInDb(email: string | undefined, username: string | undefined) {
-    return (
-      (await this.findUserByEmail(email)) ||
-      (await this.findUserByUsername(username))
-    )
+    return (await this.findUserByEmail(email)) || (await this.findUserByUsername(username))
   }
 
   async getAllUsers() {

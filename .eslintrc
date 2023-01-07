@@ -45,16 +45,9 @@
     {
       "files": ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(test).[jt]s?(x)"],
       "plugins": ["jest", "jest-async", "jest-formatting"],
-      "extends": [
-        "plugin:testing-library/react",
-        "plugin:jest/recommended",
-        "plugin:jest-formatting/recommended"
-      ],
+      "extends": ["plugin:testing-library/react", "plugin:jest/recommended", "plugin:jest-formatting/recommended"],
       "rules": {
-        "testing-library/no-render-in-setup": [
-          "error",
-          { "allowTestingFrameworkSetupHook": "beforeEach" }
-        ],
+        "testing-library/no-render-in-setup": ["error", { "allowTestingFrameworkSetupHook": "beforeEach" }],
         "jest/prefer-expect-assertions": "off",
         "jest-async/expect-return": "error"
       }

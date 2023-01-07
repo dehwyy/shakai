@@ -7,26 +7,26 @@ export const PostsDivWrapper = styled.div`
 
 export const PostCreate = styled.div`
   background: ${props => props.theme.blockBackground};
+  border-radius: 5px;
   margin: 0 auto 30px;
   width: 100%;
-  border-radius: 5px;
   & form {
-    padding: 15px;
     display: grid;
     grid-template: 1fr minmax(80px, 1vh) / 1fr 1fr;
     grid-template-areas:
       "textarea textarea"
       "btn btn-submit";
+    padding: 15px;
     & textarea {
-      grid-area: textarea;
-      box-sizing: border-box;
-      border-radius: 5px 5px 0 0;
-      padding: 10px;
       background: ${props => props.theme.lighterBlockBackground};
+      border-radius: 5px 5px 0 0;
+      box-sizing: border-box;
       color: ${props => props.theme.fontColor};
       font-size: 1rem;
+      grid-area: textarea;
       min-height: 150px;
       min-width: 1px;
+      padding: 10px;
       resize: none;
       width: 100%;
       &:focus {
@@ -34,13 +34,13 @@ export const PostCreate = styled.div`
       }
     }
     & button {
-      grid-area: btn;
-      border-radius: 5px;
-      font-size: 1.2rem;
-      min-width: 70px;
-      margin: 10px;
-      color: ${props => props.theme.fontColor};
       background: ${props => props.theme.coloredBackground};
+      border-radius: 5px;
+      color: ${props => props.theme.fontColor};
+      font-size: 1.2rem;
+      grid-area: btn;
+      margin: 10px;
+      min-width: 70px;
       &:hover {
         cursor: pointer;
       }

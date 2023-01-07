@@ -1,11 +1,10 @@
 import React, { FC, useId, useState } from "react"
 import { EditFieldInput, EditInfoButton } from "../detailedUserInfo/DetailedUserInfo-styles"
-import updateUserInformation from "../../../../requests/updateUserInfo"
 import InputModal from "../../../../UI/InputModal"
 import { useParams } from "react-router-dom"
 import Ico from "../../../../UI/Ico"
 import { inUserModalProps } from "../user"
-import { user } from "../../../../store/slices/users-store"
+import UserData from "../../../../requests/UserData"
 
 const UserModal: FC<inUserModalProps> = ({ inputValue, setInputValue, setModalVisible, setImage, field }) => {
   const inputId = useId()
@@ -41,7 +40,7 @@ const UserModal: FC<inUserModalProps> = ({ inputValue, setInputValue, setModalVi
                   console.log(field)
                 } else {
                   const key = field as keyof user
-                  await updateUserInformation(id || "error", [{ field: key, fieldNewValue: inputValue }])
+                  await UserData.updateUserInfo(id || "error", [{ field: key, fieldNewValue: inputValue }])
                 }
                 setImage(inputValue)
                 setInputValue("")

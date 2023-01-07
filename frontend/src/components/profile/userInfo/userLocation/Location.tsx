@@ -1,10 +1,10 @@
 import * as React from "react"
 import Ico from "../../../../UI/Ico"
 import { EditFieldInput } from "../detailedUserInfo/DetailedUserInfo-styles"
-import updateUserInformation from "../../../../requests/updateUserInfo"
 import { useParams } from "react-router-dom"
 import { FC, useState } from "react"
 import { inLocationProps } from "../user"
+import UserData from "../../../../requests/UserData"
 
 const Location: FC<inLocationProps> = ({ location, editable }) => {
   const { id } = useParams()
@@ -24,7 +24,7 @@ const Location: FC<inLocationProps> = ({ location, editable }) => {
           <Ico
             eventListener={async () => {
               setUserLocation(inputValue || " ")
-              await updateUserInformation(id || "error", [{ field: "location", fieldNewValue: inputValue }])
+              await UserData.updateUserInfo(id || "error", [{ field: "location", fieldNewValue: inputValue }])
               setEditLocation(false)
             }}>
             check

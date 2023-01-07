@@ -25,10 +25,7 @@ class TokenService {
   async setRefreshToken(data: inToken) {
     const candidate = await Token.findOne({ userId: data.userId })
     if (candidate) {
-      return Token.updateOne(
-        { userId: candidate.userId },
-        { $set: { refreshToken: data.refreshToken } },
-      )
+      return Token.updateOne({ userId: candidate.userId }, { $set: { refreshToken: data.refreshToken } })
     }
     return await Token.create({
       userId: data.userId,

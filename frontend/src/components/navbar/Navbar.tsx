@@ -4,22 +4,20 @@ import { NavbarWrapper, NavbarItem, NavbarItemFirst, NavbarItemLast } from "./Na
 import Ico from "../../UI/Ico"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import MenuProfile from "./profileMenu/MenuProfile"
-import { useTypedSelector } from "../../store/typed-hooks"
-import getUserImageById from "../../requests/getUserImageById"
+import UserData from "../../requests/UserData"
 
 const Navbar = () => {
   const [isVisibleMenu, setVisibleMenu] = useState<boolean>(false)
   const { id } = useParams()
   const navigate = useNavigate()
   const userId = localStorage.getItem("userId") as string
-  const imgProfile = useTypedSelector(state => state.UsersStore.users.find(user => user.id === userId))?.profileImg
-  const [img, setImg] = useState(imgProfile)
+  const [img, setImg] = useState("")
   useEffect(() => {
     ;(async () => {
       if (!id) {
         navigate(userId)
       }
-      const image = await getUserImageById(userId)
+      const image = await UserData.getUserImageById(userId)
       setImg(image)
     })()
   }, [])

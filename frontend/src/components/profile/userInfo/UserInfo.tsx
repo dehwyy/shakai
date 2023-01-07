@@ -14,12 +14,9 @@ import {
 } from "./UserInfo-styles"
 import { DivWrapper } from "../Profile-styles"
 import DetailedUserInfo from "./detailedUserInfo/DetailedUserInfo"
-import { useTypedDispatch, useTypedSelector } from "../../../store/typed-hooks"
-import getUser from "../../../requests/getUser"
-import getUserFullInfo from "../../../requests/getUserFullInfo"
 import { useParams } from "react-router-dom"
-import { uploadUser, user, updateUserInfo } from "../../../store/slices/users-store"
 import UserModal from "./userModal/UserModal"
+import UserData from "../../../requests/UserData"
 
 const Location = lazy(() => import("./userLocation/Location"))
 
@@ -32,25 +29,12 @@ const ResponseUserInfo = () => {
   const [background, setBackground] = useState(user?.backgroundImg)
   const [imageInput, setImageInput] = useState("")
   const [backgroundInput, setBackgroundInput] = useState("")
-  const dispatch = useTypedDispatch()
   const { id } = useParams()
   const [newId, setNewId] = useState(id)
-  const userFromState = useTypedSelector(state => state.UsersStore.users.find(user => newId === user.id))
-  if (userFromState && userFromState !== user) {
-    setUser(userFromState)
-  }
-  useEffect(() => {
+  const onload = async () => {
     if (id && !user) {
-      getUser(id)
+      UserData.getUser(id)
         .then(res => {
-          dispatch({
-            type: uploadUser,
-            payload: {
-              id: res.data._id,
-              email: res.data.email,
-              username: res.data.username,
-            },
-          })
           setUser({
             id: res.data._id,
             email: res.data.email,
@@ -58,20 +42,20 @@ const ResponseUserInfo = () => {
           })
         })
         .then(() => {
-          getUserFullInfo(id).then(res => {
-            console.log(res.data)
-            delete res.data._id
-            delete res.data.__v
-            const id = res.data.userId
-            delete res.data.userId
-            dispatch({ type: updateUserInfo, payload: { ...res.data, id } })
+          UserData.getUserFullInfo(id).then(res => {
+            setUser(prev => {
+              return { ...prev, ...res.data }
+            })
           })
         })
     } else if (id !== newId) {
       setNewId(id)
     }
+  }
+  useEffect(() => {
+    onload().then(() => console.log(123))
   }, [])
-  const editable = localStorage.getItem("currentUsername") === userFromState?.username
+  const editable = localStorage.getItem("userId") === id
   return (
     <UserWrapper
       onClick={() => {

@@ -17,11 +17,9 @@ import { useRef, useState } from "react"
 import usernameValidation from "./validation/usernameValidation"
 import { useNavigate } from "react-router-dom"
 import Ico from "../../UI/Ico"
-import login from "../../requests/login"
-import { setAuth, setUserId } from "../../store/slices/currentUser-store"
-import { useTypedDispatch } from "../../store/typed-hooks"
 import passwordValidation from "./validation/passwordValidation"
 import emailValidation from "./validation/emailValidation"
+import AuthReq from "../../requests/AuthReq"
 
 const LoginFormRouter = () => {
   //prettier-ignore
@@ -35,18 +33,14 @@ const LoginFormRouter = () => {
   const [username, setUsernameHook] = useState("")
   const [passwordError, setPasswordError] = useState<string>("")
   const navigate = useNavigate()
-  const dispatch = useTypedDispatch()
   const formRef = useRef<HTMLFormElement>(null)
 
   const submitHandler = async (data: Partial<AllFieldsDataForm>) => {
-    const response = await login({ ...data, email, username }).catch(() => {
+    const response = await AuthReq.login({ ...data, email, username }).catch(() => {
       setPasswordError(`Wrong password or ${methodOfAuth}!`)
     })
     if (response) {
-      dispatch({ type: setAuth, payload: true })
-      console.log(response.data.data.user.username, response.data.data.user)
       localStorage.setItem("currentUsername", response.data.data.user.username)
-      dispatch({ type: setUserId, payload: response.data.data.user._id })
       navigate(`content/profile/${response.data.data.user._id}`)
     }
     reset()

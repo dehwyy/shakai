@@ -5,12 +5,7 @@ interface inError extends Error {
   statusCode: number
 }
 
-export default (
-  error: inError,
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export default (error: inError, req: Request, res: Response, next: NextFunction) => {
   if (error instanceof ErrorHandler) {
     //prettier-ignore
     res.status(error.statusCode).json({ statusCode: error.statusCode, message: error.message })

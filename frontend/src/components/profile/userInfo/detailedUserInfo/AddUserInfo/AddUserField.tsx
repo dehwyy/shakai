@@ -1,7 +1,6 @@
 import * as React from "react"
 import { AddUserFieldWrapper, UserInfoChoiceWrapper, UserInfoChoice } from "./AddUserField-style"
 import { FC, useState } from "react"
-import { user } from "../../../../../store/slices/users-store"
 
 type argT = Omit<user, "username" | "id" | "email" | "friends">
 interface inAddUserField {

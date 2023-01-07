@@ -1,17 +1,14 @@
 import * as React from "react"
 import { DetailedUserInfoWrapper } from "./DetailedUserInfo-styles"
-import { user } from "../../../../store/slices/users-store"
 import { FC, useState } from "react"
 import { InfoTemplate } from "./AdditionalInfoComponents"
 import AddUserField from "./AddUserInfo/AddUserField"
 import { argT, inDetailedUserInfoProps } from "../user"
-import { useTypedSelector } from "../../../../store/typed-hooks"
 
 type infoOnlyUserT = Omit<user, "posts">
 
 const DetailedUserInfo: FC<inDetailedUserInfoProps> = ({ user, isEdit = false }) => {
-  const userFromState = useTypedSelector(state => state.UsersStore.users.find(cUser => user.id === cUser.id))
-  const [userData, setUserData] = useState<infoOnlyUserT>(userFromState || user)
+  const [userData, setUserData] = useState<infoOnlyUserT>(user)
   const setData = (arg: Partial<Record<keyof argT, string>>) => {
     setUserData(prev => {
       return { ...prev, ...arg }
@@ -76,3 +73,4 @@ const DetailedUserInfo: FC<inDetailedUserInfoProps> = ({ user, isEdit = false })
 }
 
 export default DetailedUserInfo
+/*Пасхалка для егора 07.01.23*/

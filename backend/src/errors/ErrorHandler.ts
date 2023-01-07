@@ -1,8 +1,5 @@
 class ErrorHandler extends Error {
-  constructor(
-    public message: string = "error",
-    public statusCode: number = 400,
-  ) {
+  constructor(public message: string = "error", public statusCode: number = 400) {
     super(message)
   }
   static BadRequest(message?: string) {
