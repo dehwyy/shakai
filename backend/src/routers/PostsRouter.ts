@@ -5,6 +5,6 @@ import PostsController from "../controllers/PostsController"
 const router: Router = CreateRouter()
 
 router.post("/create", PostsController.createPost)
-router.get("/get?:id", PostsController.getPostsByUserId)
-router.delete("/delete?:id", PostsController.deletePostByPostId)
+router.get("/getPostsByUserId?:userId", PostsController.getPostsByUserId)
+router.delete("/deletePost?:postId", PostsController.deletePostByPostId)
 export default router

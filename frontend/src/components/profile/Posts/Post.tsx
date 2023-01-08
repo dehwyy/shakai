@@ -3,29 +3,19 @@ import { FC } from "react"
 import { PostDivWrapper, PostHeader, PostBody, PostMessage } from "./Posts-styled"
 import { PROFILE_IMAGE } from "../../../img/profile"
 import Ico from "../../../UI/Ico"
-import { postAttrs } from "../../../store/slices/users-store"
-import UserData from "../../../requests/UserData"
+import { useCreatePostMutation } from "../../../store/req/posts-slice.api"
 
 interface inPostProps {
-  img?: string
-  profileImg?: string | undefined
-  text?: string
-  username?: string | undefined
-  date?: string | undefined
-  currentId?: string
-  setPosts: React.Dispatch<React.SetStateAction<postAttrs[] | undefined>>
+  img: string | undefined
+  profileImg: string | undefined
+  text: string | undefined
+  username: string | undefined
+  date: string | undefined
+  currentId: string
 }
 
-const Post: FC<inPostProps> = ({ setPosts, currentId, img, profileImg, username, date, text }) => {
-  const deleteHandler = async () => {
-    const response = await UserData.deletePost(currentId as string)
-    setPosts(prev => {
-      if (prev) {
-        return prev.filter(post => post.id !== currentId)
-      }
-    })
-  }
-
+const Post: FC<inPostProps> = ({ currentId, img, profileImg, username, date, text }) => {
+  const [deletePostApi, {}] = useCreatePostMutation()
   return (
     <PostDivWrapper data-testid="post">
       <PostHeader>
@@ -36,7 +26,7 @@ const Post: FC<inPostProps> = ({ setPosts, currentId, img, profileImg, username,
         <span data-testid="date" style={{ margin: "3px 0 0 20px" }}>
           {date}
         </span>
-        <Ico eventListener={deleteHandler}>delete</Ico>
+        <Ico eventListener={() => deletePostApi(currentId)}>delete</Ico>
       </PostHeader>
       <PostBody>
         <PostMessage>

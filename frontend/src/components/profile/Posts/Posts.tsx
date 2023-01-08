@@ -10,24 +10,17 @@ import { TransitionGroup, CSSTransition } from "react-transition-group"
 import "./PostsAnimation.css"
 import UserData from "../../../requests/UserData"
 import UserPostData from "../../../requests/UserPostData"
+import { postsResponse, useCreatePostMutation, useFetchPostsQuery } from "../../../store/req/posts-slice.api"
 const Posts = () => {
   const { id } = useParams()
-  const [posts, setPosts] = useState<postAttrs[] | undefined>()
   const [isAdditionalImageVisible, setAdditionalImageVisible] = useState(false)
   const [image, setImage] = useState<string>()
   const [imageInput, setImageInput] = useState("")
   const userId = localStorage.getItem("userId")
   const editable = userId === id
   const { reset, handleSubmit, register } = useForm<postAttrs>()
-  useEffect(() => {
-    //prettier-ignore
-    (async () => {
-      if (id) {
-        const posts = await UserData.getPosts(id)
-        setPosts(posts)
-      }
-    })()
-  }, [])
+  const { data: postsData } = useFetchPostsQuery(id as string)
+  const [deletePostApi, {}] = useCreatePostMutation()
   const submitHandler = async (data: postAttrs) => {
     const payload = { ...data, userId: id, dateOfCreate: new Date().toTimeString().slice(0, 8), postImage: image }
     await UserPostData.sendPost(payload)
@@ -47,6 +40,7 @@ const Posts = () => {
           field={"postImage"}
         />
       )}
+      <button onClick={() => deletePostApi("63b68a181aca26a818f97e3f")}>button</button>
       {editable && (
         <PostCreate>
           <form onSubmit={handleSubmit(submitHandler)}>
@@ -59,14 +53,13 @@ const Posts = () => {
         </PostCreate>
       )}
       <TransitionGroup>
-        {posts &&
+        {postsData?.posts &&
           userId &&
-          posts.map(post => (
-            <CSSTransition key={post.id} timeout={100} classNames="item">
+          postsData.posts.map(post => (
+            <CSSTransition key={post._id} timeout={100} classNames="item">
               <Post
-                setPosts={setPosts}
-                key={post.id}
-                currentId={post.id}
+                key={post._id}
+                currentId={post._id}
                 profileImg={""}
                 img={post?.postImage}
                 username={userId}

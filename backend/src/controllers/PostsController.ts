@@ -11,19 +11,23 @@ class PostsController {
       next(e)
     }
   }
-  async getPostsByUserId(req: Request<object, object, object, { id: string }>, res: Response, next: NextFunction) {
+  async getPostsByUserId(req: Request<object, object, object, { userId: string }>, res: Response, next: NextFunction) {
     try {
-      const { id } = req.query
-      const posts = await PostsService.getUserById(id)
+      const { userId } = req.query
+      const posts = await PostsService.getUserById(userId)
       res.json({ posts })
     } catch (e) {
       next(e)
     }
   }
-  async deletePostByPostId(req: Request<object, object, object, { id: string }>, res: Response, next: NextFunction) {
+  async deletePostByPostId(
+    req: Request<object, object, object, { postId: string }>,
+    res: Response,
+    next: NextFunction,
+  ) {
     try {
-      const { id } = req.query
-      const deletedPost = await PostsService.deleteUserById(id)
+      const { postId } = req.query
+      const deletedPost = await PostsService.deleteUserById(postId)
       res.json({ message: "Success" })
     } catch (e) {
       next(e)
