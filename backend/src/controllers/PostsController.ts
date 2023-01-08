@@ -5,7 +5,7 @@ class PostsController {
   async createPost(req: Request<object, object, postAttrs>, res: Response, next: NextFunction) {
     try {
       const postData = req.body
-      const response = await PostsService.createPost(postData)
+      await PostsService.createPost(postData)
       res.json({ message: "success in post creation" })
     } catch (e) {
       next(e)

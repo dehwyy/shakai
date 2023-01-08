@@ -3,7 +3,7 @@ import { FC } from "react"
 import { PostDivWrapper, PostHeader, PostBody, PostMessage } from "./Posts-styled"
 import { PROFILE_IMAGE } from "../../../img/profile"
 import Ico from "../../../UI/Ico"
-import { useCreatePostMutation } from "../../../store/req/posts-slice.api"
+import { useDeletePostMutation } from "../../../store/req/posts-slice.api"
 
 interface inPostProps {
   img: string | undefined
@@ -15,7 +15,7 @@ interface inPostProps {
 }
 
 const Post: FC<inPostProps> = ({ currentId, img, profileImg, username, date, text }) => {
-  const [deletePostApi, {}] = useCreatePostMutation()
+  const [deletePostApi, {}] = useDeletePostMutation()
   return (
     <PostDivWrapper data-testid="post">
       <PostHeader>

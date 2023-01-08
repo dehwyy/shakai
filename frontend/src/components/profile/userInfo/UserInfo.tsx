@@ -17,77 +17,38 @@ import DetailedUserInfo from "./detailedUserInfo/DetailedUserInfo"
 import { useParams } from "react-router-dom"
 import UserModal from "./userModal/UserModal"
 import UserData from "../../../requests/UserData"
+import { useGetUserPageInfoQuery } from "../../../store/req/userPage-slice-api"
 
 const Location = lazy(() => import("./userLocation/Location"))
 
 const ResponseUserInfo = () => {
   const [isOpen, setOpen] = useState(false)
-  const [isProfileModalVisible, setProfileModalVisible] = useState(false)
-  const [isBackgroundModalVisible, setBackgroundModalVisible] = useState(false)
-  const [user, setUser] = useState<user>()
-  const [image, setImage] = useState(user?.profileImg)
-  const [background, setBackground] = useState(user?.backgroundImg)
-  const [imageInput, setImageInput] = useState("")
-  const [backgroundInput, setBackgroundInput] = useState("")
+  const [isModalVisible, setModalVisible] = useState(false)
+  const [modalField, setModalField] = useState<"profileImg" | "backgroundImg">("")
   const { id } = useParams()
-  const [newId, setNewId] = useState(id)
-  const onload = async () => {
-    if (id && !user) {
-      UserData.getUser(id)
-        .then(res => {
-          setUser({
-            id: res.data._id,
-            email: res.data.email,
-            username: res.data.username,
-          })
-        })
-        .then(() => {
-          UserData.getUserFullInfo(id).then(res => {
-            setUser(prev => {
-              return { ...prev, ...res.data }
-            })
-          })
-        })
-    } else if (id !== newId) {
-      setNewId(id)
-    }
-  }
-  useEffect(() => {
-    onload().then(() => console.log(123))
-  }, [])
+  const { data: userPageInfo } = useGetUserPageInfoQuery(id as string)
+  console.log(userPageInfo)
   const editable = localStorage.getItem("userId") === id
+
+  const setBackgroundEditor = (name: typeof modalField, visible: boolean) => {
+    setModalVisible(visible)
+    setModalField(name)
+  }
+
   return (
     <UserWrapper
       onClick={() => {
-        setImageInput("")
-        setProfileModalVisible(false)
+        setModalVisible(false)
       }}>
-      {isProfileModalVisible && (
-        <UserModal
-          inputValue={imageInput}
-          setInputValue={setImageInput}
-          setModalVisible={setProfileModalVisible}
-          setImage={setImage}
-          field={"profileImg"}
-        />
-      )}
-      {isBackgroundModalVisible && (
-        <UserModal
-          inputValue={backgroundInput}
-          setInputValue={setBackgroundInput}
-          setModalVisible={setBackgroundModalVisible}
-          setImage={setBackground}
-          field={"backgroundImg"}
-        />
-      )}
+      {isModalVisible && <UserModal field={modalField} setModalVisible={setModalVisible} />}
       <DivWrapper>
         <span>
-          <BackgroundImg src={background || user?.backgroundImg || BACKGROUND_IMAGE} alt="Background" />
+          <BackgroundImg src={userPageInfo?.backgroundImg || BACKGROUND_IMAGE} alt="Background" />
           {editable && (
             <Ico
               eventListener={e => {
                 e.stopPropagation()
-                setBackgroundModalVisible(true)
+                setBackgroundEditor("backgroundImg", true)
               }}>
               edit
             </Ico>
@@ -95,12 +56,12 @@ const ResponseUserInfo = () => {
         </span>
         <ImgDiv>
           <div>
-            <Img src={image || user?.profileImg || PROFILE_IMAGE}></Img>
+            <Img src={userPageInfo?.profileImg || PROFILE_IMAGE}></Img>
             {editable && (
               <ImgSpan
                 onClick={e => {
                   e.stopPropagation()
-                  setProfileModalVisible(true)
+                  setBackgroundEditor("profileImg", true)
                 }}>
                 Change
               </ImgSpan>
@@ -109,11 +70,13 @@ const ResponseUserInfo = () => {
         </ImgDiv>
       </DivWrapper>
       <DivWrapper>
-        <ShortDescription>{user?.username}</ShortDescription>
+        <ShortDescription>{userPageInfo?.username}</ShortDescription>
         <InfoDescription>
           <InfoDescriptionFlex>
             <Suspense>
-              {(user?.location || editable) && <Location location={user?.location as string} editable={editable} />}
+              {(userPageInfo?.location || editable) && (
+                <Location location={userPageInfo?.location as string} editable={editable} />
+              )}
             </Suspense>
             <div onClick={() => setOpen(prev => !prev)} data-testid="moreInfoBtn">
               Detailed Info
@@ -122,7 +85,7 @@ const ResponseUserInfo = () => {
           </InfoDescriptionFlex>
         </InfoDescription>
         <InfoDescription data-testid="detailedInfo">
-          {isOpen && user && <DetailedUserInfo user={user} isEdit={editable} />}
+          {isOpen && userPageInfo && <DetailedUserInfo user={userPageInfo} isEdit={editable} />}
         </InfoDescription>
       </DivWrapper>
     </UserWrapper>

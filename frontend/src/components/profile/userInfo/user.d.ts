@@ -14,11 +14,8 @@ interface inLocationProps {
 }
 
 interface inUserModalProps {
-  field: keyof user | string
-  inputValue: string
-  setInputValue: (newVal: string) => void
   setModalVisible: (newVal: boolean) => void
-  setImage: (newVal: string) => void
+  field: string
 }
 
 interface inDetailedUserInfoProps {

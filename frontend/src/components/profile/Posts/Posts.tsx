@@ -2,31 +2,26 @@ import * as React from "react"
 import { PostsDivWrapper, PostCreate } from "./Posts-styled"
 import Post from "./Post"
 import { useParams } from "react-router-dom"
-import { useEffect, useState } from "react"
-import { postAttrs } from "../../../store/slices/users-store"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import UserModal from "../userInfo/userModal/UserModal"
 import { TransitionGroup, CSSTransition } from "react-transition-group"
 import "./PostsAnimation.css"
-import UserData from "../../../requests/UserData"
-import UserPostData from "../../../requests/UserPostData"
-import { postsResponse, useCreatePostMutation, useFetchPostsQuery } from "../../../store/req/posts-slice.api"
+import { useCreatePostMutation, useFetchPostsQuery } from "../../../store/req/posts-slice.api"
+
 const Posts = () => {
   const { id } = useParams()
   const [isAdditionalImageVisible, setAdditionalImageVisible] = useState(false)
   const [image, setImage] = useState<string>()
   const [imageInput, setImageInput] = useState("")
-  const userId = localStorage.getItem("userId")
-  const editable = userId === id
   const { reset, handleSubmit, register } = useForm<postAttrs>()
   const { data: postsData } = useFetchPostsQuery(id as string)
-  const [deletePostApi, {}] = useCreatePostMutation()
+  const [createPostApi, {}] = useCreatePostMutation()
+  const userId = localStorage.getItem("userId")
+  const editable = userId === id
   const submitHandler = async (data: postAttrs) => {
     const payload = { ...data, userId: id, dateOfCreate: new Date().toTimeString().slice(0, 8), postImage: image }
-    await UserPostData.sendPost(payload)
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-ignore "prev" must have a [SymbolIteratorMethod]()
-    setPosts(prev => [{ ...payload, id: Date.now() }, ...prev])
+    createPostApi(payload)
     reset()
   }
   return (
@@ -40,7 +35,6 @@ const Posts = () => {
           field={"postImage"}
         />
       )}
-      <button onClick={() => deletePostApi("63b68a181aca26a818f97e3f")}>button</button>
       {editable && (
         <PostCreate>
           <form onSubmit={handleSubmit(submitHandler)}>
@@ -53,9 +47,8 @@ const Posts = () => {
         </PostCreate>
       )}
       <TransitionGroup>
-        {postsData?.posts &&
-          userId &&
-          postsData.posts.map(post => (
+        {postsData &&
+          postsData.map(post => (
             <CSSTransition key={post._id} timeout={100} classNames="item">
               <Post
                 key={post._id}

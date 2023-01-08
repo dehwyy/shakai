@@ -15,19 +15,28 @@ const postsApi = createApi({
   }),
   tagTypes: ["Posts"],
   endpoints: build => ({
-    fetchPosts: build.query<{ posts: postsResponse[] }, string>({
+    fetchPosts: build.query<postsResponse[], string>({
       query: userId => `/getPostsByUserId?userId=${userId}`,
       providesTags: () => ["Posts"],
+      transformResponse: (res: { posts: postsResponse[] }) => res.posts.reverse(),
     }),
-    createPost: build.mutation<string, string>({
+    deletePost: build.mutation<string, string>({
       query: postId => ({
         url: `/deletePost?postId=${postId}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Posts"],
     }),
+    createPost: build.mutation<string, postAttrs>({
+      query: newPostData => ({
+        url: `/createPost`,
+        method: "POST",
+        body: newPostData,
+      }),
+      invalidatesTags: ["Posts"],
+    }),
   }),
 })
 
-export const { useFetchPostsQuery, useCreatePostMutation } = postsApi
+export const { useFetchPostsQuery, useDeletePostMutation, useCreatePostMutation } = postsApi
 export default postsApi

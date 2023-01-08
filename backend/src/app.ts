@@ -15,8 +15,8 @@ app.use(
   }),
 )
 app.use(cookieParser())
-app.use("/users", authRouter)
-app.use("/user", userRouter)
+app.use("/auth", authRouter)
+app.use("/userPage", userRouter)
 app.use("/posts", PostsRouter)
 app.use(errorMiddleware)
 export default app

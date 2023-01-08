@@ -6,10 +6,11 @@ import Ico from "../../../../UI/Ico"
 import { inUserModalProps } from "../user"
 import UserData from "../../../../requests/UserData"
 
-const UserModal: FC<inUserModalProps> = ({ inputValue, setInputValue, setModalVisible, setImage, field }) => {
+const UserModal: FC<inUserModalProps> = ({ setModalVisible, field }) => {
   const inputId = useId()
   const { id } = useParams()
   const [isModalError, setModalError] = useState(false)
+  const [inputValue, setInputValue] = useState("")
   return (
     <InputModal onClickFn={e => e.stopPropagation()}>
       <>
@@ -36,13 +37,9 @@ const UserModal: FC<inUserModalProps> = ({ inputValue, setInputValue, setModalVi
           <EditInfoButton
             onClick={async () => {
               if (inputValue.match(/.[(jpg)(png)(jpeg)]$/)) {
-                if (field === "postImage") {
+                if (field !== "postImage") {
                   console.log(field)
-                } else {
-                  const key = field as keyof user
-                  await UserData.updateUserInfo(id || "error", [{ field: key, fieldNewValue: inputValue }])
                 }
-                setImage(inputValue)
                 setInputValue("")
                 setModalVisible(false)
               } else {

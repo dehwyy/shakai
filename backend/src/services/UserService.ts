@@ -4,18 +4,14 @@ import * as mongoose from "mongoose"
 import UserDetailedInfo from "../models/UserDetailedInfo"
 
 class UserService {
-  async getUserById(id: string) {
+  async getUserMainInfo(id: string) {
     const userId = new mongoose.Types.ObjectId(id)
     const user = await User.findById(userId)
     return user
   }
-  async getUserInfoById(id: string) {
+  async getFullUserInfo(id: string) {
     const userId = new mongoose.Types.ObjectId(id)
-    const cols =
-      "userId briefInfo education dateOfBirth " +
-      "interests activity favouriteMusic favouriteBooks " +
-      "favouriteGames info profileImg backgroundImg location"
-    const userInfo = await UserDetailedInfo.findOne({ userId }, cols)
+    const userInfo = await UserDetailedInfo.findOne({ userId }).populate("userId")
     return userInfo
   }
   async getProfileImageById(id: string) {
