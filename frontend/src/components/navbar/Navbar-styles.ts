@@ -32,6 +32,7 @@ export const NavbarItemLast = styled(NavbarItem)`
   & img {
     border-radius: 50%;
     height: 50px;
+    object-fit: cover;
     width: 50px;
   }
 `

@@ -1,9 +1,13 @@
 import { Types } from "mongoose"
-import { JwtPayload } from "jsonwebtoken"
-
 declare module "express-serve-static-core" {
   interface Request {
-    userData: string | JwtPayload
+    flag: boolean
+  }
+}
+
+declare module "http" {
+  interface IncomingHttpHeaders {
+    authorization?: string
   }
 }
 

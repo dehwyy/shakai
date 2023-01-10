@@ -19,11 +19,11 @@ import { useNavigate } from "react-router-dom"
 import Ico from "../../UI/Ico"
 import passwordValidation from "./validation/passwordValidation"
 import emailValidation from "./validation/emailValidation"
-import AuthReq from "../../requests/AuthReq"
+import { useLoginMutation, useVerifyTokenQuery } from "../../store/req/currentUser-slice-api"
 
 const LoginFormRouter = () => {
   //prettier-ignore
-  const {register, formState: {errors, isValid}, reset, handleSubmit, getValues} = useForm({
+  const {register, formState: {errors, isValid}, reset, handleSubmit, getValues} = useForm<Partial<inLoginData>>({
     mode: "onBlur",
   })
   const [isReadyForSubmit, setReadyForSubmit] = useState(false)
@@ -34,25 +34,22 @@ const LoginFormRouter = () => {
   const [passwordError, setPasswordError] = useState<string>("")
   const navigate = useNavigate()
   const formRef = useRef<HTMLFormElement>(null)
-
-  const submitHandler = async (data: Partial<AllFieldsDataForm>) => {
-    const response = await AuthReq.login({ ...data, email, username }).catch(() => {
-      setPasswordError(`Wrong password or ${methodOfAuth}!`)
-    })
-    if (response) {
-      localStorage.setItem("currentUsername", response.data.data.user.username)
-      navigate(`content/profile/${response.data.data.user._id}`)
-    }
+  const [loginHandler, { isError }] = useLoginMutation()
+  const submitHandler = async (data: Partial<inLoginData>) => {
+    const password = data.password as string
+    const res = await loginHandler({ password, email, username })
+    isError && setPasswordError(`Wrong password or ${methodOfAuth}!`)
+    !isError && navigate(`content/profile/${(res as { data: userMainDataResponse })?.data?._id}`)
     reset()
   }
   const buttonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     if (isValid) {
       if (methodOfAuth === "email") {
-        setEmail(getValues().email)
+        setEmail(getValues().email as string)
         setUsernameHook("")
       } else {
-        setUsernameHook(getValues().username)
+        setUsernameHook(getValues().username as string)
         setEmail("")
       }
       setReadyForSubmit(true)

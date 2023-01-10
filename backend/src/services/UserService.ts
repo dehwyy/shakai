@@ -1,10 +1,9 @@
 import User from "../models/User"
-import { Schema } from "mongoose"
 import * as mongoose from "mongoose"
 import UserDetailedInfo from "../models/UserDetailedInfo"
 
 class UserService {
-  async getUserMainInfo(id: string) {
+  async getUserMainInfo(id: string | mongoose.Types.ObjectId) {
     const userId = new mongoose.Types.ObjectId(id)
     const user = await User.findById(userId)
     return user

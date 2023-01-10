@@ -2,7 +2,6 @@ import { inToken, inUserPublicData } from "../typing/Interfaces"
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
 import Token from "../models/Token"
-import { Types } from "mongoose"
 
 dotenv.config()
 
@@ -11,7 +10,7 @@ const rkey = process.env.REFRESH_SECRET || ""
 
 class TokenService {
   async generateTokens(userData: inUserPublicData) {
-    const accessToken = jwt.sign(userData, akey, { expiresIn: "30M" })
+    const accessToken = jwt.sign(userData, akey, { expiresIn: "15m" })
     const refreshToken = jwt.sign(userData, rkey, { expiresIn: "24h" })
     await this.setRefreshToken({
       userId: userData.userId,
@@ -40,7 +39,7 @@ class TokenService {
     return jwt.verify(rtoken, rkey) && (await this.findToken(rtoken))
   }
   async findToken(token: string) {
-    return Token.findOne({ token })
+    return Token.findOne({ refreshToken: token })
   }
 
   async removeToken(refreshToken: string) {

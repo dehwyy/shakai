@@ -13,7 +13,6 @@ const Posts = () => {
   const { id } = useParams()
   const [isAdditionalImageVisible, setAdditionalImageVisible] = useState(false)
   const [image, setImage] = useState<string>()
-  const [imageInput, setImageInput] = useState("")
   const { reset, handleSubmit, register } = useForm<postAttrs>()
   const { data: postsData } = useFetchPostsQuery(id as string)
   const [createPostApi, {}] = useCreatePostMutation()
@@ -23,17 +22,12 @@ const Posts = () => {
     const payload = { ...data, userId: id, dateOfCreate: new Date().toTimeString().slice(0, 8), postImage: image }
     createPostApi(payload)
     reset()
+    setImage("")
   }
   return (
     <PostsDivWrapper>
       {isAdditionalImageVisible && (
-        <UserModal
-          inputValue={imageInput}
-          setInputValue={setImageInput}
-          setModalVisible={setAdditionalImageVisible}
-          setImage={setImage}
-          field={"postImage"}
-        />
+        <UserModal setModalVisible={setAdditionalImageVisible} field={"postImage"} setImage={setImage} />
       )}
       {editable && (
         <PostCreate>
@@ -43,6 +37,11 @@ const Posts = () => {
               Add Image
             </button>
             <button type="submit">Post</button>
+            {image && (
+              <div>
+                <img src={image} />
+              </div>
+            )}
           </form>
         </PostCreate>
       )}
@@ -55,7 +54,7 @@ const Posts = () => {
                 currentId={post._id}
                 profileImg={""}
                 img={post?.postImage}
-                username={userId}
+                username={post?.userId}
                 text={post?.postText}
                 date={post?.dateOfCreate}
               />

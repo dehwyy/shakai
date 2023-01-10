@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
+import { baseQueryWithReAuth } from "./refetchBaseQuery"
 
 export interface postsResponse {
   _id: string
@@ -10,9 +11,7 @@ export interface postsResponse {
 
 const postsApi = createApi({
   reducerPath: "api/posts",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:727/posts",
-  }),
+  baseQuery: baseQueryWithReAuth("http://localhost:727/posts"),
   tagTypes: ["Posts"],
   endpoints: build => ({
     fetchPosts: build.query<postsResponse[], string>({

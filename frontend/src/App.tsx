@@ -1,6 +1,6 @@
 import * as React from "react"
 import styled, { ThemeProvider } from "styled-components"
-import { Navigate, Route, Routes } from "react-router-dom"
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom"
 import GlobalStyles from "./globalStyles/style"
 import Navbar from "./components/navbar/Navbar"
 import Profile from "./components/profile/Profile"
@@ -9,6 +9,8 @@ import Login from "./components/newAuthForm/Login"
 import Registration from "./components/newAuthForm/Registration"
 import { useEffect } from "react"
 import Redirect from "./components/Redirect"
+import { useVerifyTokenQuery } from "./store/req/currentUser-slice-api"
+import { useTypedSelector } from "./hooks/rtk-hooks"
 
 const AppWrapper = styled.div`
   background: ${props => props.theme.mainBackground};
@@ -33,9 +35,7 @@ const darkTheme = {
 }
 
 const App = () => {
-  useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken")
-  }, [])
+  useVerifyTokenQuery(null)
   return (
     <ThemeProvider theme={darkTheme}>
       <GlobalStyles />

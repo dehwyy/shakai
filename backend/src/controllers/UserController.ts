@@ -10,18 +10,15 @@ class UserController {
       // prettier-ignore
       const { userId, userData, }: {
         userId: Types.ObjectId
-        userData: TField[]
+        userData: TField
       } = req.body
       // prettier-ignore
-      await Promise.all(userData.map(async (fieldData: TField) => {
-          await UserInfoService.updateUserInfo(
-            userId,
-            fieldData.field,
-            fieldData.fieldNewValue,
-          )
-        }),
+      await UserInfoService.updateUserInfo(
+        userId,
+        userData.field,
+        userData.fieldNewValue,
       )
-      res.json("success in editUserInfo")
+      res.sendStatus(200)
     } catch (e) {
       next(e)
     }
@@ -29,7 +26,6 @@ class UserController {
   async getUserMainInfo(req: Request<object, object, object, { id: string }>, res: Response, next: NextFunction) {
     const { id } = req.query
     const user = await UserService.getUserMainInfo(id)
-    console.log(user)
     res.json(user)
   }
   async getFullUserInfo(req: Request<object, object, object, { id: string }>, res: Response, next: NextFunction) {

@@ -8,12 +8,15 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       return next(ErrorHandler.Unauthorized("no token"))
     }
     const token = req.headers.authorization.split(" ")[1]
-    const userValidationData = await TokenService.verifyAccessToken(token)
-    if (!userValidationData) {
-      return next(ErrorHandler.Unauthorized("invalid token"))
-    }
+    await TokenService.verifyAccessToken(token)
     next()
   } catch (e) {
-    return next(ErrorHandler.Unauthorized("invalid token"))
+    if (req.cookies.refreshToken && !String(e).match(/invalid signature/)) {
+      if (req.flag) {
+        next()
+      } else {
+        return res.status(307).json({ redirect: 307 })
+      }
+    } else return !req.flag ? res.status(401).json(e) : next()
   }
 }

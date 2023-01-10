@@ -13,28 +13,23 @@ import {
   UserWrapper,
 } from "./UserInfo-styles"
 import { DivWrapper } from "../Profile-styles"
-import DetailedUserInfo from "./detailedUserInfo/DetailedUserInfo"
+import Location from "./userLocation/Location"
 import { useParams } from "react-router-dom"
 import UserModal from "./userModal/UserModal"
-import UserData from "../../../requests/UserData"
 import { useGetUserPageInfoQuery } from "../../../store/req/userPage-slice-api"
+import DetailedUserInfo from "./detailedUserInfo/DetailedUserInfo"
 
-const Location = lazy(() => import("./userLocation/Location"))
-
-const ResponseUserInfo = () => {
+const UserPageInfo = () => {
   const [isOpen, setOpen] = useState(false)
   const [isModalVisible, setModalVisible] = useState(false)
-  const [modalField, setModalField] = useState<"profileImg" | "backgroundImg">("")
+  const [modalField, setModalField] = useState<"profileImg" | "backgroundImg">("profileImg")
   const { id } = useParams()
   const { data: userPageInfo } = useGetUserPageInfoQuery(id as string)
-  console.log(userPageInfo)
   const editable = localStorage.getItem("userId") === id
-
   const setBackgroundEditor = (name: typeof modalField, visible: boolean) => {
     setModalVisible(visible)
     setModalField(name)
   }
-
   return (
     <UserWrapper
       onClick={() => {
@@ -70,14 +65,10 @@ const ResponseUserInfo = () => {
         </ImgDiv>
       </DivWrapper>
       <DivWrapper>
-        <ShortDescription>{userPageInfo?.username}</ShortDescription>
+        <ShortDescription>{userPageInfo?.userId.username}</ShortDescription>
         <InfoDescription>
           <InfoDescriptionFlex>
-            <Suspense>
-              {(userPageInfo?.location || editable) && (
-                <Location location={userPageInfo?.location as string} editable={editable} />
-              )}
-            </Suspense>
+            {(userPageInfo?.location || editable) && <Location editable={editable} />}
             <div onClick={() => setOpen(prev => !prev)} data-testid="moreInfoBtn">
               Detailed Info
               <Ico>arrow_downward</Ico>
@@ -85,11 +76,11 @@ const ResponseUserInfo = () => {
           </InfoDescriptionFlex>
         </InfoDescription>
         <InfoDescription data-testid="detailedInfo">
-          {isOpen && userPageInfo && <DetailedUserInfo user={userPageInfo} isEdit={editable} />}
+          {isOpen && userPageInfo && <DetailedUserInfo isEdit={editable} />}
         </InfoDescription>
       </DivWrapper>
     </UserWrapper>
   )
 }
 
-export default ResponseUserInfo
+export default UserPageInfo

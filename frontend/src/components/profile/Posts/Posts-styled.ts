@@ -15,7 +15,8 @@ export const PostCreate = styled.div`
     grid-template: 1fr minmax(80px, 1vh) / 1fr 1fr;
     grid-template-areas:
       "textarea textarea"
-      "btn btn-submit";
+      "btn btn-submit"
+      "img-wrapper img-wrapper";
     padding: 15px;
     & textarea {
       background: ${props => props.theme.lighterBlockBackground};
@@ -31,6 +32,15 @@ export const PostCreate = styled.div`
       width: 100%;
       &:focus {
         outline: none;
+      }
+    }
+    & div {
+      grid-area: img-wrapper;
+      width: 90%;
+      margin: 0 auto;
+      & img {
+        max-width: 100%;
+        max-height: 100%;
       }
     }
     & button {

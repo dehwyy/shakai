@@ -5,10 +5,17 @@ import UserInfoService from "../services/UserInfoService"
 import { validationResult } from "express-validator"
 import ErrorHandler from "../errors/ErrorHandler"
 import tokenService from "../services/TokenService"
+import setNewTokens from "../middlewares/SetNewTokens"
+import TokenService from "../services/TokenService"
 
 class AuthController {
-  async getUsers(req: Request, res: Response) {
-    res.json(await AuthService.getAllUsers())
+  async verifyUserLogin(req: Request, res: Response, next: NextFunction) {
+    try {
+      const data = await setNewTokens(req, res, next)
+      res.json(data)
+    } catch (e) {
+      next(e)
+    }
   }
   async registration(req: Request<object, object, inUser>, res: Response, next: NextFunction) {
     try {
@@ -19,16 +26,7 @@ class AuthController {
       const { email, username, password } = req.body
       const data = await AuthService.reg(email, username, password)
       await UserInfoService.createUserInfo(data.userId)
-      res.cookie("refreshToken", data.tokens.refreshToken, {
-        maxAge: 24 * 60 * 60 * 1000,
-        httpOnly: true,
-      })
-      res.json({
-        message: "success in reg",
-        userId: data.userId,
-        username,
-        accessToken: data.tokens.accessToken,
-      })
+      res.json({ statusCode: 200 })
     } catch (e) {
       next(e)
     }
@@ -37,12 +35,15 @@ class AuthController {
   async login(req: Request<object, object, inDataToLogin>, res: Response, next: NextFunction) {
     try {
       const { email, username, password } = req.body
-      const data = await AuthService.login(email, username, password)
-      res.cookie("refreshToken", data.tokens.refreshToken, {
+      const {
+        tokens,
+        user: { username: usernameRes, email: emailRes, _id: _idRes },
+      } = await AuthService.login(email, username, password)
+      res.cookie("refreshToken", tokens.refreshToken, {
         maxAge: 24 * 60 * 60 * 1000,
         httpOnly: true,
       })
-      res.json({ message: "success in login", data })
+      res.json({ user: { username: usernameRes, email: emailRes, _id: _idRes }, accessToken: tokens.accessToken })
     } catch (e) {
       next(e)
     }
@@ -51,8 +52,7 @@ class AuthController {
     try {
       await tokenService.removeToken(req.cookies.refreshToken)
       res.clearCookie("refreshToken")
-      console.log("refreshToken")
-      res.sendStatus(200)
+      res.end()
     } catch (e) {
       next(e)
     }

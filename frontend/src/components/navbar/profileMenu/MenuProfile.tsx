@@ -1,14 +1,19 @@
 import * as React from "react"
 import { MenuBody, MenuItem, MenuWrapper } from "./MenuProfile-style"
 import Ico from "../../../UI/Ico"
-import { Link, useParams } from "react-router-dom"
-import AuthReq from "../../../requests/AuthReq"
+import { Link, redirect, useNavigate, useParams } from "react-router-dom"
+import { useTypedSelector } from "../../../hooks/rtk-hooks"
+import { useLogoutMutation } from "../../../store/req/currentUser-slice-api"
+import { useEffect } from "react"
 
 const MenuProfile = () => {
-  const currentUserId = localStorage.getItem("userId")
-  const profileText = currentUserId ? "Profile" : "Authorization"
+  const isAuth = useTypedSelector(state => state.currentUser.isAuth)
+  const currentUserId = useTypedSelector(state => state.currentUser._id)
+  const profileText = isAuth ? "Profile" : "Authorization"
   const { id } = useParams()
+  const navigate = useNavigate()
   const page = currentUserId !== id && (currentUserId ? `/content/redirect/${currentUserId}` : "/")
+  const [logout] = useLogoutMutation()
   return (
     <MenuWrapper>
       <MenuBody>
@@ -22,10 +27,10 @@ const MenuProfile = () => {
           <Ico> settings </Ico>
           Settings
         </MenuItem>
-        {currentUserId && (
+        {isAuth && (
           <MenuItem
             onClick={async () => {
-              await AuthReq.logout()
+              await logout()
             }}>
             <Ico> exit_to_app </Ico>
             Log out

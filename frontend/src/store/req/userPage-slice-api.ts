@@ -1,40 +1,16 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-
-interface userMainDataResponse {
-  _id: string
-  email: string
-  username: string
-}
-
-type userPageFullInfoKeysT =
-  | "_id"
-  | "briefInfo"
-  | "education"
-  | "dateOfBirth"
-  | "interests"
-  | "activity"
-  | "favouriteMusic"
-  | "favouriteBooks"
-  | "favouriteGames"
-  | "info"
-  | "profileImg"
-  | "backgroundImg"
-  | "location"
-
-type userFullInfoT = { [key in userPageFullInfoKeysT]: string } & { userId: userMainDataResponse }
+import { baseQueryWithReAuth } from "./refetchBaseQuery"
 
 const userPageApi = createApi({
   reducerPath: "api/userPage",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:727/userPage",
-  }),
+  baseQuery: baseQueryWithReAuth("http://localhost:727/userPage"),
   tagTypes: ["userPageInfo"],
   endpoints: build => ({
     getUserPageInfo: build.query<userFullInfoT, string>({
       query: userId => `/getUserPageInfo?id=${userId}`,
       providesTags: () => ["userPageInfo"],
     }),
-    updateUserPageInfo: build.mutation<unknown, unknown>({
+    updateUserPageInfo: build.mutation<void, userUpdateFieldRequest>({
       query: data => ({
         url: "/editUserPageInfo",
         body: data,
@@ -44,5 +20,5 @@ const userPageApi = createApi({
     }),
   }),
 })
-export const { useGetUserPageInfoQuery } = userPageApi
+export const { useGetUserPageInfoQuery, useUpdateUserPageInfoMutation } = userPageApi
 export default userPageApi

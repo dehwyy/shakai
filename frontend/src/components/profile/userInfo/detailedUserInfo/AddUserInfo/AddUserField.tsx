@@ -1,40 +1,41 @@
 import * as React from "react"
 import { AddUserFieldWrapper, UserInfoChoiceWrapper, UserInfoChoice } from "./AddUserField-style"
-import { FC, useState } from "react"
+import { useMemo, useState } from "react"
+import { useGetUserPageInfoQuery, useUpdateUserPageInfoMutation } from "../../../../../store/req/userPage-slice-api"
+import { useParams } from "react-router-dom"
+import { userPageInfoFields } from "../../../../../store/immutable"
 
-type argT = Omit<user, "username" | "id" | "email" | "friends">
-interface inAddUserField {
-  setData: (arg: Partial<Record<keyof argT, string>>) => void
-  user: user
-}
-const AddUserField: FC<inAddUserField> = ({ setData, user }) => {
+const AddUserField = () => {
   const [isOpen, setOpen] = useState(false)
-  return (
+  const { id } = useParams()
+  const { data: userPageInfo } = useGetUserPageInfoQuery(id as string)
+  const [updateUserInfo, {}] = useUpdateUserPageInfoMutation()
+  const fields = useMemo(() => userPageInfoFields, [])
+  const fieldsToRender =
+    userPageInfo &&
+    //prettier-ignore
+    fields.map((field, i) => !userPageInfo[field.fieldToUpdate] && (
+          <UserInfoChoice
+            key={i}
+            onClick={() =>
+              updateUserInfo({
+                userId: id as string,
+                userData: { field: field.fieldToUpdate, fieldNewValue: "string" },
+              })
+            }>
+            {(field && field.customText) || field.fieldToUpdate}
+          </UserInfoChoice>
+        ),
+    )
+  return fieldsToRender?.find(field => field) ? (
     <>
       <AddUserFieldWrapper onClick={() => setOpen(prev => !prev)}>
         <span>Edit info</span>
       </AddUserFieldWrapper>
-      {isOpen && (
-        <UserInfoChoiceWrapper>
-          {!user.dateOfBirth && (
-            <UserInfoChoice onClick={() => setData({ dateOfBirth: " " })}>dateOfBirth</UserInfoChoice>
-          )}
-          {!user.interests && <UserInfoChoice onClick={() => setData({ interests: " " })}>interests</UserInfoChoice>}
-          {!user.education && <UserInfoChoice onClick={() => setData({ education: " " })}>education</UserInfoChoice>}
-          {!user.activity && <UserInfoChoice onClick={() => setData({ activity: " " })}>activity</UserInfoChoice>}
-          {!user.info && <UserInfoChoice onClick={() => setData({ info: " " })}>info</UserInfoChoice>}
-          {!user.favouriteGames && (
-            <UserInfoChoice onClick={() => setData({ favouriteGames: " " })}>FavouriteGames</UserInfoChoice>
-          )}
-          {!user.favouriteBooks && (
-            <UserInfoChoice onClick={() => setData({ favouriteBooks: " " })}>FavouriteBooks</UserInfoChoice>
-          )}
-          {!user.favouriteMusic && (
-            <UserInfoChoice onClick={() => setData({ favouriteMusic: " " })}>FavouriteMusic</UserInfoChoice>
-          )}
-        </UserInfoChoiceWrapper>
-      )}
+      {isOpen && <UserInfoChoiceWrapper>{fieldsToRender}</UserInfoChoiceWrapper>}
     </>
+  ) : (
+    <></>
   )
 }
 

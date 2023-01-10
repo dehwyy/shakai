@@ -2,25 +2,19 @@ import * as React from "react"
 import { useEffect, useState } from "react"
 import { NavbarWrapper, NavbarItem, NavbarItemFirst, NavbarItemLast } from "./Navbar-styles"
 import Ico from "../../UI/Ico"
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import MenuProfile from "./profileMenu/MenuProfile"
-import UserData from "../../requests/UserData"
+import { useGetUserPageInfoQuery } from "../../store/req/userPage-slice-api"
+import { useLogoutMutation } from "../../store/req/currentUser-slice-api"
 
 const Navbar = () => {
   const [isVisibleMenu, setVisibleMenu] = useState<boolean>(false)
-  const { id } = useParams()
-  const navigate = useNavigate()
-  const userId = localStorage.getItem("userId") as string
   const [img, setImg] = useState("")
+  const { id } = useParams()
+  const { data: userPageData } = useGetUserPageInfoQuery(id as string)
   useEffect(() => {
-    ;(async () => {
-      if (!id) {
-        navigate(userId)
-      }
-      const image = await UserData.getUserImageById(userId)
-      setImg(image)
-    })()
-  }, [])
+    setImg(userPageData?.profileImg as string)
+  }, [userPageData?.profileImg])
   return (
     <NavbarWrapper>
       <NavbarItemFirst>
@@ -34,7 +28,7 @@ const Navbar = () => {
         </Link>
       </NavbarItem>
       <NavbarItemLast onClick={() => setVisibleMenu(prev => !prev)}>
-        {img ? <img src={img} /> : <Ico>account_circle</Ico>}
+        {img ? <img src={img} alt="profileImage" /> : <Ico>account_circle</Ico>}
         {isVisibleMenu && <MenuProfile />}
       </NavbarItemLast>
     </NavbarWrapper>

@@ -3,64 +3,58 @@ import { FC, useMemo, useState } from "react"
 import Ico from "../../../../UI/Ico"
 import { useParams } from "react-router-dom"
 import { EditFieldInput, EditInfoButton } from "./DetailedUserInfo-styles"
-import { inInfoTemplateProps } from "../user"
-import UserData from "../../../../requests/UserData"
+import { useGetUserPageInfoQuery, useUpdateUserPageInfoMutation } from "../../../../store/req/userPage-slice-api"
 
-const clickHandler = async (
-  id: string,
-  newFieldData: { field: keyof user; fieldNewValue: string },
-  resetInitValue: (arg: string) => void,
-  setEditMode: (arg: boolean) => void,
-) => {
-  resetInitValue(newFieldData.fieldNewValue)
-  setEditMode(false)
-  await UserData.updateUserInfo(id, [newFieldData])
-}
-export const InfoTemplate: FC<inInfoTemplateProps> = ({ param, paramString, isEdit, ico, customText = null }) => {
-  const [initValue, resetInitValue] = useState<string>(param)
-  const [inputValue, setInputValue] = useState<string>(param)
-  const [isEditMode, setEditMode] = useState(false)
+export const InfoTemplate: FC<inInfoTemplateProps> = ({ prop, isEdit, ico, customText = null }) => {
   const { id } = useParams()
-  const capitalizedText = useMemo(() => customText || paramString.charAt(0).toUpperCase() + paramString.slice(1), [])
+  const { data: userPageData } = useGetUserPageInfoQuery(id as string)
+  const fieldValue = useMemo(() => userPageData && userPageData[prop], [(userPageData as userFullInfoT)[prop]])
+  const capitalizedText = useMemo(() => prop.charAt(0).toUpperCase() + prop.slice(1), [])
+  const [isEditMode, setEditMode] = useState(false)
+  const [inputValue, setInputValue] = useState<string | undefined>(fieldValue)
+  const [updateUserInfo, {}] = useUpdateUserPageInfoMutation()
   return (
     <div
-      onClick={() => {
+      onMouseDown={() => {
         setEditMode(false)
+        setInputValue(fieldValue)
       }}>
-      <Ico ExtraComponent={() => <span>{capitalizedText}:</span>}>{ico}</Ico>
+      <Ico ExtraComponent={() => <span>{customText || capitalizedText}:</span>}>{ico}</Ico>
       {!isEditMode ? (
         <>
-          <span style={{ paddingLeft: "1rem" }}>{initValue}</span>
           {isEdit && (
             <Ico
               eventListener={e => {
-                setInputValue(initValue)
                 e.stopPropagation()
                 setEditMode(true)
               }}>
               create
             </Ico>
           )}
+          <span style={{ paddingLeft: "1rem" }}>{fieldValue}</span>
         </>
       ) : (
         <>
           <EditFieldInput
             value={inputValue}
             onChange={e => setInputValue(e.target.value)}
-            onClick={e => e.stopPropagation()}
+            onMouseDown={e => e.stopPropagation()}
           />
         </>
       )}
-      {initValue !== inputValue && id && (
+      {isEditMode && inputValue !== fieldValue && (
         <EditInfoButton
-          onClick={() => {
-            clickHandler(
-              id,
-              { field: paramString as keyof user, fieldNewValue: inputValue },
-              resetInitValue,
-              setEditMode,
-            )
-          }}>
+          onClick={async () => {
+            await updateUserInfo({
+              userId: id as string,
+              userData: {
+                field: prop,
+                fieldNewValue: inputValue as string,
+              },
+            })
+            setEditMode(false)
+          }}
+          onMouseDown={e => e.stopPropagation()}>
           submit
         </EditInfoButton>
       )}

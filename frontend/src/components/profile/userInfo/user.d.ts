@@ -1,26 +1,35 @@
-import { user } from "../../../store/slices/users-store"
-
 interface inInfoTemplateProps {
-  param: string
-  paramString: string
+  prop: userPageFullInfoKeysT
   isEdit: boolean
   ico: string
   customText?: string | null
 }
 
 interface inLocationProps {
-  location: string
   editable: boolean
 }
 
 interface inUserModalProps {
   setModalVisible: (newVal: boolean) => void
-  field: string
+  field: userPageFullInfoKeysT | "postImage"
+  setImage?: (image: string) => void
 }
+
+type userPageFullInfoKeysT =
+  | "_id"
+  | "briefInfo"
+  | "education"
+  | "dateOfBirth"
+  | "interests"
+  | "activity"
+  | "favouriteMusic"
+  | "favouriteBooks"
+  | "favouriteGames"
+  | "info"
+  | "profileImg"
+  | "backgroundImg"
+  | "location"
 
 interface inDetailedUserInfoProps {
-  user: user
   isEdit: boolean
 }
-
-type argT = Omit<user, "username" | "id" | "email" | "friends">

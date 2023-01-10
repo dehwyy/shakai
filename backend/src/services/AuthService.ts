@@ -49,10 +49,6 @@ class AuthService {
   async isUserInDb(email: string | undefined, username: string | undefined) {
     return (await this.findUserByEmail(email)) || (await this.findUserByUsername(username))
   }
-
-  async getAllUsers() {
-    return User.find()
-  }
 }
 
 export default new AuthService()

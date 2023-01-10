@@ -3,28 +3,30 @@ import Ico from "../../../../UI/Ico"
 import { EditFieldInput } from "../detailedUserInfo/DetailedUserInfo-styles"
 import { useParams } from "react-router-dom"
 import { FC, useState } from "react"
-import { inLocationProps } from "../user"
-import UserData from "../../../../requests/UserData"
+import { useGetUserPageInfoQuery, useUpdateUserPageInfoMutation } from "../../../../store/req/userPage-slice-api"
 
-const Location: FC<inLocationProps> = ({ location, editable }) => {
+const Location: FC<inLocationProps> = ({ editable }) => {
   const { id } = useParams()
-  const [inputValue, setInputValue] = useState(location)
-  const [userLocation, setUserLocation] = useState(location)
+  const { data: userInfoData } = useGetUserPageInfoQuery(id as string)
+  const [updateUserInfo, {}] = useUpdateUserPageInfoMutation()
+  const [inputValue, setInputValue] = useState(userInfoData?.location || "")
   const [isEditLocation, setEditLocation] = useState(false)
   return (
     <div>
       <Ico>place</Ico>
-      {isEditLocation ? (
+      {isEditLocation && (inputValue || isEditLocation) ? (
         <EditFieldInput value={inputValue} onChange={e => setInputValue(e.target.value)} />
       ) : (
-        <span>{userLocation || location || "Write your location..."}</span>
+        <span>{userInfoData?.location || "Write your location..."}</span>
       )}
       {editable &&
         (isEditLocation ? (
           <Ico
-            eventListener={async () => {
-              setUserLocation(inputValue || " ")
-              await UserData.updateUserInfo(id || "error", [{ field: "location", fieldNewValue: inputValue }])
+            eventListener={() => {
+              updateUserInfo({
+                userId: id as string,
+                userData: { field: "location", fieldNewValue: inputValue as string },
+              })
               setEditLocation(false)
             }}>
             check
