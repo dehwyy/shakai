@@ -18,6 +18,7 @@ import { useParams } from "react-router-dom"
 import UserModal from "./userModal/UserModal"
 import { useGetUserPageInfoQuery } from "../../../store/req/userPage-slice-api"
 import DetailedUserInfo from "./detailedUserInfo/DetailedUserInfo"
+import { useTypedSelector } from "../../../hooks/rtk-hooks"
 
 const UserPageInfo = () => {
   const [isOpen, setOpen] = useState(false)
@@ -25,7 +26,7 @@ const UserPageInfo = () => {
   const [modalField, setModalField] = useState<"profileImg" | "backgroundImg">("profileImg")
   const { id } = useParams()
   const { data: userPageInfo } = useGetUserPageInfoQuery(id as string)
-  const editable = localStorage.getItem("userId") === id
+  const editable = useTypedSelector(state => state.currentUser._id) === id
   const setBackgroundEditor = (name: typeof modalField, visible: boolean) => {
     setModalVisible(visible)
     setModalField(name)

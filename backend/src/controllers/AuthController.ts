@@ -25,8 +25,14 @@ class AuthController {
       }
       const { email, username, password } = req.body
       const data = await AuthService.reg(email, username, password)
+      const { userId, tokens } = data
+      const { accessToken, refreshToken } = tokens
       await UserInfoService.createUserInfo(data.userId)
-      res.json({ statusCode: 200 })
+      res.cookie("refreshToken", refreshToken, {
+        maxAge: 24 * 60 * 60 * 1000,
+        httpOnly: true,
+      })
+      res.json({ _id: userId, accessToken })
     } catch (e) {
       next(e)
     }

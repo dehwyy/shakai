@@ -24,6 +24,7 @@ const currentUserStore = createSlice({
       state.isAuth = true
     })
     builder.addMatcher(currentUserApi.endpoints.logout.matchFulfilled, state => {
+      localStorage.removeItem("accessToken")
       state.email = ""
       state._id = ""
       state.username = ""

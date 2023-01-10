@@ -8,6 +8,8 @@ import UserModal from "../userInfo/userModal/UserModal"
 import { TransitionGroup, CSSTransition } from "react-transition-group"
 import "./PostsAnimation.css"
 import { useCreatePostMutation, useFetchPostsQuery } from "../../../store/req/posts-slice.api"
+import { useTypedSelector } from "../../../hooks/rtk-hooks"
+import { useGetUserPageInfoQuery } from "../../../store/req/userPage-slice-api"
 
 const Posts = () => {
   const { id } = useParams()
@@ -16,8 +18,8 @@ const Posts = () => {
   const { reset, handleSubmit, register } = useForm<postAttrs>()
   const { data: postsData } = useFetchPostsQuery(id as string)
   const [createPostApi, {}] = useCreatePostMutation()
-  const userId = localStorage.getItem("userId")
-  const editable = userId === id
+  const { data } = useGetUserPageInfoQuery(id as string)
+  const editable = useTypedSelector(state => state.currentUser._id) === id
   const submitHandler = async (data: postAttrs) => {
     const payload = { ...data, userId: id, dateOfCreate: new Date().toTimeString().slice(0, 8), postImage: image }
     createPostApi(payload)
@@ -52,7 +54,7 @@ const Posts = () => {
               <Post
                 key={post._id}
                 currentId={post._id}
-                profileImg={""}
+                profileImg={data?.profileImg || ""}
                 img={post?.postImage}
                 username={post?.userId}
                 text={post?.postText}

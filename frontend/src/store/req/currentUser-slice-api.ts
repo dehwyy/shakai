@@ -11,7 +11,7 @@ const currentUserApi = createApi({
   }),
   tagTypes: ["currentUserData"],
   endpoints: build => ({
-    verifyToken: build.query<userMainDataResponse, any>({
+    verifyToken: build.query<userMainDataResponse, null>({
       query: () => ({
         url: "/verifyUser",
       }),
@@ -33,13 +33,16 @@ const currentUserApi = createApi({
       },
       invalidatesTags: ["currentUserData"],
     }),
-    registration: build.mutation<number, Required<inLoginData>>({
+    registration: build.mutation<registrationResponse, Required<inLoginData>>({
       query: userData => ({
         url: "/registration",
         method: "POST",
         body: userData,
       }),
-      transformResponse: (res: { statusCode: number }) => res.statusCode,
+      transformResponse: (res: registrationResponse & verifyToken) => {
+        localStorage.setItem("accessToken", res.accessToken)
+        return res
+      },
       invalidatesTags: ["currentUserData"],
     }),
     logout: build.mutation<void, void>({

@@ -11,7 +11,6 @@ const MenuProfile = () => {
   const currentUserId = useTypedSelector(state => state.currentUser._id)
   const profileText = isAuth ? "Profile" : "Authorization"
   const { id } = useParams()
-  const navigate = useNavigate()
   const page = currentUserId !== id && (currentUserId ? `/content/redirect/${currentUserId}` : "/")
   const [logout] = useLogoutMutation()
   return (

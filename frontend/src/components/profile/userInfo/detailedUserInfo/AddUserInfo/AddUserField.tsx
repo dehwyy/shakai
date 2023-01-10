@@ -20,7 +20,7 @@ const AddUserField = () => {
             onClick={() =>
               updateUserInfo({
                 userId: id as string,
-                userData: { field: field.fieldToUpdate, fieldNewValue: "string" },
+                userData: { field: field.fieldToUpdate, fieldNewValue: " " },
               })
             }>
             {(field && field.customText) || field.fieldToUpdate}

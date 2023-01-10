@@ -34,12 +34,13 @@ const LoginFormRouter = () => {
   const [passwordError, setPasswordError] = useState<string>("")
   const navigate = useNavigate()
   const formRef = useRef<HTMLFormElement>(null)
-  const [loginHandler, { isError }] = useLoginMutation()
+  const [loginHandler] = useLoginMutation()
   const submitHandler = async (data: Partial<inLoginData>) => {
     const password = data.password as string
     const res = await loginHandler({ password, email, username })
-    isError && setPasswordError(`Wrong password or ${methodOfAuth}!`)
-    !isError && navigate(`content/profile/${(res as { data: userMainDataResponse })?.data?._id}`)
+    const error = (res as inErrorResponse)?.error
+    error && setPasswordError(`Wrong password or ${methodOfAuth}!`)
+    !error && navigate(`content/profile/${(res as { data: userMainDataResponse })?.data?._id}`)
     reset()
   }
   const buttonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {

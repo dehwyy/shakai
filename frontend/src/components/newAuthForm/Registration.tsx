@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form"
 import emailValidation from "./validation/emailValidation"
 import usernameValidation from "./validation/usernameValidation"
 import passwordValidation from "./validation/passwordValidation"
-import AuthReq from "../../requests/AuthReq"
+import { useRegistrationMutation } from "../../store/req/currentUser-slice-api"
 
 const Registration = () => {
   //prettier-ignore
@@ -23,11 +23,11 @@ const Registration = () => {
     mode: "onBlur",
   })
   const navigate = useNavigate()
-  const submitHandler = async (data: AllFieldsDataForm) => {
-    const response = await AuthReq.regUser(data)
-    if (response) {
-      navigate(`/content/profile/${response.userId}`)
-    }
+  const [registration] = useRegistrationMutation()
+  const submitHandler = async (formData: AllFieldsDataForm) => {
+    const res = await registration(formData)
+    const userId = (res as { data: registrationResponse }).data._id
+    userId && navigate(`/content/profile/${userId}`)
     reset()
   }
   const required = { required: { value: true, message: "field is required" } }
