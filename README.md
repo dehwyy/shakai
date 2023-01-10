@@ -26,3 +26,13 @@
 - 29.12.2022(UTC: ~20:00) - started refactoring login and registration form cuz it was hell
 - 30.12.2022(UTC: ~0:00) - refactored registration & login
 - 31.12.2022(UTC: 23:00) - made unique user pages & linked them to backend(user's full info)
+- 1.12.2023 - add managing userPageInfo
+- 2.12.2023 - add opportunity to change profile images
+- 3.12.2023 - refactored code & end up with userPageInfo
+- 4.12.2023 - started development of posts interaction
+- 5.12.2023 - since that date, post could be added
+- 6.12.2023 - react-transition, finished functionality of userPage
+- 8.12.2023 - realised that I made a shit - demolished rtk for future migrating from axios to rtk query and also for clean code
+- 8.12.2023 - setup basement of rtk query & etc
+- 9.12.2023 - remaking endpoints and managing them on front part
+- 10.12.2023 - fully migrated to rtk q (q stands for query; now and for future), I'm going to make client side customization - 2-3 app theme; going to make app looks prettier: transition, adaptive & etc; time will tell  
