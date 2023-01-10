@@ -1,13 +1,62 @@
 # Fullstack Social Network
 
+## Technologies stack:
+
+<div style="color:#6383d7; font-size: 25px">
+Typescript
+</div>
+<div style="color:#148ef8; font-size: 25px">
+React
+</div>
+<div style="color:#4a3bf8; font-size: 25px">
+Styled-components
+</div>
+<div style="color:#9918e3; font-size: 25px">
+Redux Toolkit
+</div>
+<div style="color:#37b4e1; font-size: 25px">
+React-transition-group
+</div>
+<div style="color:#b43de6; font-size: 25px">
+React-hook-form
+</div>
+<div style="color:#5c7bc3; font-size: 25px">
+React-router-v6
+</div>
+<div style="color:#ffffff; font-size: 25px">
+Express + validator
+</div>
+<div style="color:#3ada67; font-size: 25px">
+MongoDB + mongoose
+</div>
+<div style="color:#d7c145; font-size: 25px">
+JWT
+</div>
+<div style="color:#5c7bc3; font-size: 25px">
+Websockets????(soon, I guess)
+</div>
+<span style="color:#ea8430; font-size: 25px">
+Jest<span style="color:#dc6633!important; position: relative; left: 5px; color:#3A5FB4; font-size: 15px">for integration & unit tests </span>
+</span>
+<div style="color:#52c736; font-size: 25px">
+Vite
+</div>
+<div style="color:#cce32e; font-size: 25px">
+Babel
+</div>
+<div style="color:#cce32e; font-size: 25px">
+ESLint
+</div>
+<div style="color:#cce32e; font-size: 25px">
+Prettier
+</div>
+
 ## Here is a plan:
 
 - make maintainable project with test, typescript, linters:
-- going to use `mongo` + `express` + `react` (MERN) to make fullstack app with restful api
+- going to use `mongo` + `express` + `react` (MERN) to make fullstack app
 - Going to do 2 build modes: production && development
 - Live chat on `websockets` soon...
-
-> this is my first time using `babel`, `jest`, `react-testing-library`, `express` with `typescript` + `react hook form`(since 25.12.2022), `eslint`, `prettier`
 
 ## archive
 
