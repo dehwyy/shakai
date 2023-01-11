@@ -9,7 +9,7 @@ import {
   InfoWrapper,
   LocationSpan,
 } from "./User-style"
-import { PROFILE_IMAGE } from "../../../img/profile"
+import { PROFILE_IMAGE } from "../../../static/profile"
 import Ico from "../../../UI/Ico"
 import { FC } from "react"
 

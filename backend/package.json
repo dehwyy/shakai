@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/server.js",
-  "type": "module",
   "engines": {
     "node": ">=15"
   },
   "scripts": {
-    "build": "tsc --watch",
+    "build": "ts-node .\\esbuild-config.ts",
     "dev": "nodemon  src/server.ts --port 1727",
+    "preview": "cross-env MODE=dev ts-node .\\esbuild-config.ts",
     "test": "jest"
   },
   "keywords": [],
@@ -19,6 +19,7 @@
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-validator": "^6.14.2",
@@ -39,6 +40,7 @@
     "@types/supertest": "^2.0.12",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "esbuild": "^0.16.16",
     "jest": "^29.3.1",
     "nodemon": "^2.0.20",
     "prettier": "^2.8.1",

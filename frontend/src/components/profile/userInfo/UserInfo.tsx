@@ -1,6 +1,6 @@
 import * as React from "react"
-import { lazy, useEffect, Suspense, useState } from "react"
-import { BACKGROUND_IMAGE, PROFILE_IMAGE } from "../../../img/profile"
+import { useState } from "react"
+import { BACKGROUND_IMAGE, PROFILE_IMAGE } from "../../../static/profile"
 import Ico from "../../../UI/Ico"
 import {
   BackgroundImg,

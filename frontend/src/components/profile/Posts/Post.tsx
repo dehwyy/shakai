@@ -1,7 +1,7 @@
 import * as React from "react"
 import { FC } from "react"
 import { PostDivWrapper, PostHeader, PostBody, PostMessage } from "./Posts-styled"
-import { PROFILE_IMAGE } from "../../../img/profile"
+import { PROFILE_IMAGE } from "../../../static/profile"
 import Ico from "../../../UI/Ico"
 import { useDeletePostMutation } from "../../../store/req/posts-slice.api"
 

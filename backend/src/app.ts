@@ -6,13 +6,12 @@ import errorMiddleware from "./middlewares/errorMiddleware"
 import userRouter from "./routers/UserRouter"
 import PostsRouter from "./routers/PostsRouter"
 import authMiddlware from "./middlewares/AuthMiddlware"
-
 const app: Express = express()
 app.use(json())
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:1727",
+    origin: "http://localhost:4173",
   }),
 )
 app.use(cookieParser())

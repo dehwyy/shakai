@@ -2,7 +2,7 @@ import styled from "styled-components"
 export const MenuWrapper = styled.div`
   position: absolute;
   right: -20px;
-  top: 48.5px;
+  top: 53.5px;
 `
 
 export const MenuBody = styled.div`

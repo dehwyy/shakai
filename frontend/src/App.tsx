@@ -1,16 +1,8 @@
 import * as React from "react"
 import styled, { ThemeProvider } from "styled-components"
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom"
 import GlobalStyles from "./globalStyles/style"
-import Navbar from "./components/navbar/Navbar"
-import Profile from "./components/profile/Profile"
-import Users from "./components/users/Users"
-import Login from "./components/newAuthForm/Login"
-import Registration from "./components/newAuthForm/Registration"
-import { useEffect } from "react"
-import Redirect from "./components/Redirect"
 import { useVerifyTokenQuery } from "./store/req/currentUser-slice-api"
-import { useTypedSelector } from "./hooks/rtk-hooks"
+import RoutesWrapper from "./routes/App-routes"
 
 const AppWrapper = styled.div`
   background: ${props => props.theme.mainBackground};
@@ -32,6 +24,7 @@ const darkTheme = {
   lighterBlueColor: "#4672d7",
   fontColor: "white",
   greenColor: "#4CAF50",
+  userFz: 18,
 }
 
 const App = () => {
@@ -40,31 +33,7 @@ const App = () => {
     <ThemeProvider theme={darkTheme}>
       <GlobalStyles />
       <AppWrapper>
-        <Routes>
-          <Route path={"*"} element={<Login />} />
-          <Route path={"registration"} element={<Registration />} />
-          <Route path={"content"}>
-            <Route
-              path={"profile/:id"}
-              element={
-                <>
-                  <Navbar />
-                  <Profile />
-                </>
-              }
-            />
-            <Route
-              path={"users/:id"}
-              element={
-                <>
-                  <Navbar />
-                  <Users />
-                </>
-              }
-            />
-            <Route path={"redirect/:id"} element={<Redirect url={"/content/profile/"} />} />
-          </Route>
-        </Routes>
+        <RoutesWrapper />
       </AppWrapper>
     </ThemeProvider>
   )

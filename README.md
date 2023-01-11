@@ -44,7 +44,7 @@ Vite
 <div style="color:#cce32e; font-size: 25px">
 Babel
 </div>
-<div style="color:#cce32e; font-size: 25px">
+<div style="color:#ff416b; font-size: 25px">
 ESLint
 </div>
 <div style="color:#cce32e; font-size: 25px">
