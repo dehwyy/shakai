@@ -1,6 +1,7 @@
 # Fullstack Social Network
 
 ## Technologies stack:
+<<<<<<< HEAD
 
 <div style="color:#6383d7; font-size: 25px">
 Typescript
@@ -50,6 +51,24 @@ ESLint
 <div style="color:#cce32e; font-size: 25px">
 Prettier
 </div>
+=======
+$\color[RGB]{99,131,215} Typescript$ <br>
+$\color[RGB]{20,142,248} React$ <br>
+$\color[RGB]{74,59,248} Styled-components$ <br>
+$\color[RGB]{153,24,227} Redux Toolkit$ <br>
+$\color[RGB]{55,180,225} React-transition-group$ <br>
+$\color[RGB]{180,61,230} React-hook-form$ <br>
+$\color[RGB]{92,123,195} React-router-v6$ <br>
+$\color[RGB]{255,255,255} Express + validator$ <br>
+$\color[RGB]{58,218,103} MongoDB + mongoose$ <br>
+$\color[RGB]{215,193,69} JWT$ <br>
+$\color[RGB]{92,123,195} Websockets????(soon, I guess)$ <br>
+$\color[RGB]{243,132,48} Jest + React-testing-library + Supertest$ <br>
+$\color[RGB]{82,199,54} Vite$ <br> 
+$\color[RGB]{204,227,46} Babel$ <br>
+$\color[RGB]{255,65,107} ESLint$ <br>
+$\color[RGB]{204,227,46} Prettier$ <br>
+>>>>>>> 85c2e9cc48057d515726e35db6e4e4d3a1bb035d
 
 ## Here is a plan:
 
