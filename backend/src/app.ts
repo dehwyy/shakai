@@ -11,7 +11,7 @@ app.use(json())
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:4173",
+    origin: "http://localhost:1727",
   }),
 )
 app.use(cookieParser())

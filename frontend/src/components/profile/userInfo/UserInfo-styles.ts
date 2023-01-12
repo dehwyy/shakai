@@ -73,6 +73,7 @@ export const InfoDescriptionFlex = styled.div`
     font-size: 18px;
     height: 100%;
     user-select: none;
+    padding: 20px;
     & > button {
       background: ${props => props.theme.lighterBlockBackground};
       border: none;

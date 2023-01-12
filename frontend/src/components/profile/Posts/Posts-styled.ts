@@ -3,6 +3,7 @@ export const PostsDivWrapper = styled.div`
   margin: 0 auto;
   padding-top: 50px;
   width: 60%;
+  min-width: 500px;
 `
 
 export const PostCreate = styled.div`

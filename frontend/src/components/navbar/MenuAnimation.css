@@ -1,0 +1,16 @@
+.menu-ap-enter{
+    opacity: 0;
+}
+.menu-ap-exit{
+    opacity: 1;
+}
+.menu-ap-enter-active{
+    opacity: 1;
+}
+.menu-ap-exit-active{
+    opacity: 0;
+}
+.menu-ap-enter-active,
+.menu-ap-exit-active{
+    transition: opacity 100ms ease-in-out;
+}

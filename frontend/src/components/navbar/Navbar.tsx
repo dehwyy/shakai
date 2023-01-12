@@ -1,12 +1,12 @@
 import * as React from "react"
-import { useEffect, useState } from "react"
+import { useRef, useEffect, useState } from "react"
 import { NavbarWrapper, NavbarItem, NavbarItemFirst, NavbarItemLast } from "./Navbar-styles"
 import Ico from "../../UI/Ico"
 import { Link, useParams } from "react-router-dom"
 import MenuProfile from "./profileMenu/MenuProfile"
 import { useGetUserPageInfoQuery } from "../../store/req/userPage-slice-api"
-import { useLogoutMutation } from "../../store/req/currentUser-slice-api"
-
+import { CSSTransition, SwitchTransition } from "react-transition-group"
+import "./MenuAnimation.css"
 const Navbar = () => {
   const [isVisibleMenu, setVisibleMenu] = useState<boolean>(false)
   const [img, setImg] = useState("")
@@ -15,6 +15,7 @@ const Navbar = () => {
   useEffect(() => {
     setImg(userPageData?.profileImg as string)
   }, [userPageData?.profileImg])
+  const nodeRef = useRef<HTMLDivElement>(null)
   return (
     <NavbarWrapper>
       <NavbarItemFirst>
@@ -29,7 +30,15 @@ const Navbar = () => {
       </NavbarItem>
       <NavbarItemLast onClick={() => setVisibleMenu(prev => !prev)}>
         {img ? <img src={img} alt="profileImage" /> : <Ico>account_circle</Ico>}
-        {isVisibleMenu && <MenuProfile />}
+        <SwitchTransition>
+          <CSSTransition
+            key={Number(isVisibleMenu)}
+            nodeRef={nodeRef}
+            addEndListener={done => nodeRef.current?.addEventListener("transitionend", done, false)}
+            classNames="menu-ap">
+            <div ref={nodeRef}>{isVisibleMenu && <MenuProfile />}</div>
+          </CSSTransition>
+        </SwitchTransition>
       </NavbarItemLast>
     </NavbarWrapper>
   )

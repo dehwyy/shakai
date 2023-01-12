@@ -17,6 +17,7 @@ const Posts = () => {
   const [image, setImage] = useState<string>()
   const { reset, handleSubmit, register } = useForm<postAttrs>()
   const { data: postsData } = useFetchPostsQuery(id as string)
+  const { data: currentPageUserData } = useGetUserPageInfoQuery(id as string)
   const [createPostApi, {}] = useCreatePostMutation()
   const { data } = useGetUserPageInfoQuery(id as string)
   const editable = useTypedSelector(state => state.currentUser._id) === id
@@ -56,7 +57,7 @@ const Posts = () => {
                 currentId={post._id}
                 profileImg={data?.profileImg || ""}
                 img={post?.postImage}
-                username={post?.userId}
+                username={currentPageUserData?.userId.username}
                 text={post?.postText}
                 date={post?.dateOfCreate}
               />

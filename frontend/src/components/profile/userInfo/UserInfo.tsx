@@ -19,7 +19,8 @@ import UserModal from "./userModal/UserModal"
 import { useGetUserPageInfoQuery } from "../../../store/req/userPage-slice-api"
 import DetailedUserInfo from "./detailedUserInfo/DetailedUserInfo"
 import { useTypedSelector } from "../../../hooks/rtk-hooks"
-
+import { CSSTransition, SwitchTransition } from "react-transition-group"
+import "./InfoAnimation.css"
 const UserPageInfo = () => {
   const [isOpen, setOpen] = useState(false)
   const [isModalVisible, setModalVisible] = useState(false)
@@ -31,6 +32,7 @@ const UserPageInfo = () => {
     setModalVisible(visible)
     setModalField(name)
   }
+  const nodeRef = React.useRef<HTMLDivElement>(null)
   return (
     <UserWrapper
       onClick={() => {
@@ -77,7 +79,19 @@ const UserPageInfo = () => {
           </InfoDescriptionFlex>
         </InfoDescription>
         <InfoDescription data-testid="detailedInfo">
-          {isOpen && userPageInfo && <DetailedUserInfo isEdit={editable} />}
+          <SwitchTransition mode={"out-in"}>
+            <CSSTransition
+              nodeRef={nodeRef}
+              key={Number(isOpen)}
+              classNames="fade"
+              addEndListener={(done: () => void) => {
+                nodeRef.current?.addEventListener("transitionend", done, false)
+              }}>
+              <div className="button-container" ref={nodeRef}>
+                {isOpen && userPageInfo && <DetailedUserInfo isEdit={editable} />}
+              </div>
+            </CSSTransition>
+          </SwitchTransition>
         </InfoDescription>
       </DivWrapper>
     </UserWrapper>

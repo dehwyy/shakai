@@ -14,7 +14,7 @@ export const baseQueryWithReAuth =
       })
     let result = await base(`Bearer ${localStorage.getItem("accessToken")}` || " ")(args, api, extraOptions)
     if ((result.error && result.error.status === 401) || (result.error && result.error.status === 307)) {
-      const res = await fetchBaseQuery({
+      await fetchBaseQuery({
         baseUrl: "http://localhost:727/auth/verifyUser",
         prepareHeaders: headers => {
           headers.set("Authorization", `Bearer ${localStorage.getItem("accessToken")}` || " ")
