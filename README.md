@@ -1,57 +1,6 @@
 # Fullstack Social Network
 
 ## Technologies stack:
-<<<<<<< HEAD
-
-<div style="color:#6383d7; font-size: 25px">
-Typescript
-</div>
-<div style="color:#148ef8; font-size: 25px">
-React
-</div>
-<div style="color:#4a3bf8; font-size: 25px">
-Styled-components
-</div>
-<div style="color:#9918e3; font-size: 25px">
-Redux Toolkit
-</div>
-<div style="color:#37b4e1; font-size: 25px">
-React-transition-group
-</div>
-<div style="color:#b43de6; font-size: 25px">
-React-hook-form
-</div>
-<div style="color:#5c7bc3; font-size: 25px">
-React-router-v6
-</div>
-<div style="color:#ffffff; font-size: 25px">
-Express + validator
-</div>
-<div style="color:#3ada67; font-size: 25px">
-MongoDB + mongoose
-</div>
-<div style="color:#d7c145; font-size: 25px">
-JWT
-</div>
-<div style="color:#5c7bc3; font-size: 25px">
-Websockets????(soon, I guess)
-</div>
-<span style="color:#ea8430; font-size: 25px">
-Jest<span style="color:#dc6633!important; position: relative; left: 5px; color:#3A5FB4; font-size: 15px">for integration & unit tests </span>
-</span>
-<div style="color:#52c736; font-size: 25px">
-Vite
-</div>
-<div style="color:#cce32e; font-size: 25px">
-Babel
-</div>
-<div style="color:#ff416b; font-size: 25px">
-ESLint
-</div>
-<div style="color:#cce32e; font-size: 25px">
-Prettier
-</div>
-=======
 $\color[RGB]{99,131,215} Typescript$ <br>
 $\color[RGB]{20,142,248} React$ <br>
 $\color[RGB]{74,59,248} Styled-components$ <br>
@@ -64,11 +13,10 @@ $\color[RGB]{58,218,103} MongoDB + mongoose$ <br>
 $\color[RGB]{215,193,69} JWT$ <br>
 $\color[RGB]{92,123,195} Websockets????(soon, I guess)$ <br>
 $\color[RGB]{243,132,48} Jest + React-testing-library + Supertest$ <br>
-$\color[RGB]{82,199,54} Vite$ <br> 
+$\color[RGB]{82,199,54} Vite$ <br>
 $\color[RGB]{204,227,46} Babel$ <br>
 $\color[RGB]{255,65,107} ESLint$ <br>
 $\color[RGB]{204,227,46} Prettier$ <br>
->>>>>>> 85c2e9cc48057d515726e35db6e4e4d3a1bb035d
 
 ## Here is a plan:
 
