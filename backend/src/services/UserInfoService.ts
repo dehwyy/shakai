@@ -3,7 +3,7 @@ import { Types } from "mongoose"
 
 class UserInfoService {
   async updateUserInfo(userId: Types.ObjectId, field: string, fieldNewValue: string) {
-    const fieldInDb = await UserDetailedInfo.find()
+    await UserDetailedInfo.find()
       .where({ userId })
       .updateOne({}, { $set: { [field]: fieldNewValue } })
   }

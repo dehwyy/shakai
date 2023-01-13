@@ -13,6 +13,7 @@ export const NavbarWrapper = styled.div`
 export const NavbarItem = styled.div`
   margin-right: 2vw;
   position: relative;
+  top: 5px;
   user-select: none;
   &:hover {
     cursor: pointer;

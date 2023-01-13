@@ -19,12 +19,12 @@ const Navbar = () => {
   return (
     <NavbarWrapper>
       <NavbarItemFirst>
-        <Link to="/content">
+        <Link to={`/content/${id}`}>
           <Ico>home</Ico>
         </Link>
       </NavbarItemFirst>
       <NavbarItem>
-        <Link to="/content/users">
+        <Link to={`/content/users/${id}`}>
           <Ico>people</Ico>
         </Link>
       </NavbarItem>

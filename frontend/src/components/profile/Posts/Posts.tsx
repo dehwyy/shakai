@@ -22,7 +22,7 @@ const Posts = () => {
   const { data } = useGetUserPageInfoQuery(id as string)
   const editable = useTypedSelector(state => state.currentUser._id) === id
   const submitHandler = async (data: postAttrs) => {
-    const payload = { ...data, userId: id, dateOfCreate: new Date().toTimeString().slice(0, 8), postImage: image }
+    const payload = { ...data, userId: id, dateOfCreate: new Date().toLocaleDateString(), postImage: image }
     createPostApi(payload)
     reset()
     setImage("")

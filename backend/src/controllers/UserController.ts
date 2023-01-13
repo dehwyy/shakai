@@ -33,11 +33,6 @@ class UserController {
     const userInfo = await UserService.getFullUserInfo(id)
     res.json(userInfo)
   }
-  async getImageByUserId(req: Request<object, object, object, { id: string }>, res: Response, next: NextFunction) {
-    const { id } = req.query
-    const image = await UserService.getProfileImageById(id)
-    res.json(image)
-  }
 }
 
 export default new UserController()

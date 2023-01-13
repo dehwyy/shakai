@@ -8,16 +8,16 @@ class UserService {
     const user = await User.findById(userId)
     return user
   }
-  async getFullUserInfo(id: string) {
+  async getFullUserInfo(id: string | mongoose.Types.ObjectId | undefined) {
     const userId = new mongoose.Types.ObjectId(id)
     const userInfo = await UserDetailedInfo.findOne({ userId }).populate("userId")
     return userInfo
   }
-  async getProfileImageById(id: string) {
-    const image = await UserDetailedInfo.findOne({ id }, "profileImg")
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    return image
+  async getAllUsers() {
+    const users = await UserDetailedInfo.find()
+      .populate("userId", "username")
+      .select("location briefInfo profileImg userId")
+    return users
   }
 }
 export default new UserService()

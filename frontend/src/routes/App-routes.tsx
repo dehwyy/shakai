@@ -6,6 +6,7 @@ import Redirect from "../components/Redirect"
 import UserPageRoute from "./UsePage-route"
 import UserListRoute from "./UserList-route"
 import SettingsPageRoute from "./SettingsPage-route"
+import IntroPageRoute from "./IntroPage-route"
 
 const RoutesWrapper = () => {
   return (
@@ -13,6 +14,7 @@ const RoutesWrapper = () => {
       <Route path={"*"} element={<Login />} />
       <Route path={"registration"} element={<Registration />} />
       <Route path={"content"}>
+        <Route path={":id"} element={<IntroPageRoute />} />
         <Route path={"profile/:id"} element={<UserPageRoute />} />
         <Route path={"users/:id"} element={<UserListRoute />} />
         <Route path={"settings/:id"} element={<SettingsPageRoute />} />

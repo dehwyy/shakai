@@ -6,6 +6,7 @@ import errorMiddleware from "./middlewares/errorMiddleware"
 import userRouter from "./routers/UserRouter"
 import PostsRouter from "./routers/PostsRouter"
 import authMiddlware from "./middlewares/AuthMiddlware"
+import usersListRouter from "./routers/usersListRouter"
 const app: Express = express()
 app.use(json())
 app.use(
@@ -18,6 +19,7 @@ app.use(cookieParser())
 app.use("/auth", authRouter)
 app.use(authMiddlware)
 app.use("/userPage", userRouter)
+app.use("/usersList", usersListRouter)
 app.use("/posts", PostsRouter)
 app.use(errorMiddleware)
 export default app
