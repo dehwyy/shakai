@@ -7,12 +7,10 @@ $\color[RGB]{74,59,248} Styled-components$ <br>
 $\color[RGB]{153,24,227} Redux Toolkit$ <br>
 $\color[RGB]{55,180,225} React-transition-group$ <br>
 $\color[RGB]{180,61,230} React-hook-form$ <br>
-$\color[RGB]{92,123,195} React-router-v6$ <br>
 $\color[RGB]{255,255,255} Express + validator$ <br>
 $\color[RGB]{58,218,103} MongoDB + mongoose$ <br>
 $\color[RGB]{215,193,69} JWT$ <br>
-$\color[RGB]{92,123,195} Websockets????(soon, I guess)$ <br>
-$\color[RGB]{243,132,48} Jest + React-testing-library + Supertest$ <br>
+$\color[RGB]{243,132,48} Jest + React-testing-library
 $\color[RGB]{82,199,54} Vite$ <br>
 $\color[RGB]{204,227,46} Babel$ <br>
 $\color[RGB]{255,65,107} ESLint$ <br>
@@ -23,7 +21,6 @@ $\color[RGB]{204,227,46} Prettier$ <br>
 - make maintainable project with test, typescript, linters:
 - going to use `mongo` + `express` + `react` (MERN) to make fullstack app
 - Going to do 2 build modes: production && development
-- Live chat on `websockets` soon...
 
 ## archive
 
