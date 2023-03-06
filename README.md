@@ -1,26 +1,26 @@
 # Fullstack Social Network
-
-## Technologies stack:
-$\color[RGB]{99,131,215} Typescript$ <br>
-$\color[RGB]{20,142,248} React$ <br>
-$\color[RGB]{74,59,248} Styled-components$ <br>
-$\color[RGB]{153,24,227} Redux Toolkit + query$ <br>
-$\color[RGB]{55,180,225} React-transition-group$ <br>
-$\color[RGB]{180,61,230} React-hook-form$ <br>
-$\color[RGB]{255,255,255} Express $<br>
-$\color[RGB]{58,218,103} MongoDB + mongoose$ <br>
-$\color[RGB]{215,193,69} JWT$ <br>
-$\color[RGB]{243,132,48} Jest + React-testing-library$<br>
-$\color[RGB]{82,199,54} Vite$ <br>
-$\color[RGB]{204,227,46} Babel$ <br>
-$\color[RGB]{255,65,107} ESLint$ <br>
-$\color[RGB]{204,227,46} Prettier$ <br>
+## Nostalgic repo as for me :)
+### Technologies stack:
+Typescript <br>
+React <br>
+Styled-components <br>
+Redux Toolkit + query <br>
+React-transition-group <br>
+React-hook-form <br>
+Express <br>
+MongoDB + mongoose <br>
+JWT <br>
+Jest + React-testing-library<br>
+Vite <br>
+Babel <br>
+ESLint <br>
+Prettier <br>
 
 ## Here is a plan:
 
 - make maintainable project with test, typescript, linters:
 - going to use `mongo` + `express` + `react` to make fullstack app
-- Going to do 2 build modes: production && development
+- 2 build modes: production && development
 
 ## archive
 
@@ -34,7 +34,7 @@ $\color[RGB]{204,227,46} Prettier$ <br>
 - 26.12.2022(UTC: 10:00) - made login and registration forms, update tests from _.test.jsx to _.test.tsx, profile menu depends on accessToken(soon) in localStorage
 - 27.12.2022(UTC: 0:00) - set up prettier and very basics of eslint
 - 27.12.2022(UTC: 9:00) - configured eslint and prettier
-- 28.12.2022(UTC: 6:25) - setup redux, axios instance, made connection with backend and frontend, refactor backend logic, made new schemes in db
+- 28.12.2022(UTC: 6:25) - setup redux, axios , made connection with backend and frontend, refactor backend logic, made new schemes in db
   - yesterday I was struggling with vite and babel; Idk why, but they just don't want to work together: Vite can do everything by himself and babel can do everything by himself, but not both💀💀; After 5 hours I gave up, but I'll be back 😎(maybe just going to setup esbuild or webpack, time will tell); Also, I sometimes hate prettier cuz of its strange line breaking, like I've 2 arg in func and their summary length is 10, and prettier just leave each arg on new line, thus code becomes unreadable😐
 - 29.12.2022(UTC: ~20:00) - started refactoring login and registration form cuz it was hell
 - 30.12.2022(UTC: ~0:00) - refactored registration & login
